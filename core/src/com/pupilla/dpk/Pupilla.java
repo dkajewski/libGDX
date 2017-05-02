@@ -9,6 +9,9 @@ import com.pupilla.dpk.Screens.PlayScreen;
 public class Pupilla extends com.badlogic.gdx.Game {
 	public static final int V_WIDTH = 1280;
 	public static final int V_HEIGHT = 700;
+
+	//pixels per meter
+	public static final float PPM = 16;
 	public SpriteBatch batch;
 	
 	@Override
