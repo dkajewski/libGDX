@@ -7,27 +7,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pupilla.dpk.Screens.PlayScreen;
 
 public class Pupilla extends com.badlogic.gdx.Game {
-	public static final int V_WIDTH = 1280;
-	public static final int V_HEIGHT = 700;
 
-	//pixels per meter
-	public static final float PPM = 16;
-	public SpriteBatch batch;
-	
+
+	public static final PlayScreen mainScreen = new PlayScreen();
+
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		setScreen(new PlayScreen(this));
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		setScreen(mainScreen);
 	}
 
 	@Override
 	public void render () {
 		super.render();
 	}
-	
+
 	@Override
 	public void dispose () {
-		batch.dispose();
-		//img.dispose();
+		mainScreen.dispose();
 	}
 }
