@@ -1,38 +1,50 @@
 package com.pupilla.dpk.Sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
-import com.pupilla.dpk.Pupilla;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
+import com.pupilla.dpk.Utility;
+
+import java.util.UUID;
 
 /**
  * Created by Damian on 30.04.2017.
  */
 
-public class Hero extends Sprite{
+public class Hero{
 
-    public World world;
-    public Body b2body;
+    public Sprite currentSprite;
 
-    public Hero(World world){
-        this.world = world;
-        defineHero();
+    private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
+
+    public Texture heroSheet;
+    public Animation<TextureRegion> walkAnimation;
+    public float stateTime;
+
+    public Hero(){
+        //Utility.loadTextureAsset(path);
+
     }
 
-    public void defineHero(){
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(32/Pupilla.PPM, 32/Pupilla.PPM);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
+    public void setup(){
+        TextureRegion[][] tmp = TextureRegion.split(heroSheet, heroSheet.getWidth()/FRAME_COLS, heroSheet.getHeight()/FRAME_ROWS);
+        int index = 0;
 
-        FixtureDef fdef = new FixtureDef();
-        CircleShape shape = new CircleShape();
-        shape.setRadius(5/Pupilla.PPM);
-        fdef.shape = shape;
+        TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS*FRAME_ROWS];
+        for(int i=0; i<FRAME_ROWS; i++){
+            for(int j=0; j<FRAME_COLS; j++){
+                walkFrames[index++] = tmp[i][j];
+            }
+        }
 
-        b2body.createFixture(fdef);
+        walkAnimation = new Animation<TextureRegion>(0.25f, walkFrames);
+        stateTime = 0f;
     }
+
 }
