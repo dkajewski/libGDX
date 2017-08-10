@@ -25,7 +25,17 @@ public class Hero{
 
     public Texture heroSheet;
     public Animation<TextureRegion> walkAnimation;
+    public Animation<TextureRegion> walkLeftAnimation;
+    public Animation<TextureRegion> walkRightAnimation;
+    public Animation<TextureRegion> walkUpAnimation;
+    public Animation<TextureRegion> walkDownAnimation;
     public float stateTime;
+    public boolean alive = true;
+    public Direction direction = Direction.DOWN;
+
+    public enum Direction{
+        LEFT, RIGHT, UP, DOWN
+    }
 
     public Hero(){
         //Utility.loadTextureAsset(path);
@@ -34,16 +44,45 @@ public class Hero{
 
     public void setup(){
         TextureRegion[][] tmp = TextureRegion.split(heroSheet, heroSheet.getWidth()/FRAME_COLS, heroSheet.getHeight()/FRAME_ROWS);
-        int index = 0;
 
         TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS*FRAME_ROWS];
+        TextureRegion[] walkUpFrames = new TextureRegion[FRAME_ROWS];
+        TextureRegion[] walkDownFrames = new TextureRegion[FRAME_ROWS];
+        TextureRegion[] walkLeftFrames = new TextureRegion[FRAME_ROWS];
+        TextureRegion[] walkRightFrames = new TextureRegion[FRAME_ROWS];
+
+        int wd=0, wl=0, wu=0, wr=0;
+        walkFrames[0] = tmp[0][0];
+
         for(int i=0; i<FRAME_ROWS; i++){
             for(int j=0; j<FRAME_COLS; j++){
-                walkFrames[index++] = tmp[i][j];
+                //walkFrames[index++] = tmp[i][j];
+                switch(i){
+                    //down
+                    case 0:
+                        walkDownFrames[wd++] = tmp[i][j];
+                        break;
+                    //left
+                    case 1:
+                        walkLeftFrames[wl++] = tmp[i][j];
+                        break;
+                    //right
+                    case 2:
+                        walkRightFrames[wr++] = tmp[i][j];
+                        break;
+                    //up
+                    case 3:
+                        walkUpFrames[wu++] = tmp[i][j];
+                        break;
+                }
             }
         }
 
-        walkAnimation = new Animation<TextureRegion>(0.25f, walkFrames);
+        walkAnimation = new Animation<TextureRegion>(0.1f, walkDownFrames);
+        walkLeftAnimation = new Animation<TextureRegion>(0.1f, walkLeftFrames);
+        walkRightAnimation = new Animation<TextureRegion>(0.1f, walkRightFrames);
+        walkUpAnimation = new Animation<TextureRegion>(0.1f, walkUpFrames);
+        walkDownAnimation = new Animation<TextureRegion>(0.1f, walkDownFrames);
         stateTime = 0f;
     }
 
