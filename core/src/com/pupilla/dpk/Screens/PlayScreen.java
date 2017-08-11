@@ -8,20 +8,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.MapManager;
 import com.pupilla.dpk.PlayerController;
 import com.pupilla.dpk.Scenes.Hud;
@@ -85,7 +77,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         player.currentSprite = new Sprite(texture);
         player.currentSprite.setSize(Gdx.graphics.getWidth()/UNIT_SCALE, Gdx.graphics.getHeight()/UNIT_SCALE);
 
-        hud = new Hud(spriteBatch, width, height, player);
+        hud = new Hud(spriteBatch, width, height);
 
         //input controller
         controller = new PlayerController(camera, player, hud);
@@ -141,6 +133,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
                     player.walkAnimation = player.walkDownAnimation;
                     player.direction = Hero.Direction.DOWN;
                     break;
+                default: break;
             }
         }
 

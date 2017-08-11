@@ -26,17 +26,15 @@ import com.pupilla.dpk.Sprites.Hero;
 public class Hud{
 
     public Stage stage;
-    public Viewport viewport;
+    private Viewport viewport;
     private Texture arrowup, arrowdown, arrowleft, arrowright;
     private TextureRegion region;
     private TextureRegionDrawable drawableRegion;
     public ImageButton upbutton, downbutton, leftbutton, rightbutton;
-    private Hero player;
     public static boolean isTouched = false;
     public Hero.Direction direction;
 
-    public Hud(SpriteBatch spriteBatch, int width, int height, Hero player){
-        this.player = player;
+    public Hud(SpriteBatch spriteBatch, int width, int height){
         arrowup = new Texture(Gdx.files.internal("sprites/others/arrowup.png"));
         arrowdown = new Texture(Gdx.files.internal("sprites/others/arrowdown.png"));
         arrowleft = new Texture(Gdx.files.internal("sprites/others/arrowleft.png"));
@@ -60,14 +58,10 @@ public class Hud{
 
         viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
-        upbutton.setX(48);
-        upbutton.setY(48);
-        downbutton.setX(48);
-        downbutton.setY(12);
-        leftbutton.setX(12);
-        leftbutton.setY(12);
-        rightbutton.setX(84);
-        rightbutton.setY(12);
+        upbutton.setX(86);      upbutton.setY(86);
+        downbutton.setX(86);    downbutton.setY(22);
+        leftbutton.setX(22);    leftbutton.setY(22);
+        rightbutton.setX(150);  rightbutton.setY(22);
 
         stage.addActor(upbutton);
         stage.addActor(downbutton);
