@@ -1,5 +1,6 @@
 package com.pupilla.dpk.Scenes;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
@@ -17,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.PlayerController;
+import com.pupilla.dpk.Screens.BackpackScreen;
+import com.pupilla.dpk.Screens.PlayScreen;
 import com.pupilla.dpk.Sprites.Hero;
 
 /**
@@ -30,11 +33,19 @@ public class Hud{
     private Texture arrowup, arrowdown, arrowleft, arrowright;
     private TextureRegion region;
     private TextureRegionDrawable drawableRegion;
-    public ImageButton upbutton, downbutton, leftbutton, rightbutton;
+    private ImageButton upbutton, downbutton, leftbutton, rightbutton, backpackbutton;
     public static boolean isTouched = false;
     public Hero.Direction direction;
+    private Game game;
+    private SpriteBatch spriteBatch;
+    private int width, height;
 
-    public Hud(SpriteBatch spriteBatch, int width, int height){
+    public Hud(SpriteBatch spriteBatch, int width, int height, Game game){
+        Gdx.app.debug("klik", width+ " "+height);
+        this.game = game;
+        this.spriteBatch = spriteBatch;
+        this.width = width;
+        this.height = height;
         arrowup = new Texture(Gdx.files.internal("sprites/others/arrowup.png"));
         arrowdown = new Texture(Gdx.files.internal("sprites/others/arrowdown.png"));
         arrowleft = new Texture(Gdx.files.internal("sprites/others/arrowleft.png"));
@@ -56,17 +67,21 @@ public class Hud{
         drawableRegion = new TextureRegionDrawable(region);
         rightbutton = new ImageButton(drawableRegion);
 
+        backpackbutton = new ImageButton(drawableRegion);
+
         viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
         upbutton.setX(86);      upbutton.setY(86);
         downbutton.setX(86);    downbutton.setY(22);
         leftbutton.setX(22);    leftbutton.setY(22);
         rightbutton.setX(150);  rightbutton.setY(22);
+        backpackbutton.setX(width - backpackbutton.getWidth());
 
         stage.addActor(upbutton);
         stage.addActor(downbutton);
         stage.addActor(leftbutton);
         stage.addActor(rightbutton);
+        stage.addActor(backpackbutton);
         addListeners();
         Gdx.input.setInputProcessor(stage);
     }
@@ -127,6 +142,22 @@ public class Hud{
                 isTouched = false;
             }
         });
+
+        backpackbutton.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
+                PlayScreen.parent = game.getScreen();
+                game.setScreen(new BackpackScreen(game, spriteBatch, width, height));
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                isTouched = false;
+            }
+        });
     }
+
+
 
 }

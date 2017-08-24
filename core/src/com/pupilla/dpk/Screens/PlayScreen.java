@@ -2,6 +2,7 @@ package com.pupilla.dpk.Screens;
 
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -26,13 +27,14 @@ import com.pupilla.dpk.Utility;
 
 public class PlayScreen extends ApplicationAdapter implements Screen {
 
+    Game game;
     Texture texture;
     SpriteBatch spriteBatch;
     Hero player;
     OrthographicCamera camera;
     PlayerController controller;
     public Hud hud;
-    //private World world;
+    public static Screen parent;
     //private Viewport gamePort;
 
     private String TESTMAP = "maps/testmap.tmx";
@@ -48,23 +50,13 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
     public static final int UNIT_SCALE = 32;
 
-    public PlayScreen(){
+    public PlayScreen(Game game){
         player = new Hero();
+        this.game = game;
         //world = new World(new Vector2(0,0), true);
         //b2dr = new Box2DDebugRenderer();
-    }
-
-    @Override
-    public void show() {
-        setupViewport();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, width, height);
-        Gdx.app.debug("TAG", "H: "+height+" W: "+width);
-        camera.position.set(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
-        camera.update();
-
         mapManager = new MapManager(TESTMAP);
-        renderer = mapManager.renderer;
 
         //textures loading
         spriteBatch = new SpriteBatch();
@@ -77,7 +69,21 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         player.currentSprite = new Sprite(texture);
         player.currentSprite.setSize(Gdx.graphics.getWidth()/UNIT_SCALE, Gdx.graphics.getHeight()/UNIT_SCALE);
 
-        hud = new Hud(spriteBatch, width, height);
+
+    }
+
+    @Override
+    public void show() {
+        Gdx.app.debug("klik", "show playscreen");
+        setupViewport();
+
+        camera.setToOrtho(false, width, height);
+        camera.position.set(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
+        camera.update();
+
+        renderer = mapManager.renderer;
+
+        hud = new Hud(spriteBatch, width, height, game);
 
         //input controller
         controller = new PlayerController(camera, player, hud);
@@ -137,7 +143,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             }
         }
 
-
         renderer.render();
 
 
@@ -148,13 +153,13 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         spriteBatch.end();
         hud.stage.draw();
         spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
-
-        //Gdx.app.debug("elo", Gdx.graphics.getFramesPerSecond()+"");
+        super.render();
+        //Gdx.app.debug("klik", player.currentSprite.getX()+" "+player.currentSprite.getY());
     }
 
     @Override
     public void hide() {
-
+        Gdx.app.debug("klik", "hide playscreen");
     }
 
     private void setupViewport(){
@@ -163,6 +168,20 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
     @Override
     public void dispose(){
+        Gdx.app.debug("klik", "dispose");
         spriteBatch.dispose();
     }
+
+    @Override
+    public void pause(){
+        Gdx.app.debug("klik", "pause");
+        game.pause();
+    }
+
+    @Override
+    public void resume(){
+        Gdx.app.debug("klik", "resume");
+        game.resume();
+    }
+
 }

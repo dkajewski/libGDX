@@ -9,11 +9,12 @@ import com.pupilla.dpk.Screens.PlayScreen;
 public class Pupilla extends com.badlogic.gdx.Game {
 
 
-	public static final PlayScreen mainScreen = new PlayScreen();
+	public static PlayScreen mainScreen;
 
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+		mainScreen = new PlayScreen(this);
 		setScreen(mainScreen);
 	}
 
