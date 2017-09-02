@@ -11,7 +11,7 @@ public class Backpack {
     public Item[] itemArr;
 
     public Backpack(){
-        itemArr = new Item[28];
+        itemArr = new Item[52];
     }
 
     public boolean addItem(Item item){

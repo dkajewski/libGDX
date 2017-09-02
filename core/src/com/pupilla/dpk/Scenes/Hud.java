@@ -30,7 +30,7 @@ public class Hud{
 
     public Stage stage;
     private Viewport viewport;
-    private Texture arrowup, arrowdown, arrowleft, arrowright;
+    private Texture arrowup, arrowdown, arrowleft, arrowright, backpackimage;
     private TextureRegion region;
     private TextureRegionDrawable drawableRegion;
     private ImageButton upbutton, downbutton, leftbutton, rightbutton, backpackbutton;
@@ -50,6 +50,7 @@ public class Hud{
         arrowdown = new Texture(Gdx.files.internal("sprites/others/arrowdown.png"));
         arrowleft = new Texture(Gdx.files.internal("sprites/others/arrowleft.png"));
         arrowright = new Texture(Gdx.files.internal("sprites/others/arrowright.png"));
+        backpackimage = new Texture(Gdx.files.internal("sprites/others/backpackimage.png"));
 
         region = new TextureRegion(arrowup);
         drawableRegion = new TextureRegionDrawable(region);
@@ -67,6 +68,8 @@ public class Hud{
         drawableRegion = new TextureRegionDrawable(region);
         rightbutton = new ImageButton(drawableRegion);
 
+        region = new TextureRegion(backpackimage);
+        drawableRegion = new TextureRegionDrawable(region);
         backpackbutton = new ImageButton(drawableRegion);
 
         viewport = new FitViewport(width, height, new OrthographicCamera());
@@ -75,7 +78,7 @@ public class Hud{
         downbutton.setX(86);    downbutton.setY(22);
         leftbutton.setX(22);    leftbutton.setY(22);
         rightbutton.setX(150);  rightbutton.setY(22);
-        backpackbutton.setX(width - backpackbutton.getWidth());
+        backpackbutton.setX(22);backpackbutton.setY(height-backpackbutton.getHeight()-22);
 
         stage.addActor(upbutton);
         stage.addActor(downbutton);

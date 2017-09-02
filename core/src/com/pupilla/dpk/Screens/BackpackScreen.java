@@ -44,10 +44,12 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         this.height = height;
         this.spriteBatch = spriteBatch;
         viewport = new FitViewport(width, height, new OrthographicCamera());
-        backbuttontexture = new Texture(Gdx.files.internal("sprites/others/arrowleft.png"));
+        backbuttontexture = new Texture(Gdx.files.internal("sprites/others/backarrow.png"));
         region = new TextureRegion(backbuttontexture);
         drawableRegion = new TextureRegionDrawable(region);
         backbutton = new ImageButton(drawableRegion);
+        backbutton.setX(5);
+        backbutton.setY(5);
         backpack = new Backpack();
         backpackSlots = new Image[backpack.itemArr.length];
     }
@@ -109,16 +111,15 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
 
     private void drawBackpack(){
         Texture cell = new Texture("sprites/others/backpackitemborder.png");
-        backpackSlots[3] = new Image(cell);
-        backpackSlots[10] = new Image(cell);
-        backpackSlots[17] = new Image(cell);
-        backpackSlots[24] = new Image(cell);
+        backpackSlots[6] = new Image(cell);
+        backpackSlots[19] = new Image(cell);
+        backpackSlots[32] = new Image(cell);
+        backpackSlots[45] = new Image(cell);
 
-
-        backpackSlots[3].setX(width/2);     backpackSlots[3].setY(height/2);
-        backpackSlots[10].setX(width/2);    backpackSlots[10].setY(backpackSlots[3].getY()-backpackSlots[3].getHeight()-4);
-        backpackSlots[17].setX(width/2);    backpackSlots[17].setY(backpackSlots[10].getY()-backpackSlots[10].getHeight()-4);
-        backpackSlots[24].setX(width/2);    backpackSlots[24].setY(backpackSlots[17].getY()-backpackSlots[17].getHeight()-4);
+        backpackSlots[6].setX(width/2-16);                  backpackSlots[6].setY(height/2);
+        backpackSlots[19].setX(backpackSlots[6].getX());    backpackSlots[19].setY(backpackSlots[6].getY()-backpackSlots[6].getHeight()-4);
+        backpackSlots[32].setX(backpackSlots[6].getX());    backpackSlots[32].setY(backpackSlots[19].getY()-backpackSlots[19].getHeight()-4);
+        backpackSlots[45].setX(backpackSlots[6].getX());    backpackSlots[45].setY(backpackSlots[32].getY()-backpackSlots[32].getHeight()-4);
         for(int i = 0; i< backpackSlots.length; i++){
             if(backpackSlots[i]==null){
                 backpackSlots[i] = new Image(cell);
@@ -126,39 +127,57 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
             //Gdx.app.debug("klik", i+"");
 
             switch(i){
-                case 0:case 7:case 14:case 21:
-                    backpackSlots[i].setX(backpackSlots[3].getX()-(3*backpackSlots[3].getWidth())-3*4);
+                case 0:case 13:case 26:case 39:
+                    backpackSlots[i].setX(backpackSlots[6].getX()-(6*backpackSlots[6].getWidth())-6*4);
                     break;
-                case 1:case 8:case 15:case 22:
-                    backpackSlots[i].setX(backpackSlots[3].getX()-(2*backpackSlots[3].getWidth())-2*4);
+                case 1:case 14:case 27:case 40:
+                    backpackSlots[i].setX(backpackSlots[6].getX()-(5*backpackSlots[6].getWidth())-5*4);
                     break;
-                case 2:case 9:case 16:case 23:
-                    backpackSlots[i].setX(backpackSlots[3].getX()-(backpackSlots[3].getWidth())-4);
+                case 2:case 15:case 28:case 41:
+                    backpackSlots[i].setX(backpackSlots[6].getX()-(4*backpackSlots[6].getWidth())-4*4);
                     break;
-                case 4:case 11:case 18:case 25:
-                    backpackSlots[i].setX(backpackSlots[3].getX()+(backpackSlots[3].getWidth())+4);
+                case 3:case 16:case 29:case 42:
+                    backpackSlots[i].setX(backpackSlots[6].getX()-(3*backpackSlots[6].getWidth())-3*4);
                     break;
-                case 5:case 12:case 19:case 26:
-                    backpackSlots[i].setX(backpackSlots[3].getX()+(2*backpackSlots[3].getWidth())+2*4);
+                case 4:case 17:case 30:case 43:
+                    backpackSlots[i].setX(backpackSlots[6].getX()-(2*backpackSlots[6].getWidth())-2*4);
                     break;
-                case 6:case 13:case 20:case 27:
-                    backpackSlots[i].setX(backpackSlots[3].getX()+(3*backpackSlots[3].getWidth())+3*4);
+                case 5:case 18:case 31:case 44:
+                    backpackSlots[i].setX(backpackSlots[6].getX()-(backpackSlots[6].getWidth())-4);
+                    break;
+                case 7:case 20:case 33:case 46:
+                    backpackSlots[i].setX(backpackSlots[6].getX()+(backpackSlots[6].getWidth())+4);
+                    break;
+                case 8:case 21:case 34:case 47:
+                    backpackSlots[i].setX(backpackSlots[6].getX()+(2*backpackSlots[6].getWidth())+2*4);
+                    break;
+                case 9:case 22:case 35:case 48:
+                    backpackSlots[i].setX(backpackSlots[6].getX()+(3*backpackSlots[6].getWidth())+3*4);
+                    break;
+                case 10:case 23:case 36:case 49:
+                    backpackSlots[i].setX(backpackSlots[6].getX()+(4*backpackSlots[6].getWidth())+4*4);
+                    break;
+                case 11:case 24:case 37:case 50:
+                    backpackSlots[i].setX(backpackSlots[6].getX()+(5*backpackSlots[6].getWidth())+5*4);
+                    break;
+                case 12:case 25:case 38:case 51:
+                    backpackSlots[i].setX(backpackSlots[6].getX()+(6*backpackSlots[6].getWidth())+6*4);
                     break;
                 default: break;
             }
 
             switch(i){
-                case 0:case 1:case 2:case 4:case 5:case 6:
-                    backpackSlots[i].setY(backpackSlots[3].getY());
+                case 0:case 1:case 2:case 3:case 4:case 5:case 7:case 8:case 9:case 10:case 11:case 12:
+                    backpackSlots[i].setY(backpackSlots[6].getY());
                     break;
-                case 7:case 8:case 9:case 11:case 12:case 13:
-                    backpackSlots[i].setY(backpackSlots[10].getY());
+                case 13:case 14:case 15:case 16:case 17:case 18:case 20:case 21:case 22:case 23:case 24:case 25:
+                    backpackSlots[i].setY(backpackSlots[19].getY());
                     break;
-                case 14:case 15:case 16:case 18:case 19:case 20:
-                    backpackSlots[i].setY(backpackSlots[17].getY());
+                case 26:case 27:case 28:case 29:case 30:case 31:case 33:case 34:case 35:case 36:case 37:case 38:
+                    backpackSlots[i].setY(backpackSlots[32].getY());
                     break;
-                case 21:case 22:case 23:case 25:case 26:case 27:
-                    backpackSlots[i].setY(backpackSlots[24].getY());
+                case 39:case 40:case 41:case 42:case 43:case 44:case 46:case 47:case 48:case 49:case 50:case 51:
+                    backpackSlots[i].setY(backpackSlots[45].getY());
                     break;
                 default: break;
             }

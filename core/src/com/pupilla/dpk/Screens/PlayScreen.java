@@ -175,13 +175,13 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     @Override
     public void pause(){
         Gdx.app.debug("klik", "pause");
-        game.pause();
+        //game.pause();
     }
 
     @Override
     public void resume(){
         Gdx.app.debug("klik", "resume");
-        game.resume();
+        //game.resume();
     }
 
 }

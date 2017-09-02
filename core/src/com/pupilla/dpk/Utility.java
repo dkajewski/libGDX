@@ -14,13 +14,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public final class Utility {
     public AssetManager manager = new AssetManager();
-    public static final AssetDescriptor<Texture> playerTexture =
-            new AssetDescriptor<Texture>("sprites/characters/test.png", Texture.class);
+    //public static final AssetDescriptor<Texture> playerTexture = new AssetDescriptor<Texture>("sprites/characters/test.png", Texture.class);
 
     public static final AssetDescriptor<Texture> heroSheet = new AssetDescriptor<Texture>("sprites/characters/hero.png", Texture.class);
+    public static final AssetDescriptor<Texture> itemsSheet = new AssetDescriptor<Texture>("maps/tileset1.png", Texture.class);
 
     public void load(){
-        manager.load(playerTexture);
+        //manager.load(playerTexture);
         manager.load(heroSheet);
     }
 
