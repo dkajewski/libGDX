@@ -30,10 +30,10 @@ public class Hud{
 
     public Stage stage;
     private Viewport viewport;
-    private Texture arrowup, arrowdown, arrowleft, arrowright, backpackimage;
+    private Texture arrowup, arrowdown, arrowleft, arrowright, backpackimage, optionsimage;
     private TextureRegion region;
     private TextureRegionDrawable drawableRegion;
-    private ImageButton upbutton, downbutton, leftbutton, rightbutton, backpackbutton;
+    private ImageButton upbutton, downbutton, leftbutton, rightbutton, backpackbutton, optionsbutton;
     public static boolean isTouched = false;
     public Hero.Direction direction;
     private Game game;
@@ -51,6 +51,7 @@ public class Hud{
         arrowleft = new Texture(Gdx.files.internal("sprites/others/arrowleft.png"));
         arrowright = new Texture(Gdx.files.internal("sprites/others/arrowright.png"));
         backpackimage = new Texture(Gdx.files.internal("sprites/others/backpackimage.png"));
+        optionsimage = new Texture(Gdx.files.internal("sprites/others/optiongear.png"));
 
         region = new TextureRegion(arrowup);
         drawableRegion = new TextureRegionDrawable(region);
@@ -72,6 +73,10 @@ public class Hud{
         drawableRegion = new TextureRegionDrawable(region);
         backpackbutton = new ImageButton(drawableRegion);
 
+        region = new TextureRegion(optionsimage);
+        drawableRegion = new TextureRegionDrawable(region);
+        optionsbutton = new ImageButton(drawableRegion);
+
         viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
         upbutton.setX(86);      upbutton.setY(86);
@@ -79,12 +84,14 @@ public class Hud{
         leftbutton.setX(22);    leftbutton.setY(22);
         rightbutton.setX(150);  rightbutton.setY(22);
         backpackbutton.setX(22);backpackbutton.setY(height-backpackbutton.getHeight()-22);
+        optionsbutton.setX(width-optionsbutton.getWidth()-22); optionsbutton.setY(height-optionsbutton.getHeight()-22);
 
         stage.addActor(upbutton);
         stage.addActor(downbutton);
         stage.addActor(leftbutton);
         stage.addActor(rightbutton);
         stage.addActor(backpackbutton);
+        stage.addActor(optionsbutton);
         addListeners();
         Gdx.input.setInputProcessor(stage);
     }

@@ -32,7 +32,7 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
     private Texture backbuttontexture;
     private TextureRegion region;
     private TextureRegionDrawable drawableRegion;
-    private ImageButton backbutton;
+    private ImageButton backbutton, tasksbutton;
     private Image[] backpackSlots;
     public Backpack backpack;
     private int width, height;
@@ -50,6 +50,12 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         backbutton = new ImageButton(drawableRegion);
         backbutton.setX(5);
         backbutton.setY(5);
+
+        region = new TextureRegion(new Texture("sprites/others/taskbook.png"));
+        drawableRegion = new TextureRegionDrawable(region);
+        tasksbutton = new ImageButton(drawableRegion);
+        tasksbutton.setX(width-tasksbutton.getWidth()-5);
+        tasksbutton.setY(height-tasksbutton.getHeight()-5);
         backpack = new Backpack();
         backpackSlots = new Image[backpack.itemArr.length];
     }
@@ -59,6 +65,7 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         Gdx.app.debug("klik", "show backpack");
         stage = new Stage(viewport, spriteBatch);
         stage.addActor(backbutton);
+        stage.addActor(tasksbutton);
         addListeners();
         Gdx.input.setInputProcessor(stage);
         drawBackpack();
@@ -98,6 +105,19 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
 
             }
         });
+
+        tasksbutton.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
+                //game.setScreen(PlayScreen.parent);
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+
+            }
+        });
     }
 
     private void setupBackpack(){
@@ -124,7 +144,6 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
             if(backpackSlots[i]==null){
                 backpackSlots[i] = new Image(cell);
             }
-            //Gdx.app.debug("klik", i+"");
 
             switch(i){
                 case 0:case 13:case 26:case 39:
