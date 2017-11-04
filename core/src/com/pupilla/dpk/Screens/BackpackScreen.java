@@ -109,7 +109,7 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         tasksbutton.addListener(new ClickListener(){
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
-                //game.setScreen(PlayScreen.parent);
+                game.setScreen(new TasksScreen(game, spriteBatch, width, height));
                 return true;
             }
 
