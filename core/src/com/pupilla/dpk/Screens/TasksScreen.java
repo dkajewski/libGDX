@@ -6,29 +6,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.ArrayMap;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.pupilla.dpk.Backend.Item;
 
 /**
  * Created by orzech on 03.09.2017.
@@ -36,7 +19,6 @@ import com.pupilla.dpk.Backend.Item;
 
 public class TasksScreen extends ApplicationAdapter implements Screen {
 
-    private Vector2 GAME_DEFAULT_RESOLUTION;
     private int width, height;
     private Game game;
     private Stage stage;
@@ -44,6 +26,9 @@ public class TasksScreen extends ApplicationAdapter implements Screen {
 
     ScrollPane scrollPane;
     Table outerTable, innerTable;
+
+    Table table, container;
+    ScrollPane scroll;
 
     public TasksScreen(Game game, SpriteBatch spriteBatch, int width, int height){
         this.width = width;
@@ -53,15 +38,14 @@ public class TasksScreen extends ApplicationAdapter implements Screen {
     }
 
 
-
     @Override
     public void show() {
         stage      = new Stage();
         outerTable = new Table();
         innerTable = new Table();
-        Image image = new Image(new Texture(Gdx.files.internal("data/badlogic.jpg")));
 
-        //innerTable.add(YourActor); for example Image, or TextButton
+        //lulz, without this line can't scroll
+        Gdx.input.setInputProcessor(stage);
 
         Skin uiSkin = new Skin(Gdx.files.internal("data/uiskin.json"));
         TextButton tf = new TextButton("sss", uiSkin);
@@ -75,19 +59,19 @@ public class TasksScreen extends ApplicationAdapter implements Screen {
         tf3.getLabel().setFontScale(2, 2);
 
         
-        innerTable.add(tf).width(Gdx.graphics.getWidth()).top();
+        innerTable.add(tf).width(Gdx.graphics.getWidth()-20).top();
         innerTable.row();
-        innerTable.add(tf1).width(Gdx.graphics.getWidth()).top();
+        innerTable.add(tf1).width(Gdx.graphics.getWidth()-20).top();
         innerTable.row();
-        innerTable.add(tf2).width(Gdx.graphics.getWidth()).top();
+        innerTable.add(tf2).width(Gdx.graphics.getWidth()-20).top();
         innerTable.row();
 
         for(int i=0; i<30; i++){
-            innerTable.add(new TextButton(i+"", uiSkin)).width(Gdx.graphics.getWidth()).top();
+            innerTable.add(new TextButton(i+"", uiSkin)).width(Gdx.graphics.getWidth()-20).top();
             innerTable.row();
         }
 
-        innerTable.add(tf3).width(Gdx.graphics.getWidth()).top().expand();
+        innerTable.add(tf3).width(Gdx.graphics.getWidth()-20).top().expand();
         innerTable.row();
 
         innerTable.align(0);
@@ -109,7 +93,7 @@ public class TasksScreen extends ApplicationAdapter implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.draw();
-        stage.act(delta);
+        stage.act();
         //Gdx.app.debug("ELO", "elo");
     }
 

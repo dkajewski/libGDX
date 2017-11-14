@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public final class Item {
 
-    private final class ImageClick extends ClickListener {
+    /*private final class ImageClick extends ClickListener {
         private Item item;
 
         public ImageClick(Item item) {
@@ -58,9 +58,9 @@ public final class Item {
         image.setColor(color);
 
         image.addListener(new ImageClick(this));
-    }
+    }*/
 
-    /*public int atk, def, int_, dmgbonus;
+    public int atk, def, int_, dmgbonus;
     public Texture texture;
 
     public Item(int atk, int def, int int_, int dmgbonus, Texture texture){
@@ -70,5 +70,5 @@ public final class Item {
         this.dmgbonus = dmgbonus;
         this.texture = texture;
 
-    }*/
+    }
 }
