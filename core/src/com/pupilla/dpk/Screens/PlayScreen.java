@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.pupilla.dpk.Backend.Dialogue;
 import com.pupilla.dpk.MapManager;
 import com.pupilla.dpk.PlayerController;
 import com.pupilla.dpk.Scenes.Hud;
@@ -69,7 +70,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         player.currentSprite = new Sprite(texture);
         player.currentSprite.setSize(Gdx.graphics.getWidth()/UNIT_SCALE, Gdx.graphics.getHeight()/UNIT_SCALE);
 
-
+        Dialogue d = new Dialogue();
     }
 
     @Override

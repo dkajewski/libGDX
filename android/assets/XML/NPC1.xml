@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="test1">
+    <dialogue id="1">
+        <text>
+            Witam, Witam.
+        </text>
+        <response condition="true" nextDialogue="2">
+            Siema.
+        </response>
+        <response condition="true" nextDialogue="3">
+            elo
+        </response>
+    </dialogue>
+
+</npc>
