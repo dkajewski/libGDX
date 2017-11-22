@@ -1,29 +1,71 @@
 package com.pupilla.dpk.Backend;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
+
+import java.util.List;
 
 /**
  * Created by orzech on 19.11.2017.
  */
 
 public class Dialogue {
+    public String npcName;
+    public Array<XmlReader.Element> dialogues;
+    public List<Conversation> conversations;
 
-    public Dialogue() {
-        Gdx.app.debug("klik", "dialogue");
+    private static final String TAG = "dialogue";
+    public Dialogue(String path) {
         XmlReader xml = new XmlReader();
         try {
-            // Element is the root element of your document, i.e. <levels>
-            XmlReader.Element element = xml.parse(Gdx.files.internal("XML/NPC1.xml"));
-            String npcName = element.get("name");
-            Gdx.app.debug("klik", npcName+"");
-            /*currentLevel = element.getInt("currentLevel");
-            XmlReader.Element level = element.getChildByName("Level1");
+            // root of element
+            XmlReader.Element npc = xml.parse(Gdx.files.internal(path));
+            npcName = npc.get("name");
+
+            dialogues = npc.getChildrenByName("dialogue");
+            for(int i=0; i<dialogues.size; i++){
+                Conversation c = new Conversation();
+
+                c.text = dialogues.get(i).getChildByName("text").getText();
+
+                Array<XmlReader.Element> responses = dialogues.get(i).getChildrenByName("response");
+                c.responses = new String[responses.size];
+                c.accessibility = new boolean[responses.size];
+                c.nextDialogues = new int[responses.size];
+                for(int j=0; j<responses.size; j++){
+                    boolean nextDialogueAttribute = false;
+                    c.responses[j] = responses.get(j).getText();
+                    Array<String> keys;
+                    if(responses.get(j).getAttributes() != null){
+                        keys = responses.get(j).getAttributes().keys().toArray();
+
+                        for(int k=0; k<keys.size; k++){
+                            Gdx.app.debug(TAG, keys.get(k));
+                            if(keys.get(k).equals("nextDialogue")){
+                                nextDialogueAttribute = true;
+                            }
+                        }
+                    }
+
+                    if(nextDialogueAttribute){
+                        c.nextDialogues[j] = responses.get(j).getInt("nextDialogue");
+                        Gdx.app.debug(TAG, c.nextDialogues[j]+"");
+                    }
+
+                }
+            }
+
+
+            /*currentLevel = npc.getInt("currentLevel");
+            XmlReader.Element level = npc.getChildByName("Level1");
             lineAngle = level.getInt("lineAngle");
             speed = level.getFloat("speed");
             direction = level.getInt("direction");*/
         } catch (Exception e) {
             e.printStackTrace();
+            Gdx.app.debug(TAG, "ERROR");
         }
     }
 

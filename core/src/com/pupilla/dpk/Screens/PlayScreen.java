@@ -70,7 +70,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         player.currentSprite = new Sprite(texture);
         player.currentSprite.setSize(Gdx.graphics.getWidth()/UNIT_SCALE, Gdx.graphics.getHeight()/UNIT_SCALE);
 
-        Dialogue d = new Dialogue();
+        Dialogue d = new Dialogue("XML/NPC1.xml");
     }
 
     @Override

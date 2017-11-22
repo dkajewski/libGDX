@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <npc name="test1">
-    <dialogue id="1">
+    <dialogue id="0">
         <text>
             Witam, Witam.
         </text>
-        <response condition="true" nextDialogue="2">
+        <response>
             Siema.
         </response>
-        <response condition="true" nextDialogue="3">
+        <response nextDialogue="2">
             elo
+        </response>
+    </dialogue>
+    <dialogue id="2">
+        <text>
+            odpowiedz
+        </text>
+        <response nextDialogue="0">
+            powrot
         </response>
     </dialogue>
 
