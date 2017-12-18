@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ public class Dialogue {
     private static final String TAG = "dialogue";
     public Dialogue(String path) {
         XmlReader xml = new XmlReader();
+        conversations = new ArrayList<Conversation>();
         try {
             // root of element
             XmlReader.Element npc = xml.parse(Gdx.files.internal(path));
@@ -30,13 +32,16 @@ public class Dialogue {
 
                 c.text = dialogues.get(i).getChildByName("text").getText();
 
+                //get responses
                 Array<XmlReader.Element> responses = dialogues.get(i).getChildrenByName("response");
                 c.responses = new String[responses.size];
                 c.accessibility = new boolean[responses.size];
                 c.nextDialogues = new int[responses.size];
                 for(int j=0; j<responses.size; j++){
                     boolean nextDialogueAttribute = false;
+                    //fill responses array
                     c.responses[j] = responses.get(j).getText();
+                    c.accessibility[j] = true;
                     Array<String> keys;
                     if(responses.get(j).getAttributes() != null){
                         keys = responses.get(j).getAttributes().keys().toArray();
@@ -53,6 +58,7 @@ public class Dialogue {
                         c.nextDialogues[j] = responses.get(j).getInt("nextDialogue");
                         Gdx.app.debug(TAG, c.nextDialogues[j]+"");
                     }
+                    conversations.add(c);
 
                 }
             }

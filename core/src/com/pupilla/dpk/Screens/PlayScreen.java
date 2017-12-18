@@ -13,9 +13,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Dialogue;
+import com.pupilla.dpk.Backend.NPC;
 import com.pupilla.dpk.MapManager;
 import com.pupilla.dpk.PlayerController;
 import com.pupilla.dpk.Scenes.Hud;
@@ -51,13 +59,16 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
     public static final int UNIT_SCALE = 32;
 
+    NPC npc;
+
     public PlayScreen(Game game){
-        player = new Hero();
+
         this.game = game;
-        //world = new World(new Vector2(0,0), true);
-        //b2dr = new Box2DDebugRenderer();
+        world = new World(new Vector2(0,0), false);
+        world.setContactListener(new Collision());
+        b2dr = new Box2DDebugRenderer();
         camera = new OrthographicCamera();
-        mapManager = new MapManager(TESTMAP);
+        mapManager = new MapManager(TESTMAP, world);
 
         //textures loading
         spriteBatch = new SpriteBatch();
@@ -65,12 +76,20 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         ut.manager.load(Utility.heroSheet);
         ut.manager.finishLoading();
         texture = ut.manager.get(Utility.heroSheet);
+        player = new Hero(world);
         player.heroSheet = texture;
         player.setup();
         player.currentSprite = new Sprite(texture);
         player.currentSprite.setSize(Gdx.graphics.getWidth()/UNIT_SCALE, Gdx.graphics.getHeight()/UNIT_SCALE);
+        player.defineBody();
 
-        Dialogue d = new Dialogue("XML/NPC1.xml");
+        //testing npc and dialogues
+        npc = new NPC("XML/NPC1.xml");
+        npc.npcTexture = texture;
+        npc.setup();
+        npc.currentSprite = new Sprite(texture);
+        npc.currentSprite.setSize(Gdx.graphics.getWidth()/UNIT_SCALE, Gdx.graphics.getHeight()/UNIT_SCALE);
+        npc.currentSprite.setPosition(10, 10);
     }
 
     @Override
@@ -97,13 +116,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
     @Override
     public void render(float delta) {
-        camera.position.x = player.currentSprite.getX();
-        camera.position.y = player.currentSprite.getY();
-
-        camera.update();
-        renderer.setView(camera);
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         player.stateTime += Gdx.graphics.getDeltaTime();
         TextureRegion currentFrame = player.walkAnimation.getKeyFrame(player.stateTime, true);
         if(player.walkAnimation.isAnimationFinished(player.stateTime)){
@@ -117,25 +129,29 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         if(hud.isTouched){
             switch(hud.direction){
                 case LEFT:
-                    player.currentSprite.setPosition(player.currentSprite.getX()-(PlayerController.pixelsPerSecond * Gdx.graphics.getDeltaTime()), player.currentSprite.getY());
+                    player.b2body.setLinearVelocity(-(55000*Gdx.graphics.getDeltaTime()), player.b2body.getLinearVelocity().y);
+                    player.currentSprite.setPosition(player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
                     player.alive = true;
                     player.walkAnimation = player.walkLeftAnimation;
                     player.direction = Hero.Direction.LEFT;
                     break;
                 case RIGHT:
-                    player.currentSprite.setPosition(player.currentSprite.getX()+(PlayerController.pixelsPerSecond * Gdx.graphics.getDeltaTime()), player.currentSprite.getY());
+                    player.b2body.setLinearVelocity(55000*Gdx.graphics.getDeltaTime(), player.b2body.getLinearVelocity().y);
+                    player.currentSprite.setPosition(player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
                     player.alive = true;
                     player.walkAnimation = player.walkRightAnimation;
                     player.direction = Hero.Direction.RIGHT;
                     break;
                 case UP:
-                    player.currentSprite.setPosition(player.currentSprite.getX(), player.currentSprite.getY()+(PlayerController.pixelsPerSecond * Gdx.graphics.getDeltaTime()));
+                    player.b2body.setLinearVelocity(player.b2body.getLinearVelocity().x, 55000*Gdx.graphics.getDeltaTime());
+                    player.currentSprite.setPosition(player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
                     player.alive = true;
                     player.walkAnimation = player.walkUpAnimation;
                     player.direction = Hero.Direction.UP;
                     break;
                 case DOWN:
-                    player.currentSprite.setPosition(player.currentSprite.getX(), player.currentSprite.getY()-(PlayerController.pixelsPerSecond * Gdx.graphics.getDeltaTime()));
+                    player.b2body.setLinearVelocity(player.b2body.getLinearVelocity().x, -(55000*Gdx.graphics.getDeltaTime()));
+                    player.currentSprite.setPosition(player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
                     player.alive = true;
                     player.walkAnimation = player.walkDownAnimation;
                     player.direction = Hero.Direction.DOWN;
@@ -144,13 +160,25 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             }
         }
 
+        world.step(1/60f, 6, 2);
+        camera.position.x = player.b2body.getPosition().x;
+        camera.position.y = player.b2body.getPosition().y;
+
+        camera.update();
+        renderer.setView(camera);
+        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
         renderer.render();
+        b2dr.render(world, camera.combined);
 
 
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        spriteBatch.draw(currentFrame, player.currentSprite.getX(), player.currentSprite.getY());
+        spriteBatch.draw(currentFrame, player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
         //player.currentSprite.setSize(Gdx.graphics.getWidth()/UNIT_SCALE, Gdx.graphics.getHeight()/UNIT_SCALE);
+        spriteBatch.draw(npc.walkAnimation.getKeyFrame(npc.stateTime, false), npc.currentSprite.getX(), npc.currentSprite.getY());
         spriteBatch.end();
         hud.stage.draw();
         spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -184,5 +212,4 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         Gdx.app.debug("klik", "resume");
         //game.resume();
     }
-
 }

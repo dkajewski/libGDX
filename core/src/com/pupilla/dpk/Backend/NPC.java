@@ -1,43 +1,23 @@
-package com.pupilla.dpk.Sprites;
+package com.pupilla.dpk.Backend;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
-import com.pupilla.dpk.Screens.PlayScreen;
-import com.pupilla.dpk.Utility;
 
-import java.util.UUID;
+import java.util.List;
 
 /**
- * Created by Damian on 30.04.2017.
+ * Created by orzech on 13.12.2017.
  */
 
-public class Hero{
-
-    private World world;
-    public Body b2body;
-
-    public int experiece = 0;
-    public int attack = 0;
-    public int defense = 0;
-    public int level = 0;
-    public Sprite currentSprite;
-
+public class NPC {
+    public String name;
+    public List conversations;
     private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
 
-    public Texture heroSheet;
+    public Sprite currentSprite;
+    public Texture npcTexture;
     public Animation<TextureRegion> walkAnimation;
     public Animation<TextureRegion> walkLeftAnimation;
     public Animation<TextureRegion> walkRightAnimation;
@@ -51,13 +31,15 @@ public class Hero{
         LEFT, RIGHT, UP, DOWN
     }
 
-    public Hero(World world){
-        //Utility.loadTextureAsset(path);
-        this.world = world;
+    public NPC(String path){
+
+        Dialogue dialogue = new Dialogue(path);
+        name = dialogue.npcName;
+        conversations = dialogue.conversations;
     }
 
     public void setup(){
-        TextureRegion[][] tmp = TextureRegion.split(heroSheet, heroSheet.getWidth()/FRAME_COLS, heroSheet.getHeight()/FRAME_ROWS);
+        TextureRegion[][] tmp = TextureRegion.split(npcTexture, npcTexture.getWidth()/FRAME_COLS, npcTexture.getHeight()/FRAME_ROWS);
 
         TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS*FRAME_ROWS];
         TextureRegion[] walkUpFrames = new TextureRegion[FRAME_ROWS];
@@ -99,22 +81,4 @@ public class Hero{
         walkDownAnimation = new Animation<TextureRegion>(0.1f, walkDownFrames);
         stateTime = 0f;
     }
-
-    public void defineBody(){
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(16, 16);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
-
-        FixtureDef fdef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(16, 16);
-
-        fdef.shape = shape;
-        b2body.createFixture(fdef).setUserData(this);
-        b2body.setLinearDamping(20f);
-
-        Gdx.app.debug("HERO", currentSprite.getWidth()+" "+currentSprite.getHeight());
-    }
-
 }
