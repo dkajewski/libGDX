@@ -1,24 +1,16 @@
 package com.pupilla.dpk.Sprites;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
-import com.pupilla.dpk.Screens.PlayScreen;
-import com.pupilla.dpk.Utility;
-
-import java.util.UUID;
+import com.pupilla.dpk.Backend.GameConstants;
 
 /**
  * Created by Damian on 30.04.2017.
@@ -101,16 +93,19 @@ public class Hero{
     }
 
     public void defineBody(){
+        currentSprite.setPosition(16, 16);
         BodyDef bdef = new BodyDef();
-        bdef.position.set(16, 16);
+        bdef.position.set(currentSprite.getX(), currentSprite.getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
-        FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(16, 16);
 
+        FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
+        fdef.filter.categoryBits = GameConstants.BIT_PLAYER; /* is a... */
+        fdef.filter.maskBits = GameConstants.BIT_WALL | GameConstants.BIT_PLAYER; /* colides with... */
         b2body.createFixture(fdef).setUserData(this);
         b2body.setLinearDamping(20f);
 

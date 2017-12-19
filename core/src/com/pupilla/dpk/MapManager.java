@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.pupilla.dpk.Backend.GameConstants;
 
 /**
  * Created by Damian on 18.06.2017.
@@ -56,6 +57,8 @@ public class MapManager {
 
             shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
             fdef.shape = shape;
+            fdef.filter.categoryBits = GameConstants.BIT_WALL; // is a...
+            fdef.filter.maskBits = GameConstants.BIT_WALL | GameConstants.BIT_PLAYER; // colides with...
             body.createFixture(fdef).setUserData(this);
         }
 

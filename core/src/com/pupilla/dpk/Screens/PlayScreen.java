@@ -89,7 +89,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         npc.setup();
         npc.currentSprite = new Sprite(texture);
         npc.currentSprite.setSize(Gdx.graphics.getWidth()/UNIT_SCALE, Gdx.graphics.getHeight()/UNIT_SCALE);
-        npc.currentSprite.setPosition(10, 10);
+        npc.currentSprite.setPosition(240, 10);
     }
 
     @Override
