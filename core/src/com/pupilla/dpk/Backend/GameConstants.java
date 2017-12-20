@@ -8,4 +8,6 @@ public class GameConstants {
     public static final short BIT_PLAYER = 1;
     public static final short BIT_WALL = 2;
     public static final short BIT_ITEM = 4;
+
+    public static final int UNIT_SCALE = 32;
 }

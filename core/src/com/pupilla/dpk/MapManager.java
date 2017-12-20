@@ -1,5 +1,6 @@
 package com.pupilla.dpk;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -9,10 +10,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.GameConstants;
+import com.pupilla.dpk.Backend.Item;
 
 /**
  * Created by Damian on 18.06.2017.
@@ -62,6 +65,24 @@ public class MapManager {
             body.createFixture(fdef).setUserData(this);
         }
 
+    }
+
+    public void spawnItem(Item item){
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(item.pos.x, item.pos.y);
+        bdef.type = BodyDef.BodyType.StaticBody;
+        Body body = world.createBody(bdef);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(10);
+
+        FixtureDef fdef = new FixtureDef();
+        fdef.shape = shape;
+        fdef.filter.categoryBits = GameConstants.BIT_ITEM;
+        fdef.filter.maskBits = GameConstants.BIT_ITEM | GameConstants.BIT_WALL | GameConstants.BIT_PLAYER;
+        body.createFixture(fdef).setUserData("item");
+
+        Gdx.app.debug(TAG, "item rendered");
     }
 
 

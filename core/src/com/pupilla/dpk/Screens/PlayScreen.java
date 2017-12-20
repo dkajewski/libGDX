@@ -8,22 +8,19 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.Collision;
-import com.pupilla.dpk.Backend.Dialogue;
-import com.pupilla.dpk.Backend.NPC;
+import com.pupilla.dpk.Backend.GameConstants;
+import com.pupilla.dpk.Backend.Item;
+import com.pupilla.dpk.Sprites.NPC;
 import com.pupilla.dpk.MapManager;
 import com.pupilla.dpk.PlayerController;
 import com.pupilla.dpk.Scenes.Hud;
@@ -36,12 +33,12 @@ import com.pupilla.dpk.Utility;
 
 public class PlayScreen extends ApplicationAdapter implements Screen {
 
-    Game game;
-    Texture texture;
-    SpriteBatch spriteBatch;
-    Hero player;
-    OrthographicCamera camera;
-    PlayerController controller;
+    public Game game;
+    public Texture texture;
+    public SpriteBatch spriteBatch;
+    public Hero player;
+    public OrthographicCamera camera;
+    public PlayerController controller;
     public Hud hud;
     public static Screen parent;
     //private Viewport gamePort;
@@ -57,9 +54,9 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     private int width = 640;
     private int height;
 
-    public static final int UNIT_SCALE = 32;
+    private NPC npc;
 
-    NPC npc;
+    public Item item1;
 
     public PlayScreen(Game game){
 
@@ -80,7 +77,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         player.heroSheet = texture;
         player.setup();
         player.currentSprite = new Sprite(texture);
-        player.currentSprite.setSize(Gdx.graphics.getWidth()/UNIT_SCALE, Gdx.graphics.getHeight()/UNIT_SCALE);
+        player.currentSprite.setSize(Gdx.graphics.getWidth()/ GameConstants.UNIT_SCALE, Gdx.graphics.getHeight()/GameConstants.UNIT_SCALE);
         player.defineBody();
 
         //testing npc and dialogues
@@ -88,8 +85,13 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         npc.npcTexture = texture;
         npc.setup();
         npc.currentSprite = new Sprite(texture);
-        npc.currentSprite.setSize(Gdx.graphics.getWidth()/UNIT_SCALE, Gdx.graphics.getHeight()/UNIT_SCALE);
+        npc.currentSprite.setSize(Gdx.graphics.getWidth()/GameConstants.UNIT_SCALE, Gdx.graphics.getHeight()/GameConstants.UNIT_SCALE);
         npc.currentSprite.setPosition(240, 10);
+
+        //testing items
+        item1 = new Item(10, 10, 10, 10, new Texture("sprites/items/weapons/weapon1.png"), new Vector2(250, 250));
+        mapManager.spawnItem(item1);
+
     }
 
     @Override
@@ -176,9 +178,13 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        spriteBatch.draw(currentFrame, player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
         //player.currentSprite.setSize(Gdx.graphics.getWidth()/UNIT_SCALE, Gdx.graphics.getHeight()/UNIT_SCALE);
+        // test in rendering item
+        spriteBatch.draw(item1.texture, item1.pos.x-(item1.texture.getWidth()/2), item1.pos.y-(item1.texture.getHeight()/2));
+        //end test in rendering item
+
         spriteBatch.draw(npc.walkAnimation.getKeyFrame(npc.stateTime, false), npc.currentSprite.getX(), npc.currentSprite.getY());
+        spriteBatch.draw(currentFrame, player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
         spriteBatch.end();
         hud.stage.draw();
         spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);

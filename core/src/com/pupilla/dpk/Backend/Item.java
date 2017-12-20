@@ -4,6 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -62,13 +65,15 @@ public final class Item {
 
     public int atk, def, int_, dmgbonus;
     public Texture texture;
+    public Vector2 pos;
 
-    public Item(int atk, int def, int int_, int dmgbonus, Texture texture){
+    public Item(int atk, int def, int int_, int dmgbonus, Texture texture, Vector2 pos){
         this.atk = atk;
         this.def = def;
         this.int_ = int_;
         this.dmgbonus = dmgbonus;
         this.texture = texture;
+        this.pos = pos;
 
     }
 }

@@ -6,7 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.sun.org.apache.bcel.internal.util.ClassLoader;
 
 import org.junit.Test;
@@ -33,7 +35,7 @@ public class BackpackTest {
     public void addItem() throws Exception {
         Texture texture = null;
 
-        Item item = new Item(10, 10, 10, 10, texture);
+        Item item = new Item(10, 10, 10, 10, texture, new Vector2(10, 10));
         Backpack bp = new Backpack();
         boolean output = bp.addItem(item);
 

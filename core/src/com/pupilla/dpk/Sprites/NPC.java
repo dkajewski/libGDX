@@ -1,9 +1,10 @@
-package com.pupilla.dpk.Backend;
+package com.pupilla.dpk.Sprites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.pupilla.dpk.Backend.Dialogue;
 
 import java.util.List;
 

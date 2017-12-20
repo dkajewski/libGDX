@@ -105,7 +105,7 @@ public class Hero{
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fdef.filter.categoryBits = GameConstants.BIT_PLAYER; /* is a... */
-        fdef.filter.maskBits = GameConstants.BIT_WALL | GameConstants.BIT_PLAYER; /* colides with... */
+        fdef.filter.maskBits = GameConstants.BIT_WALL | GameConstants.BIT_PLAYER | GameConstants.BIT_ITEM; /* colides with... */
         b2body.createFixture(fdef).setUserData(this);
         b2body.setLinearDamping(20f);
 
