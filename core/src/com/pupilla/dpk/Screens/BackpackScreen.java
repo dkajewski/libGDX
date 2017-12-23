@@ -20,12 +20,18 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.Backend.Backpack;
+import com.pupilla.dpk.Backend.Item;
+import com.pupilla.dpk.Sprites.Hero;
+
+import java.util.ArrayList;
 
 /**
  * Created by orzech on 13.08.2017.
  */
 
 public class BackpackScreen extends ApplicationAdapter implements Screen {
+    private static final String TAG = "BackpackScreen";
+
     private Game game;
     private Stage stage;
     private SpriteBatch spriteBatch;
@@ -35,11 +41,13 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
     private TextureRegionDrawable drawableRegion;
     private ImageButton backbutton, tasksbutton;
     private Image[] backpackSlots;
-    public Backpack backpack;
+    private Backpack backpack;
     private int width, height;
 
-    public BackpackScreen(Game game, SpriteBatch spriteBatch, int width, int height){
-        Gdx.app.debug("klik", width+ " "+height);
+    private ArrayList<Item> items = new ArrayList<Item>();
+
+    public BackpackScreen(Game game, SpriteBatch spriteBatch, int width, int height, Hero player){
+        Gdx.app.debug(TAG, width+ " "+height);
         this.game = game;
         this.width = width;
         this.height = height;
@@ -57,14 +65,14 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         tasksbutton = new ImageButton(drawableRegion);
         tasksbutton.setX(width-tasksbutton.getWidth()-5);
         tasksbutton.setY(height-tasksbutton.getHeight()-5);
-        backpack = new Backpack();
+        backpack = player.backpack;
         backpackSlots = new Image[backpack.itemArr.length];
 
     }
 
     @Override
     public void show() {
-        Gdx.app.debug("klik", "show backpack");
+        Gdx.app.debug(TAG, "show backpack");
         stage = new Stage(viewport, spriteBatch);
         stage.addActor(backbutton);
         stage.addActor(tasksbutton);
@@ -79,14 +87,15 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
+        //setupBackpack();
         spriteBatch.end();
         stage.draw();
-        //Gdx.app.debug("klik", "render backpackscreen");
+        //Gdx.app.debug(TAG, "render backpackscreen");
     }
 
     @Override
     public void hide() {
-        Gdx.app.debug("klik", "hide backpack");
+        Gdx.app.debug(TAG, "hide backpack");
     }
 
     @Override
@@ -123,10 +132,23 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
     }
 
     private void setupBackpack(){
-
-        for(int i = 0; i< backpackSlots.length; i++){
+        // create items buttons
+        for(int i = 0; i<backpackSlots.length; i++){
             if(backpack.itemArr[i]!=null){
-                // buttons
+                // creating image buttons to enter item options
+                region = new TextureRegion(backpack.itemArr[i].texture);
+                drawableRegion = new TextureRegionDrawable(region);
+                ImageButton button = new ImageButton(drawableRegion);
+                final int index = i;
+                button.setX(backpackSlots[i].getX());
+                button.setY(backpackSlots[i].getY());
+                button.addListener(new ClickListener(){
+                    @Override
+                    public void clicked(InputEvent event, float x, float y){
+                        Gdx.app.debug(TAG, "clicked " + index);
+                    }
+                });
+                stage.addActor(button);
             }
         }
     }

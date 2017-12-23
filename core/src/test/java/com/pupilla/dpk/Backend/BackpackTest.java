@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.pupilla.dpk.Sprites.Hero;
 import com.sun.org.apache.bcel.internal.util.ClassLoader;
 
 import org.junit.Test;
@@ -34,8 +36,10 @@ public class BackpackTest {
     @Test
     public void addItem() throws Exception {
         Texture texture = null;
+        World world = new World(new Vector2(0,0), false);
+        Hero player = new Hero(world);
 
-        Item item = new Item(10, 10, 10, 10, texture, new Vector2(10, 10));
+        Item item = new Item(10, 10, 10, 10, texture, player);
         Backpack bp = new Backpack();
         boolean output = bp.addItem(item);
 

@@ -10,7 +10,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.pupilla.dpk.Backend.GameConstants;
+import com.pupilla.dpk.Backend.Backpack;
+import com.pupilla.dpk.Backend.Constants;
 
 /**
  * Created by Damian on 30.04.2017.
@@ -18,8 +19,10 @@ import com.pupilla.dpk.Backend.GameConstants;
 
 public class Hero{
 
-    private World world;
+    public World world;
     public Body b2body;
+
+    public static Backpack backpack = new Backpack();
 
     public int experiece = 0;
     public int attack = 0;
@@ -46,6 +49,7 @@ public class Hero{
     public Hero(World world){
         //Utility.loadTextureAsset(path);
         this.world = world;
+        backpack = new Backpack();
     }
 
     public void setup(){
@@ -104,9 +108,9 @@ public class Hero{
 
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
-        fdef.filter.categoryBits = GameConstants.BIT_PLAYER; /* is a... */
-        fdef.filter.maskBits = GameConstants.BIT_WALL | GameConstants.BIT_PLAYER | GameConstants.BIT_ITEM; /* colides with... */
-        b2body.createFixture(fdef).setUserData(this);
+        fdef.filter.categoryBits = Constants.BIT_PLAYER; /* is a... */
+        fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_PLAYER | Constants.BIT_ITEM; /* collides with... */
+        b2body.createFixture(fdef).setUserData("player");
         b2body.setLinearDamping(20f);
 
         Gdx.app.debug("HERO", currentSprite.getWidth()+" "+currentSprite.getHeight());

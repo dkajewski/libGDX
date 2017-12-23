@@ -39,13 +39,15 @@ public class Hud{
     private Game game;
     private SpriteBatch spriteBatch;
     private int width, height;
+    private Hero player;
 
-    public Hud(SpriteBatch spriteBatch, int width, int height, Game game){
+    public Hud(SpriteBatch spriteBatch, int width, int height, Game game, Hero player){
         Gdx.app.debug("klik", width+ " "+height);
         this.game = game;
         this.spriteBatch = spriteBatch;
         this.width = width;
         this.height = height;
+        this.player = player;
         arrowup = new Texture(Gdx.files.internal("sprites/others/arrowup.png"));
         arrowdown = new Texture(Gdx.files.internal("sprites/others/arrowdown.png"));
         arrowleft = new Texture(Gdx.files.internal("sprites/others/arrowleft.png"));
@@ -157,7 +159,7 @@ public class Hud{
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
                 PlayScreen.parent = game.getScreen();
-                game.setScreen(new BackpackScreen(game, spriteBatch, width, height));
+                game.setScreen(new BackpackScreen(game, spriteBatch, width, height, player));
                 return true;
             }
 
