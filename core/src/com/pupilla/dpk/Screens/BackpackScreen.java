@@ -36,7 +36,6 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
     private Stage stage;
     private SpriteBatch spriteBatch;
     private Viewport viewport;
-    private Texture backbuttontexture;
     private TextureRegion region;
     private TextureRegionDrawable drawableRegion;
     private ImageButton backbutton, tasksbutton;
@@ -44,16 +43,16 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
     private Backpack backpack;
     private int width, height;
 
-    private ArrayList<Item> items = new ArrayList<Item>();
+    //private ArrayList<Item> items = new ArrayList<Item>();
 
-    public BackpackScreen(Game game, SpriteBatch spriteBatch, int width, int height, Hero player){
+    public BackpackScreen(Game game, int width, int height){
         Gdx.app.debug(TAG, width+ " "+height);
         this.game = game;
         this.width = width;
         this.height = height;
-        this.spriteBatch = spriteBatch;
+        this.spriteBatch = new SpriteBatch();
         viewport = new FitViewport(width, height, new OrthographicCamera());
-        backbuttontexture = new Texture(Gdx.files.internal("sprites/others/backarrow.png"));
+        Texture backbuttontexture = new Texture(Gdx.files.internal("sprites/others/backarrow.png"));
         region = new TextureRegion(backbuttontexture);
         drawableRegion = new TextureRegionDrawable(region);
         backbutton = new ImageButton(drawableRegion);
@@ -65,7 +64,7 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         tasksbutton = new ImageButton(drawableRegion);
         tasksbutton.setX(width-tasksbutton.getWidth()-5);
         tasksbutton.setY(height-tasksbutton.getHeight()-5);
-        backpack = player.backpack;
+        backpack = Hero.backpack;
         backpackSlots = new Image[backpack.itemArr.length];
 
     }
@@ -87,10 +86,8 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        //setupBackpack();
         spriteBatch.end();
         stage.draw();
-        //Gdx.app.debug(TAG, "render backpackscreen");
     }
 
     @Override
@@ -100,7 +97,7 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
 
     @Override
     public void dispose(){
-        this.dispose();
+
     }
 
     private void addListeners(){

@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.PlayerController;
 import com.pupilla.dpk.Screens.BackpackScreen;
 import com.pupilla.dpk.Screens.PlayScreen;
+import com.pupilla.dpk.Screens.SettingsScreen;
 import com.pupilla.dpk.Sprites.Hero;
 
 /**
@@ -41,10 +42,10 @@ public class Hud{
     private int width, height;
     private Hero player;
 
-    public Hud(SpriteBatch spriteBatch, int width, int height, Game game, Hero player){
+    public Hud(int width, int height, Game game, Hero player){
         Gdx.app.debug("klik", width+ " "+height);
         this.game = game;
-        this.spriteBatch = spriteBatch;
+        this.spriteBatch = new SpriteBatch();
         this.width = width;
         this.height = height;
         this.player = player;
@@ -98,7 +99,7 @@ public class Hud{
         Gdx.input.setInputProcessor(stage);
     }
 
-    public void addListeners(){
+    private void addListeners(){
         upbutton.addListener(new ClickListener(){
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
@@ -159,13 +160,22 @@ public class Hud{
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
                 PlayScreen.parent = game.getScreen();
-                game.setScreen(new BackpackScreen(game, spriteBatch, width, height, player));
+                game.setScreen(new BackpackScreen(game, width, height));
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 isTouched = false;
+            }
+        });
+
+        optionsbutton.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
+                PlayScreen.parent = game.getScreen();
+                game.setScreen(new SettingsScreen(game, width, height));
+                return true;
             }
         });
     }

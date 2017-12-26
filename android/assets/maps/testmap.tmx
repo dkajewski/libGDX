@@ -111,9 +111,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="MAP_COLLISION">
-  <object id="1" x="352" y="865" width="32" height="32"/>
- </objectgroup>
+ <objectgroup name="MAP_COLLISION"/>
  <objectgroup name="MAP_SPAWNS"/>
  <objectgroup name="MAP_PORTAL"/>
 </map>

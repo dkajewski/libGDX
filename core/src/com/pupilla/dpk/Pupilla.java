@@ -5,17 +5,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pupilla.dpk.Screens.PlayScreen;
+import com.pupilla.dpk.Screens.StartScreen;
 
 public class Pupilla extends com.badlogic.gdx.Game {
 
-
-	public static PlayScreen mainScreen;
-
+	private StartScreen startScreen;
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		mainScreen = new PlayScreen(this);
-		setScreen(mainScreen);
+		startScreen = new StartScreen(this);
+		setScreen(startScreen);
 	}
 
 	@Override
@@ -25,6 +24,6 @@ public class Pupilla extends com.badlogic.gdx.Game {
 
 	@Override
 	public void dispose () {
-		mainScreen.dispose();
+		startScreen.dispose();
 	}
 }

@@ -109,7 +109,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
         renderer = mapManager.renderer;
 
-        hud = new Hud(spriteBatch, width, height, game, player);
+        hud = new Hud(width, height, game, player);
 
         //input controller
         controller = new PlayerController(camera, player, hud);
@@ -122,6 +122,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         player.stateTime += Gdx.graphics.getDeltaTime();
         TextureRegion currentFrame = player.walkAnimation.getKeyFrame(player.stateTime, true);
         if(player.walkAnimation.isAnimationFinished(player.stateTime)){
@@ -172,8 +174,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
         camera.update();
         renderer.setView(camera);
-        Gdx.gl.glClearColor(0,0,0,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         renderer.render();
         b2dr.render(world, camera.combined);
