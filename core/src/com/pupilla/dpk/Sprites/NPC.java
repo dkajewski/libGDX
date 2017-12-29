@@ -1,10 +1,14 @@
 package com.pupilla.dpk.Sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Dialogue;
+import com.pupilla.dpk.Utility;
 
 import java.util.List;
 
@@ -32,24 +36,30 @@ public class NPC {
         LEFT, RIGHT, UP, DOWN
     }
 
-    public NPC(String path){
+    public NPC(String dialoguePath){
 
-        Dialogue dialogue = new Dialogue(path);
+        Dialogue dialogue = new Dialogue(dialoguePath);
         name = dialogue.npcName;
         conversations = dialogue.conversations;
     }
 
-    public void setup(){
+    public void setup(AssetDescriptor<Texture> sheet){
+        Utility ut = new Utility();
+        ut.manager.load(sheet);
+        ut.manager.finishLoading();
+        npcTexture = ut.manager.get(sheet);
+
+        currentSprite = new Sprite(npcTexture);
+        currentSprite.setSize(Gdx.graphics.getWidth()/ Constants.UNIT_SCALE, Gdx.graphics.getHeight()/ Constants.UNIT_SCALE);
+
         TextureRegion[][] tmp = TextureRegion.split(npcTexture, npcTexture.getWidth()/FRAME_COLS, npcTexture.getHeight()/FRAME_ROWS);
 
-        TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS*FRAME_ROWS];
         TextureRegion[] walkUpFrames = new TextureRegion[FRAME_ROWS];
         TextureRegion[] walkDownFrames = new TextureRegion[FRAME_ROWS];
         TextureRegion[] walkLeftFrames = new TextureRegion[FRAME_ROWS];
         TextureRegion[] walkRightFrames = new TextureRegion[FRAME_ROWS];
 
         int wd=0, wl=0, wu=0, wr=0;
-        walkFrames[0] = tmp[0][0];
 
         for(int i=0; i<FRAME_ROWS; i++){
             for(int j=0; j<FRAME_COLS; j++){

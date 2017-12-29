@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -12,32 +13,39 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.Backpack;
 import com.pupilla.dpk.Backend.Constants;
+import com.pupilla.dpk.Backend.Equipment;
+import com.pupilla.dpk.Utility;
+
+import java.io.Serializable;
 
 /**
  * Created by Damian on 30.04.2017.
  */
 
-public class Hero{
+public class Hero implements Serializable{
 
-    public World world;
-    public Body b2body;
+    private static final String TAG = "Hero";
+    public transient World world;
+    public transient Body b2body;
 
-    public static Backpack backpack = new Backpack();
+    public Backpack backpack;
+    public Equipment eq;
+    public Vector2 position;
 
     public int experiece = 0;
     public int attack = 0;
     public int defense = 0;
     public int level = 0;
-    public Sprite currentSprite;
+    public transient Sprite currentSprite;
 
     private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
 
-    public Texture heroSheet;
-    public Animation<TextureRegion> walkAnimation;
-    public Animation<TextureRegion> walkLeftAnimation;
-    public Animation<TextureRegion> walkRightAnimation;
-    public Animation<TextureRegion> walkUpAnimation;
-    public Animation<TextureRegion> walkDownAnimation;
+    private transient Texture heroSheet;
+    public transient Animation<TextureRegion> walkAnimation;
+    public transient Animation<TextureRegion> walkLeftAnimation;
+    public transient Animation<TextureRegion> walkRightAnimation;
+    public transient Animation<TextureRegion> walkUpAnimation;
+    public transient Animation<TextureRegion> walkDownAnimation;
     public float stateTime;
     public boolean alive = true;
     public Direction direction = Direction.DOWN;
@@ -47,22 +55,28 @@ public class Hero{
     }
 
     public Hero(World world){
-        //Utility.loadTextureAsset(path);
         this.world = world;
         backpack = new Backpack();
+        eq = new Equipment();
     }
 
     public void setup(){
+        Utility ut = new Utility();
+        ut.manager.load(Utility.heroSheet);
+        ut.manager.finishLoading();
+        heroSheet = ut.manager.get(Utility.heroSheet);
+
+        currentSprite = new Sprite(heroSheet);
+        currentSprite.setSize(Gdx.graphics.getWidth()/ Constants.UNIT_SCALE, Gdx.graphics.getHeight()/ Constants.UNIT_SCALE);
+
         TextureRegion[][] tmp = TextureRegion.split(heroSheet, heroSheet.getWidth()/FRAME_COLS, heroSheet.getHeight()/FRAME_ROWS);
 
-        TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS*FRAME_ROWS];
         TextureRegion[] walkUpFrames = new TextureRegion[FRAME_ROWS];
         TextureRegion[] walkDownFrames = new TextureRegion[FRAME_ROWS];
         TextureRegion[] walkLeftFrames = new TextureRegion[FRAME_ROWS];
         TextureRegion[] walkRightFrames = new TextureRegion[FRAME_ROWS];
 
         int wd=0, wl=0, wu=0, wr=0;
-        walkFrames[0] = tmp[0][0];
 
         for(int i=0; i<FRAME_ROWS; i++){
             for(int j=0; j<FRAME_COLS; j++){
@@ -96,8 +110,8 @@ public class Hero{
         stateTime = 0f;
     }
 
-    public void defineBody(){
-        currentSprite.setPosition(16, 16);
+    public void defineBody(Vector2 position){
+        currentSprite.setPosition(position.x, position.y);
         BodyDef bdef = new BodyDef();
         bdef.position.set(currentSprite.getX(), currentSprite.getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -113,7 +127,9 @@ public class Hero{
         b2body.createFixture(fdef).setUserData("player");
         b2body.setLinearDamping(20f);
 
-        Gdx.app.debug("HERO", currentSprite.getWidth()+" "+currentSprite.getHeight());
+        Gdx.app.debug(TAG, currentSprite.getWidth()+" "+currentSprite.getHeight());
     }
+
+
 
 }

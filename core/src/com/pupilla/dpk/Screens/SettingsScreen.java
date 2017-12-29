@@ -12,10 +12,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.pupilla.dpk.Backend.SaveGame;
+import com.pupilla.dpk.Sprites.Hero;
 
 /**
  * Created by orzech on 26.12.2017.
@@ -25,16 +29,14 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
 
     private static final String TAG = "SettingsScreen";
     private Game game;
-    private int width, height;
     private ImageButton backbutton;
     private Stage stage;
     private Viewport viewport;
-    SpriteBatch spriteBatch;
+    private SpriteBatch spriteBatch;
+    private TextButton saveGame, exitGame;
 
     public SettingsScreen(Game game, int width, int height){
         this.game = game;
-        this.width = width;
-        this.height = height;
         spriteBatch = new SpriteBatch();
         viewport = new FitViewport(width, height, new OrthographicCamera());
         Texture back = new Texture(Gdx.files.internal("sprites/others/backarrow.png"));
@@ -43,6 +45,17 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
         backbutton = new ImageButton(drawableRegion);
         backbutton.setX(5);
         backbutton.setY(height-backbutton.getHeight()-5);
+
+        Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        saveGame = new TextButton("Save", skin);
+        saveGame.setHeight(60);
+        saveGame.setWidth(200);
+        saveGame.setPosition(width/2-(saveGame.getWidth()/2), height/2-(saveGame.getHeight()/2));
+
+        exitGame = new TextButton("Exit", skin);
+        exitGame.setHeight(60);
+        exitGame.setWidth(200);
+        exitGame.setPosition(saveGame.getX(), saveGame.getY()-saveGame.getHeight());
         addListeners();
     }
 
@@ -51,6 +64,8 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
         Gdx.app.debug(TAG, "show");
         stage = new Stage(viewport, spriteBatch);
         stage.addActor(backbutton);
+        stage.addActor(saveGame);
+        stage.addActor(exitGame);
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -74,6 +89,22 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
                 game.setScreen(PlayScreen.parent);
                 return true;
+            }
+        });
+
+        saveGame.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                SaveGame save = new SaveGame();
+                save.player();
+                save.backpack();
+            }
+        });
+
+        exitGame.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.app.exit();
             }
         });
     }

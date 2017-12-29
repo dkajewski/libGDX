@@ -9,7 +9,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -19,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
+import com.pupilla.dpk.Backend.LoadGame;
 import com.pupilla.dpk.Sprites.NPC;
 import com.pupilla.dpk.MapManager;
 import com.pupilla.dpk.PlayerController;
@@ -39,12 +39,14 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     public Game game;
     public Texture texture;
     public SpriteBatch spriteBatch;
-    public Hero player;
+    public static Hero player;
     public OrthographicCamera camera;
     public PlayerController controller;
     public Hud hud;
     public static Screen parent;
     //private Viewport gamePort;
+
+    boolean newGame;
 
     private String TESTMAP = "maps/testmap.tmx";
 
@@ -60,9 +62,9 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     private NPC npc;
 
     public static ArrayList<Item> spawnedItems = new ArrayList<Item>();
-
-    public PlayScreen(Game game){
-
+    public PlayScreen(Game game, boolean newGame){
+        spriteBatch = new SpriteBatch();
+        this.newGame = newGame;
         this.game = game;
         world = new World(new Vector2(0,0), false);
         world.setContactListener(new Collision());
@@ -70,30 +72,33 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         camera = new OrthographicCamera();
         mapManager = new MapManager(TESTMAP, world);
 
-        //textures loading
-        spriteBatch = new SpriteBatch();
-        Utility ut = new Utility();
-        ut.manager.load(Utility.heroSheet);
-        ut.manager.finishLoading();
-        texture = ut.manager.get(Utility.heroSheet);
-        player = new Hero(world);
-        player.heroSheet = texture;
-        player.setup();
-        player.currentSprite = new Sprite(texture);
-        player.currentSprite.setSize(Gdx.graphics.getWidth()/ Constants.UNIT_SCALE, Gdx.graphics.getHeight()/ Constants.UNIT_SCALE);
-        player.defineBody();
+        if(newGame){
+            // new game start
+            player = new Hero(world);
+            player.setup();
+            player.defineBody(new Vector2(16, 16));
+            spawnedItems = new ArrayList<Item>();
+        } else{
+            // loading game
+            LoadGame load = new LoadGame();
+            player = load.player();
+            player.world = world;
+            player.setup();
+            player.defineBody(new Vector2(player.position.x, player.position.y));
+            player.backpack.reloadTextures();
+            spawnedItems = new ArrayList<Item>();
+        }
 
         //testing npc and dialogues
         npc = new NPC("XML/NPC1.xml");
         npc.npcTexture = texture;
-        npc.setup();
-        npc.currentSprite = new Sprite(texture);
+        npc.setup(Utility.heroSheet);
         npc.currentSprite.setSize(Gdx.graphics.getWidth()/ Constants.UNIT_SCALE, Gdx.graphics.getHeight()/ Constants.UNIT_SCALE);
         npc.currentSprite.setPosition(240, 10);
 
         //testing items
-        Item item1 = new Item(10, 10, 10, 10, Constants.w1, player);
-        Item item2 = new Item(10, 10, 10, 10, Constants.w2, player);
+        Item item1 = new Item(10, 10, 10, Constants.w1, Item.Type.weapon);
+        Item item2 = new Item(10, 10, 10, Constants.w2, Item.Type.weapon);
         item1.spawnItem(new Vector2(250, 250));
         item2.spawnItem(new Vector2( 300, 300));
     }
@@ -109,7 +114,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
         renderer = mapManager.renderer;
 
-        hud = new Hud(width, height, game, player);
+        hud = new Hud(width, height, game);
 
         //input controller
         controller = new PlayerController(camera, player, hud);
@@ -180,7 +185,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        //player.currentSprite.setSize(Gdx.graphics.getWidth()/UNIT_SCALE, Gdx.graphics.getHeight()/UNIT_SCALE);
         // test in rendering item
         spawnItems();
         //end test in rendering item

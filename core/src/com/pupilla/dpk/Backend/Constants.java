@@ -1,5 +1,6 @@
 package com.pupilla.dpk.Backend;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
@@ -15,10 +16,10 @@ public class Constants {
     public static final int UNIT_SCALE = 32;
 
     // Textures constants
-    public static Texture w1 = new Texture("sprites/items/weapons/weapon1.png");
-    public static Texture w2 = new Texture("sprites/items/weapons/weapon2.png");
-    public static Texture w3 = new Texture("sprites/items/weapons/weapon3.png");
+    public static final String w1 = "sprites/items/weapons/weapon1.png";
+    public static final String w2 = "sprites/items/weapons/weapon2.png";
+    public static final String w3 = "sprites/items/weapons/weapon3.png";
 
-    public static Texture s1 = new Texture("sprites/items/shields/shield1.png");
+    public static final String s1 = "sprites/items/shields/shield1.png";
 
 }

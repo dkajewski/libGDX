@@ -1,5 +1,6 @@
 package com.pupilla.dpk.Backend;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by orzech on 19.08.2017.
  */
 
-public class Backpack {
+public class Backpack implements Serializable{
     public Item[] itemArr;
 
     public Backpack(){
@@ -26,5 +27,13 @@ public class Backpack {
 
     public void removeItem(int i){
         itemArr[i] = null;
+    }
+
+    public void reloadTextures(){
+        for(int i=0; i<itemArr.length; i++){
+            if(itemArr[i]!=null){
+                itemArr[i].makeTexture();
+            }
+        }
     }
 }

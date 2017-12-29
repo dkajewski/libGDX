@@ -43,6 +43,8 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
     private Backpack backpack;
     private int width, height;
 
+    private Image weapon, helmet, shield, armor, legs;
+
     //private ArrayList<Item> items = new ArrayList<Item>();
 
     public BackpackScreen(Game game, int width, int height){
@@ -64,7 +66,7 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         tasksbutton = new ImageButton(drawableRegion);
         tasksbutton.setX(width-tasksbutton.getWidth()-5);
         tasksbutton.setY(height-tasksbutton.getHeight()-5);
-        backpack = Hero.backpack;
+        backpack = PlayScreen.player.backpack;
         backpackSlots = new Image[backpack.itemArr.length];
 
     }
@@ -151,7 +153,25 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
     }
 
     private void drawBackpack(){
-        Texture cell = new Texture("sprites/others/backpackitemborder.png");
+        Texture cell = new Texture(Gdx.files.internal("sprites/others/backpackitemborder.png"));
+        weapon = new Image(cell);
+        shield = new Image(cell);
+        armor = new Image(cell);
+        legs = new Image(cell);
+        helmet = new Image(cell);
+
+        helmet.setX(width/2-16);                        helmet.setY(height-helmet.getHeight()-2);
+        armor.setX(width/2-16);                         armor.setY(helmet.getY()-helmet.getHeight()-4);
+        weapon.setX(armor.getX()-weapon.getWidth()-4);  weapon.setY(armor.getY());
+        shield.setX(armor.getX()+shield.getWidth()+4);  shield.setY(armor.getY());
+        legs.setX(width/2-16);                          legs.setY(armor.getY()-armor.getHeight()-4);
+
+        stage.addActor(helmet);
+        stage.addActor(shield);
+        stage.addActor(armor);
+        stage.addActor(weapon);
+        stage.addActor(legs);
+
         backpackSlots[6] = new Image(cell);
         backpackSlots[19] = new Image(cell);
         backpackSlots[32] = new Image(cell);

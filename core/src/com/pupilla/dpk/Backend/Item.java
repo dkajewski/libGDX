@@ -22,38 +22,47 @@ import com.badlogic.gdx.utils.Array;
 import com.pupilla.dpk.Screens.PlayScreen;
 import com.pupilla.dpk.Sprites.Hero;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by orzech on 12.08.2017.
  */
 
-public final class Item {
+public final class Item implements Serializable{
     private static final String TAG = "Item";
 
-    public int atk, def, int_, dmgbonus;
-    public Texture texture;
+    public int atk, def, dmgbonus;
+    public transient Texture texture;
     public Vector2 pos;
-    public Hero player;
-    public Body body;
+    public transient Body body;
 
-    public Fixture fixture;
+    public Type type;
 
-    public Item(int atk, int def, int int_, int dmgbonus, Texture texture, Hero player){
+    public transient Fixture fixture;
+
+    private String texturePath;
+
+    public enum Type{
+        weapon, shield, legs, armor, helmet
+    }
+
+    public Item(int atk, int def, int dmgbonus, String texturePath, Type type){
         this.atk = atk;
         this.def = def;
-        this.int_ = int_;
+        this.type = type;
         this.dmgbonus = dmgbonus;
-        this.texture = texture;
-        this.player = player;
+        this.texturePath = texturePath;
+        makeTexture();
     }
 
     public void spawnItem(Vector2 pos){
+        makeTexture();
         this.pos = pos;
         BodyDef bdef = new BodyDef();
         bdef.position.set(pos.x, pos.y);
         bdef.type = BodyDef.BodyType.StaticBody;
-        body = player.world.createBody(bdef);
+        body = PlayScreen.player.world.createBody(bdef);
 
         CircleShape shape = new CircleShape();
         shape.setRadius(10);
@@ -71,17 +80,23 @@ public final class Item {
     }
 
     public void addToBackpack(){
-        player.backpack.addItem(this);
+        PlayScreen.player.backpack.addItem(this);
         setCategoryFilter(Constants.BIT_COLLECTED);
         Gdx.app.debug(TAG, "item added");
         int index = PlayScreen.spawnedItems.indexOf(this);
         PlayScreen.spawnedItems.remove(index);
+
+        fixture = null;
     }
 
     private void setCategoryFilter(short bit){
         Filter filter = new Filter();
         filter.categoryBits = bit;
         fixture.setFilterData(filter);
+    }
+
+    public void makeTexture(){
+        texture = new Texture(Gdx.files.internal(texturePath));
     }
 
 }

@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.pupilla.dpk.Backend.SaveGame;
 import com.pupilla.dpk.PlayerController;
 import com.pupilla.dpk.Screens.BackpackScreen;
 import com.pupilla.dpk.Screens.PlayScreen;
@@ -31,32 +32,28 @@ public class Hud{
 
     public Stage stage;
     private Viewport viewport;
-    private Texture arrowup, arrowdown, arrowleft, arrowright, backpackimage, optionsimage;
-    private TextureRegion region;
     private TextureRegionDrawable drawableRegion;
     private ImageButton upbutton, downbutton, leftbutton, rightbutton, backpackbutton, optionsbutton;
-    public static boolean isTouched = false;
+    public boolean isTouched = false;
     public Hero.Direction direction;
     private Game game;
     private SpriteBatch spriteBatch;
     private int width, height;
-    private Hero player;
 
-    public Hud(int width, int height, Game game, Hero player){
+    public Hud(int width, int height, Game game){
         Gdx.app.debug("klik", width+ " "+height);
         this.game = game;
         this.spriteBatch = new SpriteBatch();
         this.width = width;
         this.height = height;
-        this.player = player;
-        arrowup = new Texture(Gdx.files.internal("sprites/others/arrowup.png"));
-        arrowdown = new Texture(Gdx.files.internal("sprites/others/arrowdown.png"));
-        arrowleft = new Texture(Gdx.files.internal("sprites/others/arrowleft.png"));
-        arrowright = new Texture(Gdx.files.internal("sprites/others/arrowright.png"));
-        backpackimage = new Texture(Gdx.files.internal("sprites/others/backpackimage.png"));
-        optionsimage = new Texture(Gdx.files.internal("sprites/others/optiongear.png"));
+        Texture arrowup = new Texture(Gdx.files.internal("sprites/others/arrowup.png"));
+        Texture arrowdown = new Texture(Gdx.files.internal("sprites/others/arrowdown.png"));
+        Texture arrowleft = new Texture(Gdx.files.internal("sprites/others/arrowleft.png"));
+        Texture arrowright = new Texture(Gdx.files.internal("sprites/others/arrowright.png"));
+        Texture backpackimage = new Texture(Gdx.files.internal("sprites/others/backpackimage.png"));
+        Texture optionsimage = new Texture(Gdx.files.internal("sprites/others/optiongear.png"));
 
-        region = new TextureRegion(arrowup);
+        TextureRegion region = new TextureRegion(arrowup);
         drawableRegion = new TextureRegionDrawable(region);
         upbutton = new ImageButton(drawableRegion);
 
