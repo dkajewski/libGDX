@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.pupilla.dpk.Backend.Constants;
 
 /**
  * Created by orzech on 03.09.2017.
@@ -47,7 +48,7 @@ public class TasksScreen extends ApplicationAdapter implements Screen {
         //lulz, without this line can't scroll
         Gdx.input.setInputProcessor(stage);
 
-        Skin uiSkin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        Skin uiSkin = new Skin(Gdx.files.internal(Constants.skin));
         TextButton tf = new TextButton("sss", uiSkin);
         TextButton tf1 = new TextButton("sss1sss1sss1sss1sss1sss1sss1sss1sss1sss1sss1", uiSkin);
         TextButton tf2 = new TextButton("sss2", uiSkin);

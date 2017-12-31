@@ -12,14 +12,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.Backend.Backpack;
+import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
 import com.pupilla.dpk.Sprites.Hero;
 
@@ -43,6 +46,8 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
     private Backpack backpack;
     private int width, height;
 
+    public static boolean refresh = false;
+
     private Image weapon, helmet, shield, armor, legs;
 
     //private ArrayList<Item> items = new ArrayList<Item>();
@@ -54,6 +59,13 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         this.height = height;
         this.spriteBatch = new SpriteBatch();
         viewport = new FitViewport(width, height, new OrthographicCamera());
+
+
+    }
+
+    @Override
+    public void show() {
+        Gdx.app.debug(TAG, "show backpack");
         Texture backbuttontexture = new Texture(Gdx.files.internal("sprites/others/backarrow.png"));
         region = new TextureRegion(backbuttontexture);
         drawableRegion = new TextureRegionDrawable(region);
@@ -69,11 +81,6 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         backpack = PlayScreen.player.backpack;
         backpackSlots = new Image[backpack.itemArr.length];
 
-    }
-
-    @Override
-    public void show() {
-        Gdx.app.debug(TAG, "show backpack");
         stage = new Stage(viewport, spriteBatch);
         stage.addActor(backbutton);
         stage.addActor(tasksbutton);
@@ -87,6 +94,10 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if(refresh){
+            show();
+            refresh = false;
+        }
         spriteBatch.begin();
         spriteBatch.end();
         stage.draw();
@@ -145,10 +156,29 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
                     @Override
                     public void clicked(InputEvent event, float x, float y){
                         Gdx.app.debug(TAG, "clicked " + index);
+                        ItemProperties ip = new ItemProperties(new Skin(Gdx.files.internal(Constants.skin)), backpack.itemArr[index]);
+                        ip.show(stage);
                     }
                 });
                 stage.addActor(button);
             }
+        }
+
+        // create EQ items buttons
+        if(PlayScreen.player.eq.weapon != null){
+            region = new TextureRegion(PlayScreen.player.eq.weapon.texture);
+            drawableRegion = new TextureRegionDrawable(region);
+            ImageButton weaponbtn = new ImageButton(drawableRegion);
+            final Item.Type type = Item.Type.weapon;
+            weaponbtn.setX(weapon.getX());     weaponbtn.setY(weapon.getY());
+            weaponbtn.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y){
+                    Gdx.app.debug(TAG, "Clicked ");
+                }
+            });
+            Gdx.app.debug(TAG, "ejo 2");
+            stage.addActor(weaponbtn);
         }
     }
 

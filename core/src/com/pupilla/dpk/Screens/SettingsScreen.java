@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.SaveGame;
 import com.pupilla.dpk.Sprites.Hero;
 
@@ -46,7 +47,7 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
         backbutton.setX(5);
         backbutton.setY(height-backbutton.getHeight()-5);
 
-        Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        Skin skin = new Skin(Gdx.files.internal(Constants.skin));
         saveGame = new TextButton("Save", skin);
         saveGame.setHeight(60);
         saveGame.setWidth(200);

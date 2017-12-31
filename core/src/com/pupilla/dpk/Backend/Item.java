@@ -24,6 +24,7 @@ import com.pupilla.dpk.Sprites.Hero;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by orzech on 12.08.2017.
@@ -32,7 +33,8 @@ import java.util.ArrayList;
 public final class Item implements Serializable{
     private static final String TAG = "Item";
 
-    public int atk, def, dmgbonus;
+    public String name;
+    public int atk, def, dmgbonus, level;
     public transient Texture texture;
     public Vector2 pos;
     public transient Body body;
@@ -47,12 +49,11 @@ public final class Item implements Serializable{
         weapon, shield, legs, armor, helmet
     }
 
-    public Item(int atk, int def, int dmgbonus, String texturePath, Type type){
-        this.atk = atk;
-        this.def = def;
+    public Item(String name, int level, String texturePath, Type type){
+        this.name = name;
         this.type = type;
-        this.dmgbonus = dmgbonus;
         this.texturePath = texturePath;
+        setStats();
         makeTexture();
     }
 
@@ -99,4 +100,62 @@ public final class Item implements Serializable{
         texture = new Texture(Gdx.files.internal(texturePath));
     }
 
+    private void setStats(){
+        switch(type){
+            case weapon:
+                setWeaponStats();
+                break;
+            case armor:
+                setArmorStats();
+                break;
+            case shield:
+                setShieldStats();
+                break;
+            case legs:
+                setLegsStats();
+                break;
+            case helmet:
+                setHelmetStats();
+                break;
+        }
+    }
+
+    private void setWeaponStats(){
+        Random r = new Random();
+        switch(level){
+            case 0:
+                atk = r.nextInt(5)+1;
+                def = r.nextInt(3);
+                dmgbonus = r.nextInt(2);
+                break;
+        }
+    }
+
+    private void setArmorStats(){
+        switch(level){
+            case 0:
+                break;
+        }
+    }
+
+    private void setShieldStats(){
+        switch(level){
+            case 0:
+                break;
+        }
+    }
+
+    private void setHelmetStats(){
+        switch(level){
+            case 0:
+                break;
+        }
+    }
+
+    private void setLegsStats(){
+        switch(level){
+            case 0:
+                break;
+        }
+    }
 }

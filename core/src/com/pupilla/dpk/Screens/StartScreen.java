@@ -6,18 +6,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.pupilla.dpk.Backend.Constants;
 
 /**
  * Created by orzech on 25.12.2017.
@@ -27,7 +24,6 @@ public class StartScreen extends ApplicationAdapter implements Screen {
 
     private static final String TAG = "StartScreen";
     private Game game;
-    private int width=640, height;
     private Stage stage;
     private Viewport viewport;
     private SpriteBatch batch;
@@ -37,11 +33,11 @@ public class StartScreen extends ApplicationAdapter implements Screen {
         Gdx.app.debug(TAG, "hello");
         this.game = game;
         batch = new SpriteBatch();
-        height = (width*Gdx.graphics.getHeight())/Gdx.graphics.getWidth();
+        int width = 640;
+        int height = (width*Gdx.graphics.getHeight())/Gdx.graphics.getWidth();
         viewport = new FitViewport(width, height, new OrthographicCamera());
-        Skin skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        Skin skin = new Skin(Gdx.files.internal(Constants.skin));
         startGame = new TextButton("Start", skin);
-        //startGame.getLabel().setFontScale(2, 2);
         startGame.setHeight(60);
         startGame.setWidth(200);
         startGame.setPosition(width/2-(startGame.getWidth()/2), height/2-(startGame.getHeight()/2));

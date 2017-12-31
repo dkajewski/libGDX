@@ -39,7 +39,7 @@ public class BackpackTest {
         World world = new World(new Vector2(0,0), false);
         Hero player = new Hero(world);
 
-        Item item = new Item(10, 10, 10, texturePath, Item.Type.weapon);
+        Item item = new Item(Constants.weapon1, 0, texturePath, Item.Type.weapon);
         Backpack bp = new Backpack();
         boolean output = bp.addItem(item);
 

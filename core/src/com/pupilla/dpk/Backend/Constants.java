@@ -22,4 +22,18 @@ public class Constants {
 
     public static final String s1 = "sprites/items/shields/shield1.png";
 
+
+    //skin
+    public static final String skin = "data/skin/skin.json";
+    public static final String font = "data/skin/worksans.fnt";
+
+    // items names
+    public static final String weapon1 = "Stalowy miecz";
+    public static final String weapon2 = "Dzida";
+
+    // commands
+    public static final String takeOn = "Załóż";
+    public static final String throwOut = "Wyrzuć";
+    public static final String close = "Zamknij";
+
 }

@@ -97,8 +97,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         npc.currentSprite.setPosition(240, 10);
 
         //testing items
-        Item item1 = new Item(10, 10, 10, Constants.w1, Item.Type.weapon);
-        Item item2 = new Item(10, 10, 10, Constants.w2, Item.Type.weapon);
+        Item item1 = new Item(Constants.weapon1,0, Constants.w1, Item.Type.weapon);
+        Item item2 = new Item(Constants.weapon2, 0, Constants.w2, Item.Type.weapon);
         item1.spawnItem(new Vector2(250, 250));
         item2.spawnItem(new Vector2( 300, 300));
     }
