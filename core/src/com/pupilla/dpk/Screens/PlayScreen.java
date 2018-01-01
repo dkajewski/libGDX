@@ -9,6 +9,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -192,9 +193,9 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         spriteBatch.draw(npc.walkAnimation.getKeyFrame(npc.stateTime, false), npc.currentSprite.getX(), npc.currentSprite.getY());
         spriteBatch.draw(currentFrame, player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
         spriteBatch.end();
-        hud.stage.draw();
         spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
-        super.render();
+        hud.stage.draw();
+        //super.render();
         //Gdx.app.debug("klik", player.currentSprite.getX()+" "+player.currentSprite.getY());
     }
 
@@ -225,10 +226,15 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         //game.resume();
     }
 
-    public void spawnItems(){
+    private void spawnItems(){
         for(int i=0; i<spawnedItems.size(); i++){
             spriteBatch.draw(spawnedItems.get(i).texture, spawnedItems.get(i).pos.x-(spawnedItems.get(i).texture.getWidth()/2),
                     spawnedItems.get(i).pos.y-(spawnedItems.get(i).texture.getHeight()/2));
         }
+    }
+
+    private float getHealthbarWidth(){
+        //Gdx.app.debug(TAG, (player.currentHealth/player.health * 96)+"");
+        return player.currentHealth/player.health * 96;
     }
 }

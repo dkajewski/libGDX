@@ -1,4 +1,4 @@
-package com.pupilla.dpk.Screens;
+package com.pupilla.dpk.Scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -7,8 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.pupilla.dpk.Backend.Backpack;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
+import com.pupilla.dpk.Screens.BackpackScreen;
+import com.pupilla.dpk.Screens.PlayScreen;
 
 import java.util.Arrays;
 
@@ -33,31 +36,37 @@ public class ItemProperties extends Dialog{
     protected void result(Object object){
         if(object!=null){
             int action = (Integer) object;
+            int a = Arrays.asList(PlayScreen.player.backpack.itemArr).indexOf(item);
             switch(action){
                 case 0:
-                    int a = Arrays.asList(PlayScreen.player.backpack.itemArr).indexOf(item);
                     switch(item.type){
                         case weapon:
+                            PlayScreen.player.backpack.itemArr[a] = PlayScreen.player.eq.weapon;
                             PlayScreen.player.eq.weapon = item;
                             break;
                         case shield:
+                            PlayScreen.player.backpack.itemArr[a] = PlayScreen.player.eq.shield;
                             PlayScreen.player.eq.shield = item;
                             break;
                         case armor:
+                            PlayScreen.player.backpack.itemArr[a] = PlayScreen.player.eq.armor;
                             PlayScreen.player.eq.armor = item;
                             break;
                         case helmet:
+                            PlayScreen.player.backpack.itemArr[a] = PlayScreen.player.eq.helmet;
                             PlayScreen.player.eq.helmet = item;
                             break;
                         case legs:
+                            PlayScreen.player.backpack.itemArr[a] = PlayScreen.player.eq.legs;
                             PlayScreen.player.eq.legs = item;
                             break;
                     }
-                    PlayScreen.player.backpack.removeItem(a);
                     BackpackScreen.refresh = true;
                     remove();
                     break;
                 case 1:
+                    PlayScreen.player.backpack.removeItem(a);
+                    BackpackScreen.refresh = true;
                     remove();
                     break;
                 case 2:
@@ -156,15 +165,15 @@ public class ItemProperties extends Dialog{
         Label.LabelStyle redFont = new Label.LabelStyle(bf, Color.RED);
         float scale = 0.75f;
 
-        Label attack = new Label("Atak: ", skin);
-        Label defense = new Label("Obrona: ", skin);
-        Label bonus = new Label("Bonus: ", skin);
+        Label attack = new Label(Constants.attack+": ", skin);
+        Label defense = new Label(Constants.defense+": ", skin);
+        Label bonus = new Label(Constants.bonus+": ", skin);
 
         attack.setFontScale(scale);
         defense.setFontScale(scale);
         bonus.setFontScale(scale);
+        difference = item.atk-a;
         if(item.atk>0){
-            difference = item.atk-a;
             table.add(attack);
             table.add(new Label(item.atk+" ", skin));
             if(difference>0){
@@ -173,11 +182,18 @@ public class ItemProperties extends Dialog{
             }else if(difference<0){
                 table.add(new Label(difference+"", redFont));
                 table.row();
+            }else{
+                table.row();
             }
+        }else if(item.atk==0 && a>0){
+            table.add(attack);
+            table.add(new Label(item.atk+" ", skin));
+            table.add(new Label(difference+"", redFont));
+            table.row();
         }
 
+        difference = item.def-d;
         if(item.def>0){
-            difference = item.def-d;
             table.add(defense);
             table.add(new Label(item.def+" ", skin));
             if(difference>0){
@@ -186,11 +202,18 @@ public class ItemProperties extends Dialog{
             }else if(difference<0){
                 table.add(new Label(difference+"", redFont));
                 table.row();
+            }else{
+                table.row();
             }
+        }else if(item.def==0 && d>0){
+            table.add(defense);
+            table.add(new Label(item.def+" ", skin));
+            table.add(new Label(difference+"", redFont));
+            table.row();
         }
 
+        difference = item.dmgbonus-b;
         if(item.dmgbonus>0){
-            difference = item.dmgbonus-b;
             table.add(bonus);
             table.add(new Label(item.dmgbonus+" ", skin));
             if(difference>0){
@@ -202,6 +225,11 @@ public class ItemProperties extends Dialog{
             }else{
                 table.row();
             }
+        }else if(item.dmgbonus==0 && b>0){
+            table.add(bonus);
+            table.add(new Label(item.dmgbonus+" ", skin));
+            table.add(new Label(difference+"", redFont));
+            table.row();
         }
     }
 }

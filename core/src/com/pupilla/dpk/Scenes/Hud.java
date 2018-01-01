@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -34,6 +35,7 @@ public class Hud{
     private Viewport viewport;
     private TextureRegionDrawable drawableRegion;
     private ImageButton upbutton, downbutton, leftbutton, rightbutton, backpackbutton, optionsbutton;
+    public ImageButton healthbutton;
     public boolean isTouched = false;
     public Hero.Direction direction;
     private Game game;
@@ -52,6 +54,7 @@ public class Hud{
         Texture arrowright = new Texture(Gdx.files.internal("sprites/others/arrowright.png"));
         Texture backpackimage = new Texture(Gdx.files.internal("sprites/others/backpackimage.png"));
         Texture optionsimage = new Texture(Gdx.files.internal("sprites/others/optiongear.png"));
+        Texture healthbar = new Texture(Gdx.files.internal("sprites/others/healthbar.png"));
 
         TextureRegion region = new TextureRegion(arrowup);
         drawableRegion = new TextureRegionDrawable(region);
@@ -77,6 +80,10 @@ public class Hud{
         drawableRegion = new TextureRegionDrawable(region);
         optionsbutton = new ImageButton(drawableRegion);
 
+        region = new TextureRegion(healthbar);
+        drawableRegion = new TextureRegionDrawable(region);
+        healthbutton = new ImageButton(drawableRegion);
+
         viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
         upbutton.setX(86);      upbutton.setY(86);
@@ -85,6 +92,7 @@ public class Hud{
         rightbutton.setX(150);  rightbutton.setY(22);
         backpackbutton.setX(22);backpackbutton.setY(height-backpackbutton.getHeight()-22);
         optionsbutton.setX(width-optionsbutton.getWidth()-22); optionsbutton.setY(height-optionsbutton.getHeight()-22);
+        healthbutton.setX((width/2)-(healthbutton.getWidth()/2));   healthbutton.setY(height-healthbutton.getHeight());
 
         stage.addActor(upbutton);
         stage.addActor(downbutton);
@@ -92,6 +100,7 @@ public class Hud{
         stage.addActor(rightbutton);
         stage.addActor(backpackbutton);
         stage.addActor(optionsbutton);
+        stage.addActor(healthbutton);
         addListeners();
         Gdx.input.setInputProcessor(stage);
     }

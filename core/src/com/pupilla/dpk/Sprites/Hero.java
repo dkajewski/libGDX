@@ -36,6 +36,9 @@ public class Hero implements Serializable{
     public int attack = 0;
     public int defense = 0;
     public int level = 0;
+    public int gold = 0;
+    public int health;
+    public int currentHealth;
     public transient Sprite currentSprite;
 
     private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
@@ -58,6 +61,8 @@ public class Hero implements Serializable{
         this.world = world;
         backpack = new Backpack();
         eq = new Equipment();
+        health = 150;
+        currentHealth = health;
     }
 
     public void setup(){

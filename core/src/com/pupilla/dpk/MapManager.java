@@ -33,14 +33,17 @@ public class MapManager {
     private static final String MAP_PORTAL = "MAP_PORTAL";
 
 
-    private TmxMapLoader mapLoader = new TmxMapLoader();
+    private TmxMapLoader mapLoader;
     private TiledMap map = new TiledMap();
     public OrthogonalTiledMapRenderer renderer;
     private World world;
 
     public MapManager(String mapPath, World world){
         this.world = world;
-        map = mapLoader.load(mapPath);
+        TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
+        params.generateMipMaps = true;
+        mapLoader = new TmxMapLoader();
+        map = mapLoader.load(mapPath, params);
         renderer = new OrthogonalTiledMapRenderer(map);
 
         BodyDef bdef = new BodyDef();

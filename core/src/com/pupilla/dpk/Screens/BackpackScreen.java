@@ -7,26 +7,22 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.Backend.Backpack;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
-import com.pupilla.dpk.Sprites.Hero;
-
-import java.util.ArrayList;
+import com.pupilla.dpk.Scenes.EquippedItemProperties;
+import com.pupilla.dpk.Scenes.ItemProperties;
 
 /**
  * Created by orzech on 13.08.2017.
@@ -169,16 +165,71 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
             region = new TextureRegion(PlayScreen.player.eq.weapon.texture);
             drawableRegion = new TextureRegionDrawable(region);
             ImageButton weaponbtn = new ImageButton(drawableRegion);
-            final Item.Type type = Item.Type.weapon;
             weaponbtn.setX(weapon.getX());     weaponbtn.setY(weapon.getY());
             weaponbtn.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y){
-                    Gdx.app.debug(TAG, "Clicked ");
+                    EquippedItemProperties eip = new EquippedItemProperties(new Skin(Gdx.files.internal(Constants.skin)), PlayScreen.player.eq.weapon);
+                    eip.show(stage);
                 }
             });
-            Gdx.app.debug(TAG, "ejo 2");
             stage.addActor(weaponbtn);
+        }
+        if(PlayScreen.player.eq.armor != null){
+            region = new TextureRegion(PlayScreen.player.eq.armor.texture);
+            drawableRegion = new TextureRegionDrawable(region);
+            ImageButton armorbtn = new ImageButton(drawableRegion);
+            armorbtn.setX(armor.getX());     armorbtn.setY(armor.getY());
+            armorbtn.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y){
+                    EquippedItemProperties eip = new EquippedItemProperties(new Skin(Gdx.files.internal(Constants.skin)), PlayScreen.player.eq.armor);
+                    eip.show(stage);
+                }
+            });
+            stage.addActor(armorbtn);
+        }
+        if(PlayScreen.player.eq.shield != null){
+            region = new TextureRegion(PlayScreen.player.eq.shield.texture);
+            drawableRegion = new TextureRegionDrawable(region);
+            ImageButton shieldbtn = new ImageButton(drawableRegion);
+            shieldbtn.setX(shield.getX());     shieldbtn.setY(shield.getY());
+            shieldbtn.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y){
+                    EquippedItemProperties eip = new EquippedItemProperties(new Skin(Gdx.files.internal(Constants.skin)), PlayScreen.player.eq.shield);
+                    eip.show(stage);
+                }
+            });
+            stage.addActor(shieldbtn);
+        }
+        if(PlayScreen.player.eq.helmet != null){
+            region = new TextureRegion(PlayScreen.player.eq.helmet.texture);
+            drawableRegion = new TextureRegionDrawable(region);
+            ImageButton helmetbtn = new ImageButton(drawableRegion);
+            helmetbtn.setX(helmet.getX());     helmetbtn.setY(helmet.getY());
+            helmetbtn.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y){
+                    EquippedItemProperties eip = new EquippedItemProperties(new Skin(Gdx.files.internal(Constants.skin)), PlayScreen.player.eq.helmet);
+                    eip.show(stage);
+                }
+            });
+            stage.addActor(helmetbtn);
+        }
+        if(PlayScreen.player.eq.legs != null){
+            region = new TextureRegion(PlayScreen.player.eq.helmet.texture);
+            drawableRegion = new TextureRegionDrawable(region);
+            ImageButton legsbtn = new ImageButton(drawableRegion);
+            legsbtn.setX(legs.getX());     legsbtn.setY(legs.getY());
+            legsbtn.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y){
+                    EquippedItemProperties eip = new EquippedItemProperties(new Skin(Gdx.files.internal(Constants.skin)), PlayScreen.player.eq.legs);
+                    eip.show(stage);
+                }
+            });
+            stage.addActor(legsbtn);
         }
     }
 
