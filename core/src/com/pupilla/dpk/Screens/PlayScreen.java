@@ -6,16 +6,19 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
@@ -37,17 +40,20 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
     private static final String TAG = "PlayScreen";
 
-    public Game game;
+    private Game game;
     public Texture texture;
-    public SpriteBatch spriteBatch;
+    private SpriteBatch spriteBatch;
     public static Hero player;
-    public OrthographicCamera camera;
-    public PlayerController controller;
-    public Hud hud;
+    private OrthographicCamera camera;
+    private PlayerController controller;
+    private Hud hud;
     public static Screen parent;
     //private Viewport gamePort;
 
     boolean newGame;
+
+    public static float _3s = 0f;
+    public static boolean afterPotion = false;
 
     private String TESTMAP = "maps/testmap.tmx";
 
@@ -61,6 +67,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     private int height;
 
     private NPC npc;
+
+    private BitmapFont bf;
 
     public static ArrayList<Item> spawnedItems = new ArrayList<Item>();
     public PlayScreen(Game game, boolean newGame){
@@ -89,6 +97,10 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             player.backpack.reloadTextures();
             spawnedItems = new ArrayList<Item>();
         }
+
+        bf = new BitmapFont(Gdx.files.internal(Constants.font));
+        bf.getData().setScale(0.5f);
+        //Label.LabelStyle whiteFont = new Label.LabelStyle(bf, Color.WHITE);
 
         //testing npc and dialogues
         npc = new NPC("XML/NPC1.xml");
@@ -192,11 +204,19 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
         spriteBatch.draw(npc.walkAnimation.getKeyFrame(npc.stateTime, false), npc.currentSprite.getX(), npc.currentSprite.getY());
         spriteBatch.draw(currentFrame, player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
+
+        if(afterPotion){
+            _3s += delta;
+            bf.draw(spriteBatch, "+"+player.healed, player.b2body.getPosition().x-16, player.b2body.getPosition().y+30);
+            if(_3s>=3){
+                afterPotion=false;
+            }
+        }
         spriteBatch.end();
         spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.health.setWidth(getHealthbarWidth());
         hud.stage.draw();
         //super.render();
-        //Gdx.app.debug("klik", player.currentSprite.getX()+" "+player.currentSprite.getY());
     }
 
     @Override
@@ -223,7 +243,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     @Override
     public void resume(){
         Gdx.app.debug(TAG, "resume");
-        //game.resume();
     }
 
     private void spawnItems(){
@@ -234,7 +253,10 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     }
 
     private float getHealthbarWidth(){
-        //Gdx.app.debug(TAG, (player.currentHealth/player.health * 96)+"");
-        return player.currentHealth/player.health * 96;
+        return (player.currentHealth*96.0f)/player.maxHealth *1.0f;
+    }
+
+    private void showLabel(){
+
     }
 }

@@ -2,24 +2,23 @@ package com.pupilla.dpk.Scenes;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.pupilla.dpk.Backend.SaveGame;
-import com.pupilla.dpk.PlayerController;
+import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Screens.BackpackScreen;
 import com.pupilla.dpk.Screens.PlayScreen;
 import com.pupilla.dpk.Screens.SettingsScreen;
@@ -31,21 +30,21 @@ import com.pupilla.dpk.Sprites.Hero;
 
 public class Hud{
 
+    private static final String TAG = "Hud";
     public Stage stage;
-    private Viewport viewport;
-    private TextureRegionDrawable drawableRegion;
-    private ImageButton upbutton, downbutton, leftbutton, rightbutton, backpackbutton, optionsbutton;
-    public ImageButton healthbutton;
+    private ImageButton upbutton, downbutton, leftbutton, rightbutton, backpackbutton, optionsbutton, potionbutton;
     public boolean isTouched = false;
     public Hero.Direction direction;
     private Game game;
-    private SpriteBatch spriteBatch;
     private int width, height;
 
+    public Image health;
+
+    private Label potions;
+
     public Hud(int width, int height, Game game){
-        Gdx.app.debug("klik", width+ " "+height);
+        Gdx.app.debug(TAG, width+ " "+height);
         this.game = game;
-        this.spriteBatch = new SpriteBatch();
         this.width = width;
         this.height = height;
         Texture arrowup = new Texture(Gdx.files.internal("sprites/others/arrowup.png"));
@@ -55,9 +54,11 @@ public class Hud{
         Texture backpackimage = new Texture(Gdx.files.internal("sprites/others/backpackimage.png"));
         Texture optionsimage = new Texture(Gdx.files.internal("sprites/others/optiongear.png"));
         Texture healthbar = new Texture(Gdx.files.internal("sprites/others/healthbar.png"));
+        Texture potion = new Texture(Gdx.files.internal("sprites/others/potion.png"));
+        health = new Image(new Texture(Gdx.files.internal(Constants.health)));
 
         TextureRegion region = new TextureRegion(arrowup);
-        drawableRegion = new TextureRegionDrawable(region);
+        TextureRegionDrawable drawableRegion = new TextureRegionDrawable(region);
         upbutton = new ImageButton(drawableRegion);
 
         region = new TextureRegion(arrowdown);
@@ -82,10 +83,14 @@ public class Hud{
 
         region = new TextureRegion(healthbar);
         drawableRegion = new TextureRegionDrawable(region);
-        healthbutton = new ImageButton(drawableRegion);
+        ImageButton healthbutton = new ImageButton(drawableRegion);
 
-        viewport = new FitViewport(width, height, new OrthographicCamera());
-        stage = new Stage(viewport, spriteBatch);
+        region = new TextureRegion(potion);
+        drawableRegion = new TextureRegionDrawable(region);
+        potionbutton = new ImageButton(drawableRegion);
+
+        Viewport viewport = new FitViewport(width, height, new OrthographicCamera());
+        stage = new Stage(viewport, new SpriteBatch());
         upbutton.setX(86);      upbutton.setY(86);
         downbutton.setX(86);    downbutton.setY(22);
         leftbutton.setX(22);    leftbutton.setY(22);
@@ -93,6 +98,17 @@ public class Hud{
         backpackbutton.setX(22);backpackbutton.setY(height-backpackbutton.getHeight()-22);
         optionsbutton.setX(width-optionsbutton.getWidth()-22); optionsbutton.setY(height-optionsbutton.getHeight()-22);
         healthbutton.setX((width/2)-(healthbutton.getWidth()/2));   healthbutton.setY(height-healthbutton.getHeight());
+        potionbutton.setX(width-potionbutton.getWidth()-22); potionbutton.setY(height/2);
+
+        health.setX(healthbutton.getX()+2);
+        health.setY(healthbutton.getY()+2);
+        Gdx.app.debug(TAG, health.getWidth()+"");
+
+        BitmapFont bf = new BitmapFont(Gdx.files.internal(Constants.font));
+        Label.LabelStyle whiteFont = new Label.LabelStyle(bf, Color.WHITE);
+        potions = new Label(PlayScreen.player.potioncount+"", whiteFont);
+        potions.setFontScale(0.5f);
+        setPotionsLabelPos();
 
         stage.addActor(upbutton);
         stage.addActor(downbutton);
@@ -100,7 +116,10 @@ public class Hud{
         stage.addActor(rightbutton);
         stage.addActor(backpackbutton);
         stage.addActor(optionsbutton);
+        stage.addActor(health);
         stage.addActor(healthbutton);
+        stage.addActor(potionbutton);
+        stage.addActor(potions);
         addListeners();
         Gdx.input.setInputProcessor(stage);
     }
@@ -184,8 +203,32 @@ public class Hud{
                 return true;
             }
         });
+
+        potionbutton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                PlayScreen.player.usePotion();
+                setPotionsLabelPos();
+            }
+        });
     }
 
+    private void setPotionsLabelPos(){
+        potions.setText(PlayScreen.player.potioncount+"");
+        potions.setAlignment(Align.center);
+        if(PlayScreen.player.potioncount>=0 && PlayScreen.player.potioncount<10){
+            potions.setX(potionbutton.getX()+6);
+            potions.setY(potionbutton.getY()+potionbutton.getHeight()/2+6);
+        }else if(PlayScreen.player.potioncount>=10 && PlayScreen.player.potioncount<20) {
+            potions.setX(potionbutton.getX()-5);
+            potions.setY(potionbutton.getY()+potionbutton.getHeight()/2+6);
+        }else if(PlayScreen.player.potioncount>=20 && PlayScreen.player.potioncount<100) {
+            potions.setX(potionbutton.getX()-6);
+            potions.setY(potionbutton.getY()+potionbutton.getHeight()/2+6);
+        }else if(PlayScreen.player.potioncount>=100){
+            potions.setX(potionbutton.getX()-10);
+            potions.setY(potionbutton.getY()+potionbutton.getHeight()/2+6);
+        }
 
-
+    }
 }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.pupilla.dpk.Screens.PlayScreen;
 
 /**
  * Created by orzech on 18.12.2017.
@@ -31,6 +32,8 @@ public class Collision implements ContactListener {
             if(object.getUserData() instanceof Item){
                 Gdx.app.debug(TAG, "item collision");
                 ((Item) object.getUserData()).addToBackpack();
+                // test in resizing healthbar!!!
+                PlayScreen.player.currentHealth = PlayScreen.player.currentHealth/2;
             }
         }
 

@@ -14,9 +14,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.Backpack;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Equipment;
+import com.pupilla.dpk.Screens.PlayScreen;
 import com.pupilla.dpk.Utility;
 
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * Created by Damian on 30.04.2017.
@@ -35,11 +37,14 @@ public class Hero implements Serializable{
     public int experiece = 0;
     public int attack = 0;
     public int defense = 0;
-    public int level = 0;
+    public int level = 1;
     public int gold = 0;
-    public int health;
+    public int potioncount;
+    public int maxHealth;
     public int currentHealth;
     public transient Sprite currentSprite;
+
+    public int healed = 0;
 
     private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
 
@@ -61,8 +66,9 @@ public class Hero implements Serializable{
         this.world = world;
         backpack = new Backpack();
         eq = new Equipment();
-        health = 150;
-        currentHealth = health;
+        maxHealth = 150;
+        currentHealth = maxHealth;
+        potioncount = 5;
     }
 
     public void setup(){
@@ -135,6 +141,30 @@ public class Hero implements Serializable{
         Gdx.app.debug(TAG, currentSprite.getWidth()+" "+currentSprite.getHeight());
     }
 
+    public void usePotion(){
+        if(potioncount>0){
+            double heal = 0.33*maxHealth;
+            double bonus = bonusHealing();
 
+            if(currentHealth!=maxHealth){
+                potioncount--;
+                if((int)(currentHealth+heal+bonus)>maxHealth){
+                    healed = maxHealth-currentHealth;
+                    currentHealth=maxHealth;
+                }else{
+                    healed = (int)(heal+bonus);
+                    currentHealth = (int)(currentHealth+heal+bonus);
+                }
+                PlayScreen.afterPotion = true;
+                PlayScreen._3s = 0f;
+            }
+        }
+    }
+
+    private int bonusHealing(){
+        Random r = new Random();
+        int percent = (int)(0.1*maxHealth);
+        return r.nextInt(2*percent)-percent;
+    }
 
 }
