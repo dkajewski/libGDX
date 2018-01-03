@@ -40,7 +40,7 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
         this.game = game;
         spriteBatch = new SpriteBatch();
         viewport = new FitViewport(width, height, new OrthographicCamera());
-        Texture back = new Texture(Gdx.files.internal("sprites/others/backarrow.png"));
+        Texture back = new Texture(Gdx.files.internal(Constants.backArrow));
         TextureRegion region = new TextureRegion(back);
         TextureRegionDrawable drawableRegion = new TextureRegionDrawable(region);
         backbutton = new ImageButton(drawableRegion);
@@ -48,12 +48,12 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
         backbutton.setY(height-backbutton.getHeight()-5);
 
         Skin skin = new Skin(Gdx.files.internal(Constants.skin));
-        saveGame = new TextButton("Save", skin);
+        saveGame = new TextButton(Constants.save, skin);
         saveGame.setHeight(60);
         saveGame.setWidth(200);
         saveGame.setPosition(width/2-(saveGame.getWidth()/2), height/2-(saveGame.getHeight()/2));
 
-        exitGame = new TextButton("Exit", skin);
+        exitGame = new TextButton(Constants.exit, skin);
         exitGame.setHeight(60);
         exitGame.setWidth(200);
         exitGame.setPosition(saveGame.getX(), saveGame.getY()-saveGame.getHeight());

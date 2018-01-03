@@ -38,6 +38,7 @@ public class Hero implements Serializable{
     public int attack = 0;
     public int defense = 0;
     public int level = 1;
+    public int skillPoints = 0;
     public int gold = 0;
     public int potioncount;
     public int maxHealth;
@@ -165,6 +166,15 @@ public class Hero implements Serializable{
         Random r = new Random();
         int percent = (int)(0.1*maxHealth);
         return r.nextInt(2*percent)-percent;
+    }
+
+    public int getMinDamage(){
+
+        return 1;
+    }
+
+    public int getMaxDamage(){
+        return 3;
     }
 
 }

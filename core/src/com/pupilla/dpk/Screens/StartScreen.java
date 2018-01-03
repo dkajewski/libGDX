@@ -30,19 +30,19 @@ public class StartScreen extends ApplicationAdapter implements Screen {
     private TextButton startGame, loadGame;
 
     public StartScreen(Game game){
-        Gdx.app.debug(TAG, "hello");
+        Gdx.app.debug(TAG, "hello world");
         this.game = game;
         batch = new SpriteBatch();
         int width = 640;
         int height = (width*Gdx.graphics.getHeight())/Gdx.graphics.getWidth();
         viewport = new FitViewport(width, height, new OrthographicCamera());
         Skin skin = new Skin(Gdx.files.internal(Constants.skin));
-        startGame = new TextButton("Start", skin);
+        startGame = new TextButton(Constants.start, skin);
         startGame.setHeight(60);
         startGame.setWidth(200);
         startGame.setPosition(width/2-(startGame.getWidth()/2), height/2-(startGame.getHeight()/2));
 
-        loadGame = new TextButton("Load", skin);
+        loadGame = new TextButton(Constants.load, skin);
         loadGame.setHeight(60);
         loadGame.setWidth(200);
         loadGame.setPosition(startGame.getX(), startGame.getY()-startGame.getHeight());

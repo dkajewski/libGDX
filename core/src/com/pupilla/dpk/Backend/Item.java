@@ -123,7 +123,7 @@ public final class Item implements Serializable{
     private void setWeaponStats(){
         Random r = new Random();
         switch(level){
-            case 0:
+            case 0:default:
                 atk = r.nextInt(5)+1;
                 def = r.nextInt(3);
                 dmgbonus = r.nextInt(2);
@@ -132,29 +132,45 @@ public final class Item implements Serializable{
     }
 
     private void setArmorStats(){
+        Random r = new Random();
         switch(level){
-            case 0:
+            case 0:default:
+                atk = 0;
+                def = r.nextInt(4)+3;
+                dmgbonus = r.nextInt(3);
                 break;
         }
     }
 
     private void setShieldStats(){
+        Random r = new Random();
         switch(level){
-            case 0:
+            case 0:default:
+                atk = 0;
+                def = r.nextInt(7)+2;
+                dmgbonus = 0;
                 break;
         }
     }
 
     private void setHelmetStats(){
+        Random r = new Random();
         switch(level){
-            case 0:
+            case 0:default:
+                atk = 0;
+                def = r.nextInt(3)+1;
+                dmgbonus = r.nextInt(2);
                 break;
         }
     }
 
     private void setLegsStats(){
+        Random r = new Random();
         switch(level){
-            case 0:
+            case 0:default:
+                atk = 0;
+                def = r.nextInt(4)+2;
+                dmgbonus = 0;
                 break;
         }
     }

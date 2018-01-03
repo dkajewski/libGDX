@@ -6,7 +6,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,8 +16,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
@@ -110,10 +107,20 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         npc.currentSprite.setPosition(240, 10);
 
         //testing items
-        Item item1 = new Item(Constants.weapon1,0, Constants.w1, Item.Type.weapon);
-        Item item2 = new Item(Constants.weapon2, 0, Constants.w2, Item.Type.weapon);
-        item1.spawnItem(new Vector2(250, 250));
-        item2.spawnItem(new Vector2( 300, 300));
+        Item item1 = new Item(Constants.weapon1,0, Constants.steelSword, Item.Type.weapon);
+        Item item2 = new Item(Constants.weapon2, 0, Constants.spear, Item.Type.weapon);
+        Item item3 = new Item(Constants.weapon3, 0, Constants.halberd, Item.Type.weapon);
+        Item armor = new Item(Constants.armor1, 0, Constants.leatherArmor, Item.Type.armor);
+        Item helmet = new Item(Constants.helmet1, 0, Constants.leatherHelmet, Item.Type.helmet);
+        Item shield = new Item(Constants.shield1,0, Constants.woodenShield, Item.Type.shield);
+        Item legs = new Item(Constants.legs1, 0, Constants.leatherLegs, Item.Type.legs);
+        item1.spawnItem(new Vector2(5*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
+        item2.spawnItem(new Vector2( 6*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
+        item3.spawnItem(new Vector2( 7*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
+        armor.spawnItem(new Vector2( 5*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
+        helmet.spawnItem(new Vector2( 6*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
+        shield.spawnItem(new Vector2( 7*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
+        legs.spawnItem(new Vector2( 5*Constants.UNIT_SCALE, 7*Constants.UNIT_SCALE));
     }
 
     @Override
@@ -256,7 +263,4 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         return (player.currentHealth*96.0f)/player.maxHealth *1.0f;
     }
 
-    private void showLabel(){
-
-    }
 }
