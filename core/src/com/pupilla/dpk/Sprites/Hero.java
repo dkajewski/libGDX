@@ -37,8 +37,9 @@ public class Hero implements Serializable{
     public int experiece = 0;
     public int attack = 0;
     public int defense = 0;
+    public int damage = 0;
     public int level = 1;
-    public int skillPoints = 0;
+    public int skillPoints = 10;
     public int gold = 0;
     public int potioncount;
     public int maxHealth;
@@ -143,15 +144,16 @@ public class Hero implements Serializable{
     }
 
     public void usePotion(){
+        int currentMaxHealth = calculateHealth();
         if(potioncount>0){
-            double heal = 0.33*maxHealth;
+            double heal = 0.33*currentMaxHealth;
             double bonus = bonusHealing();
 
-            if(currentHealth!=maxHealth){
+            if(currentHealth!=currentMaxHealth){
                 potioncount--;
-                if((int)(currentHealth+heal+bonus)>maxHealth){
-                    healed = maxHealth-currentHealth;
-                    currentHealth=maxHealth;
+                if((int)(currentHealth+heal+bonus)>currentMaxHealth){
+                    healed = currentMaxHealth-currentHealth;
+                    currentHealth=currentMaxHealth;
                 }else{
                     healed = (int)(heal+bonus);
                     currentHealth = (int)(currentHealth+heal+bonus);
@@ -164,8 +166,12 @@ public class Hero implements Serializable{
 
     private int bonusHealing(){
         Random r = new Random();
-        int percent = (int)(0.1*maxHealth);
+        int percent = (int)(0.1*calculateHealth());
         return r.nextInt(2*percent)-percent;
+    }
+
+    public int calculateHealth(){
+        return maxHealth+eq.getStatsBoostSum()[3];
     }
 
     public int getMinDamage(){
@@ -177,4 +183,32 @@ public class Hero implements Serializable{
         return 3;
     }
 
+    public void increaseAttack(){
+        if(skillPoints>0){
+            attack++;
+            skillPoints--;
+        }
+    }
+
+    public void increaseDefense(){
+        if(skillPoints>0){
+            defense++;
+            skillPoints--;
+        }
+    }
+
+    public void increaseDamage(){
+        if(skillPoints>0){
+            damage++;
+            skillPoints--;
+        }
+    }
+
+    public void increaseHealth(){
+        if(skillPoints>0){
+            maxHealth+=5;
+            skillPoints--;
+        }
+
+    }
 }

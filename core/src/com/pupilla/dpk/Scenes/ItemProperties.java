@@ -81,8 +81,8 @@ public class ItemProperties extends Dialog{
     private void prepareWindow(){
         Table table = new Table();
 
-        // attack, defense, bonus;
-        int a, d, b;
+        // attack, defense, bonusdmg, health
+        int a, d, b, h;
 
         switch(item.type){
             case weapon:
@@ -90,65 +90,75 @@ public class ItemProperties extends Dialog{
                     a=0;
                     d=0;
                     b=0;
+                    h=0;
                 }else{
                     a = PlayScreen.player.eq.weapon.atk;
                     d = PlayScreen.player.eq.weapon.def;
                     b = PlayScreen.player.eq.weapon.dmgbonus;
+                    h = PlayScreen.player.eq.weapon.healthbonus;
                 }
 
-                fillTable(table, a, d, b);
+                fillTable(table, a, d, b, h);
                 break;
             case armor:
                 if(PlayScreen.player.eq.armor==null){
                     a=0;
                     d=0;
                     b=0;
+                    h=0;
                 }else{
                     a = PlayScreen.player.eq.armor.atk;
                     d = PlayScreen.player.eq.armor.def;
                     b = PlayScreen.player.eq.armor.dmgbonus;
+                    h = PlayScreen.player.eq.weapon.healthbonus;
                 }
 
-                fillTable(table, a, d, b);
+                fillTable(table, a, d, b, h);
                 break;
             case shield:
                 if(PlayScreen.player.eq.shield==null){
                     a=0;
                     d=0;
                     b=0;
+                    h=0;
                 }else{
                     a = PlayScreen.player.eq.shield.atk;
                     d = PlayScreen.player.eq.shield.def;
                     b = PlayScreen.player.eq.shield.dmgbonus;
+                    h = PlayScreen.player.eq.weapon.healthbonus;
                 }
 
-                fillTable(table, a, d, b);
+                fillTable(table, a, d, b, h);
                 break;
             case helmet:
                 if(PlayScreen.player.eq.helmet==null){
                     a=0;
                     d=0;
                     b=0;
+                    h=0;
                 }else{
                     a = PlayScreen.player.eq.helmet.atk;
                     d = PlayScreen.player.eq.helmet.def;
                     b = PlayScreen.player.eq.helmet.dmgbonus;
+                    h = PlayScreen.player.eq.weapon.healthbonus;
                 }
 
-                fillTable(table, a, d, b);
+                fillTable(table, a, d, b, h);
                 break;
             case legs:
                 if(PlayScreen.player.eq.legs==null){
                     a=0;
                     d=0;
                     b=0;
+                    h=0;
                 }else{
                     a = PlayScreen.player.eq.legs.atk;
                     d = PlayScreen.player.eq.legs.def;
                     b = PlayScreen.player.eq.legs.dmgbonus;
+                    h = PlayScreen.player.eq.weapon.healthbonus;
                 }
 
-                fillTable(table, a, d, b);
+                fillTable(table, a, d, b, h);
                 break;
 
         }
@@ -158,7 +168,7 @@ public class ItemProperties extends Dialog{
         getContentTable().add(table);
     }
 
-    private void fillTable(Table table, int a, int d, int b){
+    private void fillTable(Table table, int a, int d, int b, int h){
         int difference;
         BitmapFont bf = new BitmapFont(Gdx.files.internal(Constants.font));
         Label.LabelStyle greenFont = new Label.LabelStyle(bf, Color.GREEN);
@@ -168,10 +178,12 @@ public class ItemProperties extends Dialog{
         Label attack = new Label(Constants.attack+": ", skin);
         Label defense = new Label(Constants.defense+": ", skin);
         Label bonus = new Label(Constants.bonus+": ", skin);
+        Label health = new Label(Constants.health+": ", skin);
 
         attack.setFontScale(scale);
         defense.setFontScale(scale);
         bonus.setFontScale(scale);
+        health.setFontScale(scale);
         difference = item.atk-a;
         if(item.atk>0){
             table.add(attack);
@@ -228,6 +240,26 @@ public class ItemProperties extends Dialog{
         }else if(item.dmgbonus==0 && b>0){
             table.add(bonus);
             table.add(new Label(item.dmgbonus+" ", skin));
+            table.add(new Label(difference+"", redFont));
+            table.row();
+        }
+
+        difference = item.healthbonus-h;
+        if(item.healthbonus>0){
+            table.add(health);
+            table.add(new Label(item.healthbonus+" ", skin));
+            if(difference>0){
+                table.add(new Label("+"+difference, greenFont));
+                table.row();
+            }else if(difference<0){
+                table.add(new Label(difference+"", redFont));
+                table.row();
+            }else{
+                table.row();
+            }
+        }else if(item.healthbonus==0 && h>0){
+            table.add(health);
+            table.add(new Label(item.healthbonus+" ", skin));
             table.add(new Label(difference+"", redFont));
             table.row();
         }

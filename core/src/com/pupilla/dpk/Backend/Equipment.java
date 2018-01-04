@@ -23,35 +23,43 @@ public class Equipment implements Serializable{
         int atk=0;
         int def=0;
         int bonus=0;
+        int health=0;
         if(helmet!=null){
             atk+=helmet.atk;
             def+=helmet.def;
             bonus+=helmet.dmgbonus;
+            health+=helmet.healthbonus;
         }
 
         if(weapon!=null){
             atk+=weapon.atk;
             def+=weapon.def;
             bonus+=weapon.dmgbonus;
+            health+=weapon.healthbonus;
         }
 
         if(armor!=null){
             atk+=armor.atk;
             def+=armor.def;
             bonus+=armor.dmgbonus;
+            health+=armor.healthbonus;
         }
 
         if(shield!=null){
             atk+=shield.atk;
             def+=shield.def;
             bonus+=shield.dmgbonus;
+            health+=shield.healthbonus;
         }
 
         if(legs!=null){
             atk+=legs.atk;
             def+=legs.def;
             bonus+=legs.dmgbonus;
+            health+=legs.healthbonus;
         }
-        return new int[]{atk, def, bonus};
+        return new int[]{atk, def, bonus, health};
     }
+
+
 }

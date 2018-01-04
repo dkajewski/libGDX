@@ -21,7 +21,7 @@ public class Constants {
 
     // Textures constants
     public static final String backArrow = "sprites/others/backarrow.png";
-    public static final String health = "sprites/others/health.png";
+    public static final String healthBar = "sprites/others/health.png";
 
     public static final String steelSword = "sprites/items/weapons/weapon1.png";
     public static final String spear = "sprites/items/weapons/weapon2.png";
@@ -62,6 +62,8 @@ public class Constants {
     public static final String attack = "Atak";
     public static final String defense = "Obrona";
     public static final String bonus = "Obrażenia";
+    public static final String health = "Zdrowie";
+    public static final String points = "Punkty";
     public static final String gold = "Złoto";
     public static final String level = "Poziom";
 

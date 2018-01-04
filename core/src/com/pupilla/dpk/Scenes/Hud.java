@@ -55,7 +55,7 @@ public class Hud{
         Texture optionsimage = new Texture(Gdx.files.internal("sprites/others/optiongear.png"));
         Texture healthbar = new Texture(Gdx.files.internal("sprites/others/healthbar.png"));
         Texture potion = new Texture(Gdx.files.internal("sprites/others/potion.png"));
-        health = new Image(new Texture(Gdx.files.internal(Constants.health)));
+        health = new Image(new Texture(Gdx.files.internal(Constants.healthBar)));
 
         TextureRegion region = new TextureRegion(arrowup);
         TextureRegionDrawable drawableRegion = new TextureRegionDrawable(region);

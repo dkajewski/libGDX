@@ -34,7 +34,7 @@ public final class Item implements Serializable{
     private static final String TAG = "Item";
 
     public String name;
-    public int atk, def, dmgbonus, level;
+    public int atk, def, dmgbonus, healthbonus,level;
     public transient Texture texture;
     public Vector2 pos;
     public transient Body body;
@@ -52,6 +52,7 @@ public final class Item implements Serializable{
     public Item(String name, int level, String texturePath, Type type){
         this.name = name;
         this.type = type;
+        this.level = level;
         this.texturePath = texturePath;
         setStats();
         makeTexture();
@@ -127,6 +128,7 @@ public final class Item implements Serializable{
                 atk = r.nextInt(5)+1;
                 def = r.nextInt(3);
                 dmgbonus = r.nextInt(2);
+                healthbonus = 0;
                 break;
         }
     }
@@ -138,6 +140,7 @@ public final class Item implements Serializable{
                 atk = 0;
                 def = r.nextInt(4)+3;
                 dmgbonus = r.nextInt(3);
+                healthbonus = 0;
                 break;
         }
     }
@@ -149,6 +152,7 @@ public final class Item implements Serializable{
                 atk = 0;
                 def = r.nextInt(7)+2;
                 dmgbonus = 0;
+                healthbonus = 0;
                 break;
         }
     }
@@ -160,6 +164,7 @@ public final class Item implements Serializable{
                 atk = 0;
                 def = r.nextInt(3)+1;
                 dmgbonus = r.nextInt(2);
+                healthbonus = r.nextInt(2)+50;
                 break;
         }
     }
@@ -171,6 +176,7 @@ public final class Item implements Serializable{
                 atk = 0;
                 def = r.nextInt(4)+2;
                 dmgbonus = 0;
+                healthbonus = 0;
                 break;
         }
     }

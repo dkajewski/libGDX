@@ -19,6 +19,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
+import com.pupilla.dpk.Backend.Level;
 import com.pupilla.dpk.Backend.LoadGame;
 import com.pupilla.dpk.Sprites.NPC;
 import com.pupilla.dpk.MapManager;
@@ -77,7 +78,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         b2dr = new Box2DDebugRenderer();
         camera = new OrthographicCamera();
         mapManager = new MapManager(TESTMAP, world);
-
+        Level.generateExperienceTable();
+        //Level.showLevels();
         if(newGame){
             // new game start
             player = new Hero(world);
@@ -260,7 +262,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     }
 
     private float getHealthbarWidth(){
-        return (player.currentHealth*96.0f)/player.maxHealth *1.0f;
+        return (player.currentHealth*96.0f)/player.calculateHealth() *1.0f;
     }
 
 }
