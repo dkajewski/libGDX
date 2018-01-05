@@ -102,11 +102,10 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         //Label.LabelStyle whiteFont = new Label.LabelStyle(bf, Color.WHITE);
 
         //testing npc and dialogues
-        npc = new NPC("XML/NPC1.xml");
-        npc.npcTexture = texture;
+        npc = new NPC("XML/NPC1.xml", world);
+        //npc.npcTexture = texture;
         npc.setup(Utility.heroSheet);
-        npc.currentSprite.setSize(Gdx.graphics.getWidth()/ Constants.UNIT_SCALE, Gdx.graphics.getHeight()/ Constants.UNIT_SCALE);
-        npc.currentSprite.setPosition(240, 10);
+        npc.defineBody(new Vector2(8*Constants.UNIT_SCALE, Constants.UNIT_SCALE));
 
         //testing items
         Item item1 = new Item(Constants.weapon1,0, Constants.steelSword, Item.Type.weapon);
@@ -211,7 +210,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         spawnItems();
         //end test in rendering item
 
-        spriteBatch.draw(npc.walkAnimation.getKeyFrame(npc.stateTime, false), npc.currentSprite.getX(), npc.currentSprite.getY());
+        spriteBatch.draw(npc.walkAnimation.getKeyFrame(npc.stateTime, false), npc.body.getPosition().x-16, npc.body.getPosition().y-16);
         spriteBatch.draw(currentFrame, player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
 
         if(afterPotion){
@@ -226,6 +225,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         hud.health.setWidth(getHealthbarWidth());
         hud.stage.draw();
         //super.render();
+
+        //npc.body.setLinearVelocity(10, 10);
     }
 
     @Override

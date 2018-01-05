@@ -6,6 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Dialogue;
 import com.pupilla.dpk.Utility;
@@ -17,6 +23,10 @@ import java.util.List;
  */
 
 public class NPC {
+    private static final String TAG = "NPC";
+
+    private transient World world;
+    public transient Body body;
     public String name;
     public List conversations;
     private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
@@ -36,8 +46,8 @@ public class NPC {
         LEFT, RIGHT, UP, DOWN
     }
 
-    public NPC(String dialoguePath){
-
+    public NPC(String dialoguePath, World world){
+        this.world = world;
         Dialogue dialogue = new Dialogue(dialoguePath);
         name = dialogue.npcName;
         conversations = dialogue.conversations;
@@ -92,4 +102,24 @@ public class NPC {
         walkDownAnimation = new Animation<TextureRegion>(0.1f, walkDownFrames);
         stateTime = 0f;
     }
+
+    public void defineBody(Vector2 position){
+        currentSprite.setPosition(position.x, position.y);
+        BodyDef bdef = new BodyDef();
+        bdef.position.set(currentSprite.getX(), currentSprite.getY());
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        body = world.createBody(bdef);
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(16, 16);
+
+        FixtureDef fdef = new FixtureDef();
+        fdef.density = 99999;
+        fdef.shape = shape;
+        fdef.filter.categoryBits = Constants.BIT_PLAYER; /* is a... */
+        fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_PLAYER | Constants.BIT_ITEM | Constants.BIT_NPC; /* collides with... */
+        body.createFixture(fdef).setUserData(this);
+        body.setLinearDamping(20f);
+    }
+
 }

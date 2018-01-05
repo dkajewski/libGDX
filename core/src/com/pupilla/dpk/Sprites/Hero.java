@@ -34,7 +34,7 @@ public class Hero implements Serializable{
     public Equipment eq;
     public Vector2 position;
 
-    public int experiece = 0;
+    public int experience = 0;
     public int attack = 0;
     public int defense = 0;
     public int damage = 0;
@@ -136,7 +136,7 @@ public class Hero implements Serializable{
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fdef.filter.categoryBits = Constants.BIT_PLAYER; /* is a... */
-        fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_PLAYER | Constants.BIT_ITEM; /* collides with... */
+        fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_PLAYER | Constants.BIT_ITEM | Constants.BIT_NPC; /* collides with... */
         b2body.createFixture(fdef).setUserData("player");
         b2body.setLinearDamping(20f);
 

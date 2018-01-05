@@ -42,6 +42,8 @@ public class Hud{
 
     private Label potions;
 
+    public static ImageButton attackbutton, dialoguebutton;
+
     public Hud(int width, int height, Game game){
         Gdx.app.debug(TAG, width+ " "+height);
         this.game = game;
@@ -56,6 +58,8 @@ public class Hud{
         Texture healthbar = new Texture(Gdx.files.internal("sprites/others/healthbar.png"));
         Texture potion = new Texture(Gdx.files.internal("sprites/others/potion.png"));
         health = new Image(new Texture(Gdx.files.internal(Constants.healthBar)));
+        Texture attackbtn = new Texture(Gdx.files.internal(Constants.attackBtn));
+        Texture dialoguebtn = new Texture(Gdx.files.internal(Constants.dialogueBtn));
 
         TextureRegion region = new TextureRegion(arrowup);
         TextureRegionDrawable drawableRegion = new TextureRegionDrawable(region);
@@ -89,6 +93,14 @@ public class Hud{
         drawableRegion = new TextureRegionDrawable(region);
         potionbutton = new ImageButton(drawableRegion);
 
+        region = new TextureRegion(attackbtn);
+        drawableRegion = new TextureRegionDrawable(region);
+        attackbutton = new ImageButton(drawableRegion);
+
+        region = new TextureRegion(dialoguebtn);
+        drawableRegion = new TextureRegionDrawable(region);
+        dialoguebutton = new ImageButton(drawableRegion);
+
         Viewport viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, new SpriteBatch());
         upbutton.setX(86);      upbutton.setY(86);
@@ -110,6 +122,17 @@ public class Hud{
         potions.setFontScale(0.5f);
         setPotionsLabelPos();
 
+        attackbutton.setX(width-attackbutton.getWidth()-45);
+        attackbutton.setY(45);
+        attackbutton.setTransform(true);
+        attackbutton.setScale(1.5f);
+
+        dialoguebutton.setX(attackbutton.getX());
+        dialoguebutton.setY(attackbutton.getY());
+        dialoguebutton.setTransform(true);
+        dialoguebutton.setScale(1.5f);
+        dialoguebutton.setVisible(false);
+
         stage.addActor(upbutton);
         stage.addActor(downbutton);
         stage.addActor(leftbutton);
@@ -120,6 +143,8 @@ public class Hud{
         stage.addActor(healthbutton);
         stage.addActor(potionbutton);
         stage.addActor(potions);
+        stage.addActor(attackbutton);
+        stage.addActor(dialoguebutton);
         addListeners();
         Gdx.input.setInputProcessor(stage);
     }

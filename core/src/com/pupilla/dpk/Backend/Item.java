@@ -34,7 +34,7 @@ public final class Item implements Serializable{
     private static final String TAG = "Item";
 
     public String name;
-    public int atk, def, dmgbonus, healthbonus,level;
+    public int atk, def, dmgbonus, healthbonus, level;
     public transient Texture texture;
     public Vector2 pos;
     public transient Body body;
@@ -164,7 +164,7 @@ public final class Item implements Serializable{
                 atk = 0;
                 def = r.nextInt(3)+1;
                 dmgbonus = r.nextInt(2);
-                healthbonus = r.nextInt(2)+50;
+                healthbonus = r.nextInt(2);
                 break;
         }
     }

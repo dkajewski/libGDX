@@ -12,6 +12,7 @@ public class Constants {
     public static final short BIT_WALL = 2;
     public static final short BIT_ITEM = 4;
     public static final short BIT_COLLECTED = 8;
+    public static final short BIT_NPC = 16;
 
     public static final int UNIT_SCALE = 32;
 
@@ -22,6 +23,8 @@ public class Constants {
     // Textures constants
     public static final String backArrow = "sprites/others/backarrow.png";
     public static final String healthBar = "sprites/others/health.png";
+    public static final String attackBtn = "sprites/others/attackbutton.png";
+    public static final String dialogueBtn = "sprites/others/dialoguebutton.png";
 
     public static final String steelSword = "sprites/items/weapons/weapon1.png";
     public static final String spear = "sprites/items/weapons/weapon2.png";
@@ -58,6 +61,8 @@ public class Constants {
     public static final String close = "Zamknij";
     public static final String exit = "Wyjdź";
     public static final String stats = "Statystyki";
+    public static final String exp = "Doświadczenie";
+    public static final String toNextLevel = "Nast. poziom";
 
     public static final String attack = "Atak";
     public static final String defense = "Obrona";
