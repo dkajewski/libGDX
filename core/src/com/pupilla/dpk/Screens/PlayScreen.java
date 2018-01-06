@@ -224,6 +224,9 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.health.setWidth(getHealthbarWidth());
         hud.stage.draw();
+        if(player.currentHealth<=0){
+            game.setScreen(new DeathScreen(game));
+        }
         //super.render();
 
         //npc.body.setLinearVelocity(10, 10);
@@ -263,7 +266,11 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     }
 
     private float getHealthbarWidth(){
-        return (player.currentHealth*96.0f)/player.calculateHealth() *1.0f;
+        float width = (player.currentHealth*96.0f)/player.calculateHealth() *1.0f;
+        if(width<0){
+            width=0;
+        }
+        return width;
     }
 
 }

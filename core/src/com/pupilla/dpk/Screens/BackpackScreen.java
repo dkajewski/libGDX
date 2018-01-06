@@ -78,10 +78,6 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         level.setFontScale(0.5f);
         level.setX(15);
         level.setY(height-22-level.getHeight());
-        Label goldAmount = new Label(Constants.gold+": "+PlayScreen.player.gold, style);
-        goldAmount.setFontScale(0.5f);
-        goldAmount.setX(125);
-        goldAmount.setY(level.getY());
         Label exp = new Label(Constants.exp+": "+PlayScreen.player.experience, style);
         exp.setFontScale(0.5f);
         exp.setX(level.getX());
@@ -90,6 +86,10 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         toNextLvl.setFontScale(0.5f);
         toNextLvl.setX(level.getX());
         toNextLvl.setY(exp.getY()-exp.getHeight()/2);
+        Label goldAmount = new Label(Constants.gold+": "+PlayScreen.player.gold, style);
+        goldAmount.setFontScale(0.5f);
+        goldAmount.setX(level.getX());
+        goldAmount.setY(toNextLvl.getY()-toNextLvl.getHeight()/2);
 
         skin = new Skin(Gdx.files.internal(Constants.skin));
         stats = new TextButton(Constants.stats, skin);

@@ -59,7 +59,9 @@ public class Constants {
     public static final String takeOff = "Zdejmij";
     public static final String throwOut = "Wyrzuć";
     public static final String close = "Zamknij";
+    public static final String menu = "Menu";
     public static final String exit = "Wyjdź";
+    public static final String gameOver = "Koniec gry";
     public static final String stats = "Statystyki";
     public static final String exp = "Doświadczenie";
     public static final String toNextLevel = "Nast. poziom";
