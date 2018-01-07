@@ -69,6 +69,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     private BitmapFont bf;
 
     public static ArrayList<Item> spawnedItems = new ArrayList<Item>();
+    public static ArrayList<NPC> NPCs = new ArrayList<NPC>();
     public PlayScreen(Game game, boolean newGame){
         spriteBatch = new SpriteBatch();
         this.newGame = newGame;
@@ -106,6 +107,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         //npc.npcTexture = texture;
         npc.setup(Utility.heroSheet);
         npc.defineBody(new Vector2(8*Constants.UNIT_SCALE, Constants.UNIT_SCALE));
+        NPCs.add(npc);
 
         //testing items
         Item item1 = new Item(Constants.weapon1,0, Constants.steelSword, Item.Type.weapon);

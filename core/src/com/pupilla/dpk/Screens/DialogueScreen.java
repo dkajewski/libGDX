@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -18,42 +17,36 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.Backend.Constants;
 
 /**
- * Created by orzech on 06.01.2018.
+ * Created by orzech on 07.01.2018.
  */
 
-public class DeathScreen extends ApplicationAdapter implements Screen {
+public class DialogueScreen extends ApplicationAdapter implements Screen {
 
-    private static final String TAG = "DeathScreen";
-    private SpriteBatch batch;
-    private Stage stage;
-    private TextButton menu;
+    private static final String TAG = "DialogueScreen";
     private Game game;
-    private Viewport viewport;
-    private int width, height;
-    private BitmapFont bf;
+    private Stage stage;
+    private SpriteBatch batch;
 
-    public DeathScreen(Game game){
-        Gdx.app.debug(TAG, "You died.");
+    private TextButton end;
+
+    public DialogueScreen(Game game){
         this.game = game;
         batch = new SpriteBatch();
-
-        width = 640;
-        height = (width*Gdx.graphics.getHeight())/Gdx.graphics.getWidth();
-        viewport = new FitViewport(width, height, new OrthographicCamera());
     }
 
     @Override
     public void show() {
-        Skin skin = new Skin(Gdx.files.internal(Constants.skin));
-        bf = new BitmapFont(Gdx.files.internal(Constants.font));
+        int width = 640;
+        int height = (width* Gdx.graphics.getHeight())/Gdx.graphics.getWidth();
+        Viewport viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, batch);
-        menu = new TextButton(Constants.menu, skin);
-        menu.setHeight(60);
-        menu.setWidth(200);
-        menu.setPosition(width/2-(menu.getWidth()/2), height/2-(menu.getHeight()/2));
-        stage.addActor(menu);
-        addListeners();
+        Skin skin = new Skin(Gdx.files.internal(Constants.skin));
+        end = new TextButton(Constants.end, skin);
 
+        end.setPosition(width/2-end.getWidth()/2, height/2);
+
+        addListeners();
+        stage.addActor(end);
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -63,7 +56,6 @@ public class DeathScreen extends ApplicationAdapter implements Screen {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        bf.draw(batch, Constants.gameOver, menu.getX()+20, height-50);
         batch.end();
         stage.draw();
     }
@@ -74,10 +66,10 @@ public class DeathScreen extends ApplicationAdapter implements Screen {
     }
 
     private void addListeners(){
-        menu.addListener(new ClickListener(){
+        end.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                game.setScreen(new StartScreen(game));
+                game.setScreen(PlayScreen.parent);
             }
         });
     }

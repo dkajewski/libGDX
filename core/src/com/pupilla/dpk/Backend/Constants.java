@@ -61,6 +61,7 @@ public class Constants {
     public static final String close = "Zamknij";
     public static final String menu = "Menu";
     public static final String exit = "Wyjdź";
+    public static final String end = "Koniec";
     public static final String gameOver = "Koniec gry";
     public static final String stats = "Statystyki";
     public static final String exp = "Doświadczenie";
