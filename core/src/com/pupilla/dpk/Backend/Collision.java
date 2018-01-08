@@ -19,6 +19,7 @@ import com.pupilla.dpk.Sprites.NPC;
 public class Collision implements ContactListener {
     private static final String TAG = "Collision";
 
+    public static String NPCname = "";
     @Override
     public void beginContact(Contact contact) {
 
@@ -48,7 +49,8 @@ public class Collision implements ContactListener {
 
             if(npc.getUserData() instanceof NPC){
                 Gdx.app.debug(TAG, "npc!");
-                //NPC npc1 = (NPC) npc.getUserData();
+                NPC npc1 = (NPC) npc.getUserData();
+                NPCname = npc1.name;
                 Hud.attackbutton.setVisible(false);
                 Hud.dialoguebutton.setVisible(true);
             }
@@ -70,6 +72,7 @@ public class Collision implements ContactListener {
             if(npc.getUserData() instanceof NPC){
                 Gdx.app.debug(TAG, "npc!");
                 //NPC npc1 = (NPC) npc.getUserData();
+                NPCname = "";
                 Hud.attackbutton.setVisible(true);
                 Hud.dialoguebutton.setVisible(false);
             }

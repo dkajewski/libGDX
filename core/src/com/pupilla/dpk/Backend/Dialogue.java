@@ -27,9 +27,10 @@ public class Dialogue {
             npcName = npc.get("name");
 
             dialogues = npc.getChildrenByName("dialogue");
+
             for(int i=0; i<dialogues.size; i++){
                 Conversation c = new Conversation();
-
+                c.id = Integer.parseInt(dialogues.get(i).getAttribute("id"));
                 c.text = dialogues.get(i).getChildByName("text").getText();
 
                 //get responses
@@ -57,6 +58,8 @@ public class Dialogue {
                     if(nextDialogueAttribute){
                         c.nextDialogues[j] = responses.get(j).getInt("nextDialogue");
                         Gdx.app.debug(TAG, c.nextDialogues[j]+"");
+                    }else{
+                        c.nextDialogues[j] = 999;
                     }
                     conversations.add(c);
 

@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.Constants;
+import com.pupilla.dpk.Backend.Conversation;
 import com.pupilla.dpk.Backend.Dialogue;
 import com.pupilla.dpk.Utility;
 
@@ -28,7 +29,7 @@ public class NPC {
     private transient World world;
     public transient Body body;
     public String name;
-    public List conversations;
+    public List<Conversation> conversations;
     private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
 
     public Sprite currentSprite;

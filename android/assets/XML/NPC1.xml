@@ -4,19 +4,24 @@
         <text>
             Witam, Witam.
         </text>
-        <response>
+        <response nextDialogue="1">
             Siema.
         </response>
         <response nextDialogue="2">
             elo
         </response>
     </dialogue>
+	<dialogue id="1">
+		<text>
+			Odpowiedź 1
+		</text>
+	</dialogue>
     <dialogue id="2">
         <text>
-            odpowiedz
+            Odpowiedź 2
         </text>
         <response nextDialogue="0">
-            powrot
+            Wróćmy.
         </response>
     </dialogue>
 

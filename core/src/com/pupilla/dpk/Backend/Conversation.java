@@ -7,6 +7,7 @@ package com.pupilla.dpk.Backend;
 public class Conversation {
 
     private static final String TAG = "Conversation";
+    public int id;
     public String text;
     public String[] responses;
     public int[] nextDialogues;
