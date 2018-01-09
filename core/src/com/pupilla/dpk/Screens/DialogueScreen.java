@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Constants;
+import com.pupilla.dpk.Backend.Conversation;
 import com.pupilla.dpk.Sprites.NPC;
 
 /**
@@ -37,8 +38,10 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
     private Label name, text;
     private TextButton end;
     private Skin skin;
+    private Label.LabelStyle whiteFont;
 
-    private int nextDialogue = 999;
+    private int index;
+    private int width = 640, height;
 
     public DialogueScreen(Game game){
         this.game = game;
@@ -48,13 +51,12 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
 
     @Override
     public void show() {
-        int width = 640;
-        int height = (width* Gdx.graphics.getHeight())/Gdx.graphics.getWidth();
+        height = (width* Gdx.graphics.getHeight())/Gdx.graphics.getWidth();
         Viewport viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, batch);
         skin = new Skin(Gdx.files.internal(Constants.skin));
         BitmapFont bf = new BitmapFont(Gdx.files.internal(Constants.font));
-        Label.LabelStyle whiteFont = new Label.LabelStyle(bf, Color.WHITE);
+        whiteFont = new Label.LabelStyle(bf, Color.WHITE);
 
         end = new TextButton(Constants.end, skin);
 
@@ -97,7 +99,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
     }
 
     private void prepareTable(){
-        int index = getNPCindex();
+        index = getNPCindex();
         NPC npc = PlayScreen.NPCs.get(index);
         if(index!=999){
             name.setText(npc.name);
@@ -110,7 +112,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
 
             for(int i=0; i<npc.conversations.get(0).responses.length; i++){
                 // if I have access to see response...
-                if(npc.conversations.get(0).accessibility[i]){
+                if(npc.conversations.get(0).accessibility[i] && npc.conversations.get(0).nextDialogues.length!=0){
                     // create button with that response
                     TextButton response = new TextButton(npc.conversations.get(0).responses[i], skin);
                     if(npc.conversations.get(0).nextDialogues[i]!=999){
@@ -119,6 +121,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                             @Override
                             public void clicked(InputEvent event, float x, float y){
                                 Gdx.app.debug(TAG, "next Dialogue: "+next);
+                                setNewResponses(next);
                             }
                         });
                     }
@@ -138,4 +141,65 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
         return 999;
     }
 
+    private void setNewResponses(int nextDialogue){
+        for(int i=0; i<stage.getActors().size; i++){
+            if(stage.getActors().get(i).equals(table)){
+                stage.getActors().removeIndex(i);
+            }
+        }
+        table = new Table();
+        table.debug();
+        table.setPosition(width/2, height/2);
+        NPC npc = PlayScreen.NPCs.get(index);
+        Conversation dialogue = getDialogue(npc, nextDialogue);
+
+        startQuest(dialogue.id);
+        name = new Label(npc.name, whiteFont);
+        text = new Label(dialogue.text, whiteFont);
+        table.add(name);
+        table.row();
+        table.add(text);
+        table.row();
+
+        for(int i=0; i<dialogue.responses.length; i++){
+            // if I have access to see response...
+            if(dialogue.accessibility[i] && dialogue.nextDialogues.length!=0){
+                // create button with that response
+                TextButton response = new TextButton(dialogue.responses[i], skin);
+                if(dialogue.nextDialogues[i]!=999){
+                    final int next = dialogue.nextDialogues[i];
+                    response.addListener(new ClickListener(){
+                        @Override
+                        public void clicked(InputEvent event, float x, float y){
+                            //Gdx.app.debug(TAG, "next Dialogue: "+next);
+                            setNewResponses(next);
+                        }
+                    });
+                }
+                table.add(response).fill();
+                table.row();
+            }
+        }
+
+        table.add(end).fill();
+        stage.addActor(table);
+        Gdx.app.debug(TAG, name.getText().toString());
+    }
+
+    private Conversation getDialogue(NPC npc, int id){
+        for(int i=0; i<npc.conversations.size(); i++){
+            if(npc.conversations.get(i).id == id){
+                return npc.conversations.get(i);
+            }
+        }
+        return new Conversation();
+    }
+
+    /**
+     * Checking whether that dialogue option starts new quest
+     * @param dialogue
+     */
+    private void startQuest(int dialogue){
+
+    }
 }

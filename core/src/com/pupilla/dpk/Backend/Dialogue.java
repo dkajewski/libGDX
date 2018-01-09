@@ -2,7 +2,6 @@ package com.pupilla.dpk.Backend;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.XmlReader;
 
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import java.util.List;
 
 public class Dialogue {
     public String npcName;
-    public Array<XmlReader.Element> dialogues;
     public List<Conversation> conversations;
 
     private static final String TAG = "dialogue";
@@ -26,7 +24,7 @@ public class Dialogue {
             XmlReader.Element npc = xml.parse(Gdx.files.internal(path));
             npcName = npc.get("name");
 
-            dialogues = npc.getChildrenByName("dialogue");
+            Array<XmlReader.Element> dialogues = npc.getChildrenByName("dialogue");
 
             for(int i=0; i<dialogues.size; i++){
                 Conversation c = new Conversation();
@@ -38,6 +36,9 @@ public class Dialogue {
                 c.responses = new String[responses.size];
                 c.accessibility = new boolean[responses.size];
                 c.nextDialogues = new int[responses.size];
+                if(c.responses.length==0){
+                    conversations.add(c);
+                }
                 for(int j=0; j<responses.size; j++){
                     boolean nextDialogueAttribute = false;
                     //fill responses array
@@ -48,7 +49,6 @@ public class Dialogue {
                         keys = responses.get(j).getAttributes().keys().toArray();
 
                         for(int k=0; k<keys.size; k++){
-                            Gdx.app.debug(TAG, keys.get(k));
                             if(keys.get(k).equals("nextDialogue")){
                                 nextDialogueAttribute = true;
                             }
@@ -57,7 +57,6 @@ public class Dialogue {
 
                     if(nextDialogueAttribute){
                         c.nextDialogues[j] = responses.get(j).getInt("nextDialogue");
-                        Gdx.app.debug(TAG, c.nextDialogues[j]+"");
                     }else{
                         c.nextDialogues[j] = 999;
                     }
@@ -65,13 +64,6 @@ public class Dialogue {
 
                 }
             }
-
-
-            /*currentLevel = npc.getInt("currentLevel");
-            XmlReader.Element level = npc.getChildByName("Level1");
-            lineAngle = level.getInt("lineAngle");
-            speed = level.getFloat("speed");
-            direction = level.getInt("direction");*/
         } catch (Exception e) {
             e.printStackTrace();
             Gdx.app.debug(TAG, "ERROR");

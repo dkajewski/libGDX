@@ -104,6 +104,10 @@ public class NPC {
         stateTime = 0f;
     }
 
+    /**
+     * Defining body of object
+     * @param position
+     */
     public void defineBody(Vector2 position){
         currentSprite.setPosition(position.x, position.y);
         BodyDef bdef = new BodyDef();
