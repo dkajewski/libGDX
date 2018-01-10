@@ -1,30 +1,26 @@
 package com.pupilla.dpk.Backend;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 /**
  * Created by orzech on 12.11.2017.
  */
 
-public class Task {
+public class Task implements Serializable{
 
     public String title;
     public String description;
-    public Task(){
+    public boolean active;
+    public boolean ended;
 
-    }
+    public static ArrayList<Task> tasks = new ArrayList<Task>();
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
+    public Task(String title, String description){
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
+        active = false;
+        ended = false;
     }
+
 }

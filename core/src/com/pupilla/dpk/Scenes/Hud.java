@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -111,7 +112,6 @@ public class Hud{
         backpackbutton.setX(22);backpackbutton.setY(height-backpackbutton.getHeight()-22);
         optionsbutton.setX(width-optionsbutton.getWidth()-22); optionsbutton.setY(height-optionsbutton.getHeight()-22);
         healthbutton.setX((width/2)-(healthbutton.getWidth()/2));   healthbutton.setY(height-healthbutton.getHeight());
-        potionbutton.setX(width-potionbutton.getWidth()-22); potionbutton.setY(height/2);
 
         health.setX(healthbutton.getX()+2);
         health.setY(healthbutton.getY()+2);
@@ -120,8 +120,15 @@ public class Hud{
         BitmapFont bf = new BitmapFont(Gdx.files.internal(Constants.font));
         Label.LabelStyle whiteFont = new Label.LabelStyle(bf, Color.WHITE);
         potions = new Label(PlayScreen.player.potioncount+"", whiteFont);
-        potions.setFontScale(0.5f);
-        setPotionsLabelPos();
+        potions.setFontScale(0.6f);
+        potionbutton.setTransform(true);
+        potionbutton.setScale(1.5f);
+        potionbutton.align(Align.bottomLeft);
+        Table potionTable = new Table();
+        potionTable.add(potions);
+        potionTable.row();
+        potionTable.add(potionbutton).width(50).height(50).center();
+        potionTable.setPosition(width-50, height/2-10);
 
         attackbutton.setX(width-attackbutton.getWidth()-45);
         attackbutton.setY(45);
@@ -142,8 +149,7 @@ public class Hud{
         stage.addActor(optionsbutton);
         stage.addActor(health);
         stage.addActor(healthbutton);
-        stage.addActor(potionbutton);
-        stage.addActor(potions);
+        stage.addActor(potionTable);
         stage.addActor(attackbutton);
         stage.addActor(dialoguebutton);
         addListeners();
@@ -234,7 +240,7 @@ public class Hud{
             @Override
             public void clicked(InputEvent event, float x, float y){
                 PlayScreen.player.usePotion();
-                setPotionsLabelPos();
+                potions.setText(PlayScreen.player.potioncount+"");
             }
         });
 
@@ -245,24 +251,5 @@ public class Hud{
                 game.setScreen(new DialogueScreen(game));
             }
         });
-    }
-
-    private void setPotionsLabelPos(){
-        potions.setText(PlayScreen.player.potioncount+"");
-        potions.setAlignment(Align.center);
-        if(PlayScreen.player.potioncount>=0 && PlayScreen.player.potioncount<10){
-            potions.setX(potionbutton.getX()+6);
-            potions.setY(potionbutton.getY()+potionbutton.getHeight()/2+6);
-        }else if(PlayScreen.player.potioncount>=10 && PlayScreen.player.potioncount<20) {
-            potions.setX(potionbutton.getX()-5);
-            potions.setY(potionbutton.getY()+potionbutton.getHeight()/2+6);
-        }else if(PlayScreen.player.potioncount>=20 && PlayScreen.player.potioncount<100) {
-            potions.setX(potionbutton.getX()-6);
-            potions.setY(potionbutton.getY()+potionbutton.getHeight()/2+6);
-        }else if(PlayScreen.player.potioncount>=100){
-            potions.setX(potionbutton.getX()-10);
-            potions.setY(potionbutton.getY()+potionbutton.getHeight()/2+6);
-        }
-
     }
 }

@@ -43,6 +43,8 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
     private int index;
     private int width = 640, height;
 
+    private BitmapFont bf;
+
     public DialogueScreen(Game game){
         this.game = game;
         batch = new SpriteBatch();
@@ -55,7 +57,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
         Viewport viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, batch);
         skin = new Skin(Gdx.files.internal(Constants.skin));
-        BitmapFont bf = new BitmapFont(Gdx.files.internal(Constants.font));
+        bf = new BitmapFont(Gdx.files.internal(Constants.font));
         whiteFont = new Label.LabelStyle(bf, Color.WHITE);
 
         end = new TextButton(Constants.end, skin);
@@ -201,5 +203,13 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
      */
     private void startQuest(int dialogue){
 
+    }
+
+    @Override
+    public void dispose(){
+        stage.dispose();
+        batch.dispose();
+        skin.dispose();
+        bf.dispose();
     }
 }

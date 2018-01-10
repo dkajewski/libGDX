@@ -47,6 +47,7 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
     private Backpack backpack;
     private int width, height;
 
+    public static Screen parent;
     public static boolean refresh = false;
 
     private Image weapon, helmet, shield, armor, legs;
@@ -139,7 +140,9 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
 
     @Override
     public void dispose(){
-
+        stage.dispose();
+        spriteBatch.dispose();
+        skin.dispose();
     }
 
     private void addListeners(){
@@ -159,7 +162,8 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         tasksbutton.addListener(new ClickListener(){
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button){
-                game.setScreen(new TasksScreen(game, spriteBatch, width, height));
+                parent = game.getScreen();
+                game.setScreen(new TasksScreen(game));
                 return true;
             }
 

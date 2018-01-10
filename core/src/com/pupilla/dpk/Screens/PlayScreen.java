@@ -64,8 +64,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     private int width = 640;
     private int height;
 
-    private NPC npc;
-
     private BitmapFont bf;
 
     public static ArrayList<Item> spawnedItems = new ArrayList<Item>();
@@ -103,11 +101,14 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         //Label.LabelStyle whiteFont = new Label.LabelStyle(bf, Color.WHITE);
 
         //testing npc and dialogues
-        npc = new NPC("XML/NPC1.xml", world);
-        //npc.npcTexture = texture;
+        NPC npc = new NPC("XML/NPC1.xml", world);
         npc.setup(Utility.heroSheet);
         npc.defineBody(new Vector2(8*Constants.UNIT_SCALE, Constants.UNIT_SCALE));
+        NPC npc1 = new NPC("XML/NPC1.xml", world);
+        npc1.setup(Utility.heroSheet);
+        npc1.defineBody(new Vector2(13*Constants.UNIT_SCALE, Constants.UNIT_SCALE));
         NPCs.add(npc);
+        NPCs.add(npc1);
 
         //testing items
         Item item1 = new Item(Constants.weapon1,0, Constants.steelSword, Item.Type.weapon);
@@ -211,8 +212,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         // test in rendering item
         spawnItems();
         //end test in rendering item
-
-        spriteBatch.draw(npc.walkAnimation.getKeyFrame(npc.stateTime, false), npc.body.getPosition().x-16, npc.body.getPosition().y-16);
+        drawNPCs();
         spriteBatch.draw(currentFrame, player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
 
         if(afterPotion){
@@ -229,9 +229,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         if(player.currentHealth<=0){
             game.setScreen(new DeathScreen(game));
         }
-        //super.render();
-
-        //npc.body.setLinearVelocity(10, 10);
     }
 
     @Override
@@ -264,6 +261,13 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         for(int i=0; i<spawnedItems.size(); i++){
             spriteBatch.draw(spawnedItems.get(i).texture, spawnedItems.get(i).pos.x-(spawnedItems.get(i).texture.getWidth()/2),
                     spawnedItems.get(i).pos.y-(spawnedItems.get(i).texture.getHeight()/2));
+        }
+    }
+
+    private void drawNPCs(){
+        for(int i=0; i<NPCs.size(); i++){
+            spriteBatch.draw(NPCs.get(i).walkAnimation.getKeyFrame(NPCs.get(i).stateTime, false), NPCs.get(i).body.getPosition().x-16,
+                    NPCs.get(i).body.getPosition().y-16);
         }
     }
 
