@@ -104,7 +104,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         NPC npc = new NPC("XML/NPC1.xml", world);
         npc.setup(Utility.heroSheet);
         npc.defineBody(new Vector2(8*Constants.UNIT_SCALE, Constants.UNIT_SCALE));
-        NPC npc1 = new NPC("XML/NPC1.xml", world);
+        NPC npc1 = new NPC("XML/QuestNPC.xml", world);
         npc1.setup(Utility.heroSheet);
         npc1.defineBody(new Vector2(13*Constants.UNIT_SCALE, Constants.UNIT_SCALE));
         NPCs.add(npc);

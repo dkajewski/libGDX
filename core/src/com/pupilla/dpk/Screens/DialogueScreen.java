@@ -12,10 +12,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.Backend.Collision;
@@ -45,10 +47,15 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
 
     private BitmapFont bf;
 
+    private Table innerTable, outerTable;
+    private ScrollPane scrollPane;
+
     public DialogueScreen(Game game){
         this.game = game;
         batch = new SpriteBatch();
         table = new Table();
+        innerTable = new Table();
+        outerTable = new Table();
     }
 
     @Override
@@ -65,11 +72,9 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
         name = new Label("", whiteFont);
         text = new Label("", whiteFont);
 
-        table.setPosition(width/2, height/2);
         table.debug();
 
         prepareTable();
-        table.add(end).fill();
 
         addListeners();
         stage.addActor(table);
@@ -84,6 +89,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
         batch.begin();
         batch.end();
         stage.draw();
+        stage.act();
     }
 
     @Override
@@ -109,7 +115,10 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
             table.row();
             Gdx.app.debug(TAG, npc.conversations.size()+"");
             text.setText(npc.conversations.get(0).text);
-            table.add(text);
+            text.setWrap(true);
+            text.setFontScale(0.7f);
+            text.setAlignment(Align.center);
+            table.add(text).width(640);
             table.row();
 
             for(int i=0; i<npc.conversations.get(0).responses.length; i++){
@@ -117,6 +126,8 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                 if(npc.conversations.get(0).accessibility[i] && npc.conversations.get(0).nextDialogues.length!=0){
                     // create button with that response
                     TextButton response = new TextButton(npc.conversations.get(0).responses[i], skin);
+                    response.getLabel().setWrap(true);
+                    response.getLabel().setFontScale(0.6f);
                     if(npc.conversations.get(0).nextDialogues[i]!=999){
                         final int next = npc.conversations.get(0).nextDialogues[i];
                         response.addListener(new ClickListener(){
@@ -127,10 +138,23 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                             }
                         });
                     }
-                    table.add(response).fill();
-                    table.row();
+                    innerTable.add(response).fill();
+                    innerTable.row();
                 }
             }
+
+            innerTable.add(end).width(width-20);
+            scrollPane = new ScrollPane(innerTable, skin);
+            outerTable.add(scrollPane);
+            outerTable.row();
+            outerTable.setHeight(180);
+            outerTable.setWidth(width-10);
+            outerTable.setPosition(0,0);
+            //table.setX(0);
+            //table.setY(height-table.getHeight());
+            table.setPosition(outerTable.getWidth()/2+10, outerTable.getHeight()+60);
+            stage.addActor(table);
+            stage.addActor(outerTable);
         }
     }
 
@@ -148,19 +172,27 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
             if(stage.getActors().get(i).equals(table)){
                 stage.getActors().removeIndex(i);
             }
+            if(stage.getActors().get(i).equals(outerTable)){
+                stage.getActors().removeIndex(i);
+            }
         }
+        innerTable = new Table();
+        outerTable = new Table();
         table = new Table();
         table.debug();
-        table.setPosition(width/2, height/2);
+        table.setPosition(width/2, height);
         NPC npc = PlayScreen.NPCs.get(index);
         Conversation dialogue = getDialogue(npc, nextDialogue);
 
         startQuest(dialogue.id);
         name = new Label(npc.name, whiteFont);
         text = new Label(dialogue.text, whiteFont);
+        text.setWrap(true);
+        text.setFontScale(0.7f);
+        text.setAlignment(Align.center);
         table.add(name);
         table.row();
-        table.add(text);
+        table.add(text).width(640);
         table.row();
 
         for(int i=0; i<dialogue.responses.length; i++){
@@ -168,6 +200,8 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
             if(dialogue.accessibility[i] && dialogue.nextDialogues.length!=0){
                 // create button with that response
                 TextButton response = new TextButton(dialogue.responses[i], skin);
+                response.getLabel().setWrap(true);
+                response.getLabel().setFontScale(0.6f);
                 if(dialogue.nextDialogues[i]!=999){
                     final int next = dialogue.nextDialogues[i];
                     response.addListener(new ClickListener(){
@@ -178,14 +212,23 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         }
                     });
                 }
-                table.add(response).fill();
-                table.row();
+                innerTable.add(response).fill();
+                innerTable.row();
             }
         }
 
-        table.add(end).fill();
+        innerTable.add(end).width(width-20);
+        scrollPane = new ScrollPane(innerTable, skin);
+        outerTable.add(scrollPane);
+        outerTable.row();
+        outerTable.setHeight(180);
+        outerTable.setWidth(width-10);
+        outerTable.setPosition(0,0);
+        //table.setX(0);
+        //table.setY(height-table.getHeight());
+        table.setPosition(outerTable.getWidth()/2+10, outerTable.getHeight()+60);
         stage.addActor(table);
-        Gdx.app.debug(TAG, name.getText().toString());
+        stage.addActor(outerTable);
     }
 
     private Conversation getDialogue(NPC npc, int id){

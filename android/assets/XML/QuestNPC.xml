@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Test2">
+    <dialogue id="0">
+        <text>
+            Witaj, wędrowcze. Co cię sprowadza do tej krainy?
+        </text>
+        <response nextDialogue="1">
+            Przychodzę z pokojowymi zamiarami. Mogę o coś zapytać?
+        </response>
+        <response nextDialogue="2">
+            Masz dla mnie jakieś zadanie?
+        </response>
+        <response nextDialogue="2">
+            Masz dla mnie jakieś zadanie?
+        </response>
+        <response nextDialogue="2">
+            Masz dla mnie jakieś zadanie?
+        </response>
+        <response nextDialogue="2">
+            Masz dla mnie jakieś zadanie?
+        </response><response nextDialogue="2">
+        Masz dla mnie jakieś zadanie?
+    </response>
+
+    </dialogue>
+    <dialogue id="1">
+        <text>
+            Pytaj.
+        </text>
+        <response nextDialogue="0">
+            Rozmyśliłem się...
+        </response>
+        <response nextDialogue="3">
+            Co to za miejsce?
+        </response>
+    </dialogue>
+    <dialogue id="2">
+        <text>
+            Przynieś mi jakiś pancerz.
+        </text>
+        <response nextDialogue="0">
+            Już się robi.
+        </response>
+    </dialogue>
+    <dialogue id="3">
+        <text>
+            Ta kraina jest opanowana przez złe istoty. Każda para rąk przyda się do walki z nimi.
+        </text>
+        <response nextDialogue="0">
+            Dzięki za informacje...
+        </response>
+    </dialogue>
+</npc>
