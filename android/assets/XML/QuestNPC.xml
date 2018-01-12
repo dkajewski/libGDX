@@ -10,18 +10,6 @@
         <response nextDialogue="2">
             Masz dla mnie jakieś zadanie?
         </response>
-        <response nextDialogue="2">
-            Masz dla mnie jakieś zadanie?
-        </response>
-        <response nextDialogue="2">
-            Masz dla mnie jakieś zadanie?
-        </response>
-        <response nextDialogue="2">
-            Masz dla mnie jakieś zadanie?
-        </response><response nextDialogue="2">
-        Masz dla mnie jakieś zadanie?
-    </response>
-
     </dialogue>
     <dialogue id="1">
         <text>

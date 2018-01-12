@@ -6,6 +6,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,6 +22,7 @@ import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
 import com.pupilla.dpk.Backend.Level;
 import com.pupilla.dpk.Backend.LoadGame;
+import com.pupilla.dpk.Backend.Task;
 import com.pupilla.dpk.Sprites.NPC;
 import com.pupilla.dpk.MapManager;
 import com.pupilla.dpk.PlayerController;
@@ -152,7 +154,9 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         player.stateTime += Gdx.graphics.getDeltaTime();
         TextureRegion currentFrame = player.walkAnimation.getKeyFrame(player.stateTime, true);
         if(player.walkAnimation.isAnimationFinished(player.stateTime)){
@@ -244,6 +248,10 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     public void dispose(){
         Gdx.app.debug(TAG, "dispose");
         spriteBatch.dispose();
+        bf.dispose();
+        texture.dispose();
+        renderer.dispose();
+        world.dispose();
     }
 
     @Override

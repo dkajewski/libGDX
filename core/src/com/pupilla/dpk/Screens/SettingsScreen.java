@@ -21,6 +21,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.SaveGame;
 import com.pupilla.dpk.Sprites.Hero;
+import com.pupilla.dpk.Sprites.NPC;
+
+import java.util.ArrayList;
 
 /**
  * Created by orzech on 26.12.2017.
@@ -105,6 +108,8 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
         exitGame.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
+                game.dispose();
+                PlayScreen.NPCs = new ArrayList<NPC>();
                 Gdx.app.exit();
             }
         });

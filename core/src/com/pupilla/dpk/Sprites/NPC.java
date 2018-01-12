@@ -17,13 +17,14 @@ import com.pupilla.dpk.Backend.Conversation;
 import com.pupilla.dpk.Backend.Dialogue;
 import com.pupilla.dpk.Utility;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by orzech on 13.12.2017.
  */
 
-public class NPC {
+public class NPC implements Serializable{
     private static final String TAG = "NPC";
 
     private transient World world;
@@ -32,14 +33,14 @@ public class NPC {
     public List<Conversation> conversations;
     private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
 
-    public Sprite currentSprite;
-    public Texture npcTexture;
-    public Animation<TextureRegion> walkAnimation;
-    public Animation<TextureRegion> walkLeftAnimation;
-    public Animation<TextureRegion> walkRightAnimation;
-    public Animation<TextureRegion> walkUpAnimation;
-    public Animation<TextureRegion> walkDownAnimation;
-    public float stateTime;
+    public transient Sprite currentSprite;
+    public transient Texture npcTexture;
+    public transient Animation<TextureRegion> walkAnimation;
+    public transient Animation<TextureRegion> walkLeftAnimation;
+    public transient Animation<TextureRegion> walkRightAnimation;
+    public transient Animation<TextureRegion> walkUpAnimation;
+    public transient Animation<TextureRegion> walkDownAnimation;
+    public float stateTime=0f;
     public boolean alive = true;
     public Direction direction = Direction.DOWN;
 
