@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Task implements Serializable{
 
     private static final String TAG = "Task";
+    public int id;
     public String title;
     public String description;
     public boolean active;
@@ -19,7 +20,8 @@ public class Task implements Serializable{
 
     public static ArrayList<Task> tasks = new ArrayList<Task>();
 
-    public Task(String title, String description){
+    public Task(int id, String title, String description){
+        this.id = id;
         this.title = title;
         this.description = description;
         active = false;

@@ -127,6 +127,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         helmet.spawnItem(new Vector2( 6*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
         shield.spawnItem(new Vector2( 7*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
         legs.spawnItem(new Vector2( 5*Constants.UNIT_SCALE, 7*Constants.UNIT_SCALE));
+
+        Task task = new Task(1, "Zdobyć pancerz", "Test1 prosił o pancerz.");
     }
 
     @Override

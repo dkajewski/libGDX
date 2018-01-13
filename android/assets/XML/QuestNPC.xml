@@ -26,7 +26,7 @@
         <text>
             Przynieś mi jakiś pancerz.
         </text>
-        <response nextDialogue="0">
+        <response nextDialogue="4">
             Już się robi.
         </response>
     </dialogue>
@@ -36,6 +36,14 @@
         </text>
         <response nextDialogue="0">
             Dzięki za informacje...
+        </response>
+    </dialogue>
+    <dialogue id="4">
+        <text>
+            Dziękuję, że chcesz mi pomóc.
+        </text>
+        <response nextDialogue="0">
+            Chcę cię jeszcze o coś spytać.
         </response>
     </dialogue>
 </npc>

@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Conversation;
+import com.pupilla.dpk.Backend.Task;
 import com.pupilla.dpk.Sprites.NPC;
 
 /**
@@ -242,10 +243,19 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
 
     /**
      * Checking whether that dialogue option starts new quest
-     * @param dialogue
+     * @param dialogue - id of dialogue
      */
     private void startQuest(int dialogue){
-
+        //NPC npc = null;
+        if(Collision.NPCname.equals("Test2")){
+            if(dialogue==4){
+                for(int i=0; i<Task.tasks.size(); i++){
+                    if(Task.tasks.get(i).id==1 && !Task.tasks.get(i).active){
+                        Task.tasks.get(i).active=true;
+                    }
+                }
+            }
+        }
     }
 
     @Override

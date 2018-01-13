@@ -34,6 +34,7 @@ import java.util.ArrayList;
 
 public class TasksScreen extends ApplicationAdapter implements Screen {
 
+    private static final String TAG = "TasksScreen";
     private int width=640, height;
     private Game game;
     private Stage stage;
@@ -154,8 +155,11 @@ public class TasksScreen extends ApplicationAdapter implements Screen {
     }
 
     private void fillTasksArrays(){
+        Gdx.app.debug(TAG, Task.tasks.size()+"");
         for(int i=0; i<Task.tasks.size(); i++){
+            Gdx.app.debug(TAG, i+"");
             if(Task.tasks.get(i).active){
+                Gdx.app.debug(TAG, "active task");
                 activeTasks.add(Task.tasks.get(i));
             }
             if(Task.tasks.get(i).ended){
