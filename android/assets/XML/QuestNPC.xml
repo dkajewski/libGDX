@@ -10,6 +10,9 @@
         <response nextDialogue="2">
             Masz dla mnie jakieś zadanie?
         </response>
+        <response nextDialogue="5" accessibility="false">
+            Przyniosłem o co prosiłeś.
+        </response>
     </dialogue>
     <dialogue id="1">
         <text>
@@ -44,6 +47,14 @@
         </text>
         <response nextDialogue="0">
             Chcę cię jeszcze o coś spytać.
+        </response>
+    </dialogue>
+    <dialogue id="5">
+        <text>
+            To miłe, że przyniosłeś to, o co prosiłem.
+        </text>
+        <response nextDialogue="0">
+            Porozmawiajmy o czymś jeszcze.
         </response>
     </dialogue>
 </npc>

@@ -101,7 +101,7 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
             public void clicked(InputEvent event, float x, float y){
                 SaveGame save = new SaveGame();
                 save.player();
-                save.backpack();
+                save.taskList();
             }
         });
 

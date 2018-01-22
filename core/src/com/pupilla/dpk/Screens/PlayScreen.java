@@ -87,6 +87,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             player.setup();
             player.defineBody(new Vector2(16, 16));
             spawnedItems = new ArrayList<Item>();
+
+            Task task = new Task(1, "Zdobyć pancerz", "Test1 prosił o pancerz.");
         } else{
             // loading game
             LoadGame load = new LoadGame();
@@ -96,6 +98,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             player.defineBody(new Vector2(player.position.x, player.position.y));
             player.backpack.reloadTextures();
             spawnedItems = new ArrayList<Item>();
+            Task.tasks = load.taskList();
         }
 
         bf = new BitmapFont(Gdx.files.internal(Constants.font));
@@ -127,8 +130,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         helmet.spawnItem(new Vector2( 6*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
         shield.spawnItem(new Vector2( 7*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
         legs.spawnItem(new Vector2( 5*Constants.UNIT_SCALE, 7*Constants.UNIT_SCALE));
-
-        Task task = new Task(1, "Zdobyć pancerz", "Test1 prosił o pancerz.");
     }
 
     @Override

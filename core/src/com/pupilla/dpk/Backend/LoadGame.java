@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by orzech on 28.12.2017.
@@ -38,7 +40,26 @@ public class LoadGame {
         return null;
     }
 
-    public Backpack backpack(){
+    public ArrayList<Task> taskList(){
+        try{
+            FileInputStream fis = new FileInputStream(Gdx.files.getLocalStoragePath()+"tasklist.sav");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            ArrayList<Task> obj = (ArrayList) ois.readObject();
+            ois.close();
+            fis.close();
+            return obj;
+        } catch (FileNotFoundException e){
+            Gdx.app.debug(TAG, "loadtasks");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /*public Backpack backpack(){
         try{
             FileInputStream fis = new FileInputStream(Gdx.files.getLocalStoragePath()+"backpack.sav");
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -55,5 +76,5 @@ public class LoadGame {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 }

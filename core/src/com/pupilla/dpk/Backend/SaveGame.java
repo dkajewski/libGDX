@@ -41,7 +41,23 @@ public class SaveGame{
 
     }
 
-    public void backpack(){
+    public void taskList(){
+        try{
+            FileHandle fh = Gdx.files.local(Gdx.files.getLocalStoragePath()+"tasklist.sav");
+            Gdx.app.debug(TAG, Gdx.files.getLocalStoragePath());
+            FileOutputStream fos = new FileOutputStream(fh.path());
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(Task.tasks);
+            fos.close();
+            oos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*public void backpack(){
         try{
             FileHandle fh = Gdx.files.local(Gdx.files.getLocalStoragePath()+"backpack.sav");
             Gdx.app.debug(TAG, Gdx.files.getLocalStoragePath());
@@ -55,5 +71,5 @@ public class SaveGame{
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

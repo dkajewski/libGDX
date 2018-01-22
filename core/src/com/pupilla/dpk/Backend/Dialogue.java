@@ -41,9 +41,10 @@ public class Dialogue {
                 }
                 for(int j=0; j<responses.size; j++){
                     boolean nextDialogueAttribute = false;
+                    boolean accessibilityKey = false;
                     //fill responses array
                     c.responses[j] = responses.get(j).getText();
-                    c.accessibility[j] = true;
+                    //c.accessibility[j] = true;
                     Array<String> keys;
                     if(responses.get(j).getAttributes() != null){
                         keys = responses.get(j).getAttributes().keys().toArray();
@@ -52,7 +53,17 @@ public class Dialogue {
                             if(keys.get(k).equals("nextDialogue")){
                                 nextDialogueAttribute = true;
                             }
+
+                            if(keys.get(k).equals("accessibility")){
+                                c.accessibility[j] = responses.get(j).getBoolean("accessibility");
+                                accessibilityKey = true;
+                            }
                         }
+                    }
+
+                    // if there's no accessibility param, set access to the response to true
+                    if(!accessibilityKey){
+                        c.accessibility[j] = true;
                     }
 
                     if(nextDialogueAttribute){
@@ -60,6 +71,12 @@ public class Dialogue {
                     }else{
                         c.nextDialogues[j] = 999;
                     }
+
+                    /*if(accessibility){
+                        c.accessibility[j] = responses.get(j).getBoolean("accessibility");
+                    }else{
+                        c.accessibility[j] = true;
+                    }*/
                     conversations.add(c);
 
                 }

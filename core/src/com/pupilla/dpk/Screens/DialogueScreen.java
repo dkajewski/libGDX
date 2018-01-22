@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Conversation;
+import com.pupilla.dpk.Backend.Item;
 import com.pupilla.dpk.Backend.Task;
 import com.pupilla.dpk.Sprites.NPC;
 
@@ -74,7 +75,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
         text = new Label("", whiteFont);
 
         table.debug();
-
+        checkQuests();
         prepareTable();
 
         addListeners();
@@ -102,6 +103,15 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
         end.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
+                for(int i=0; i<PlayScreen.NPCs.size(); i++){
+                    if(PlayScreen.NPCs.get(i).name.equals("Test2")){
+                        for(int j=0; j<Task.tasks.size(); j++){
+                            if(Task.tasks.get(j).id==1 && !Task.tasks.get(j).ended && Task.tasks.get(j).active){
+                                PlayScreen.NPCs.get(i).conversations.get(0).accessibility[2] = false;
+                            }
+                        }
+                    }
+                }
                 game.setScreen(PlayScreen.parent);
             }
         });
@@ -248,10 +258,46 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
     private void startQuest(int dialogue){
         //NPC npc = null;
         if(Collision.NPCname.equals("Test2")){
-            if(dialogue==4){
-                for(int i=0; i<Task.tasks.size(); i++){
+            if(dialogue==4)
+                for(int i=0; i<Task.tasks.size(); i++)
                     if(Task.tasks.get(i).id==1 && !Task.tasks.get(i).active){
                         Task.tasks.get(i).active=true;
+                        for(int j=0; j<PlayScreen.NPCs.size(); j++)
+                            if(PlayScreen.NPCs.get(j).name.equals("Test2")) {
+                                PlayScreen.NPCs.get(j).conversations.get(0).accessibility[1] = false;
+                                break;
+                            }
+                    }
+
+            if(dialogue==5)
+                for(int i=0; i<Task.tasks.size(); i++)
+                    if(Task.tasks.get(i).id==1 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active = false;
+                        Task.tasks.get(i).ended = true;
+                        for(int j=0; j<PlayScreen.NPCs.size(); j++)
+                            if(PlayScreen.NPCs.get(j).name.equals("Test2")){
+                                PlayScreen.NPCs.get(j).conversations.get(0).accessibility[2] = false;
+                                break;
+                            }
+                    }
+        }
+    }
+
+    /**
+     *  Check whether quest can be completed
+     */
+    private void checkQuests(){
+        for(int i=0; i<Task.tasks.size(); i++){
+            if(Task.tasks.get(i).id==1 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                for(int j=0; j<PlayScreen.player.backpack.itemArr.length; j++){
+                    if(PlayScreen.player.backpack.itemArr[j]!=null && PlayScreen.player.backpack.itemArr[j].type == Item.Type.armor){
+                        for(int k=0; k<PlayScreen.NPCs.size(); k++){
+                            if(PlayScreen.NPCs.get(k).name.equals("Test2")){
+                                PlayScreen.player.backpack.itemArr[j] = null;
+                                PlayScreen.NPCs.get(k).conversations.get(0).accessibility[2] = true;
+                                break;
+                            }
+                        }
                     }
                 }
             }
