@@ -20,7 +20,7 @@ public class Task implements Serializable{
 
     public static ArrayList<Task> tasks = new ArrayList<Task>();
 
-    public Task(int id, String title, String description){
+    public Task(int id, String title, String description, int gold, int exp){
         this.id = id;
         this.title = title;
         this.description = description;

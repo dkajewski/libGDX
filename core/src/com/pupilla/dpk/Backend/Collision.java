@@ -2,6 +2,7 @@ package com.pupilla.dpk.Backend;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.pupilla.dpk.Scenes.Hud;
 import com.pupilla.dpk.Screens.PlayScreen;
+import com.pupilla.dpk.Sprites.Enemy;
 import com.pupilla.dpk.Sprites.NPC;
 
 /**
@@ -56,6 +58,31 @@ public class Collision implements ContactListener {
             }
         }
 
+        // collision with enemy
+        if(fixA.getUserData() instanceof Enemy || fixB.getUserData() instanceof Enemy){
+            Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
+            Fixture enemy = player==fixA ? fixB : fixA;
+
+            if(enemy.getUserData() instanceof Enemy){
+                Gdx.app.debug(TAG, "enemy collision");
+                Enemy enemy1 = (Enemy) enemy.getUserData();
+                //enemy1.body.setLinearVelocity(-400, -500);
+            }
+        }
+
+        // entering "visible" area to enemy
+        if(fixA.getUserData() instanceof Body || fixB.getUserData() instanceof Body){
+            Gdx.app.debug(TAG, "enemy sensor collision");
+            Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
+            Fixture sensor = player==fixA ? fixB : fixA;
+            Body area = (Body) sensor.getUserData();
+            for(int i=0; i<PlayScreen.enemies.size(); i++){
+                if(PlayScreen.enemies.get(i).visibleArea.equals(area)){
+                    PlayScreen.enemies.get(i).canMove = true;
+                }
+            }
+        }
+
     }
 
     @Override
@@ -77,15 +104,28 @@ public class Collision implements ContactListener {
                 Hud.dialoguebutton.setVisible(false);
             }
         }
+
+        // entering "visible" area to enemy
+        if(fixA.getUserData() instanceof Body || fixB.getUserData() instanceof Body){
+            Gdx.app.debug(TAG, "enemy sensor end collision");
+            Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
+            Fixture sensor = player==fixA ? fixB : fixA;
+            Body area = (Body) sensor.getUserData();
+            for(int i=0; i<PlayScreen.enemies.size(); i++){
+                if(PlayScreen.enemies.get(i).visibleArea.equals(area)){
+                    PlayScreen.enemies.get(i).canMove = false;
+                }
+            }
+        }
     }
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-
+        //Gdx.app.debug(TAG, "presolve");
     }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-
+        //Gdx.app.debug(TAG, "postsolve");
     }
 }

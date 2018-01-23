@@ -13,58 +13,52 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.Constants;
-import com.pupilla.dpk.Backend.Conversation;
-import com.pupilla.dpk.Backend.Dialogue;
 import com.pupilla.dpk.Utility;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
- * Created by orzech on 13.12.2017.
+ * Created by orzech on 23.01.2018.
  */
 
-public class NPC implements Serializable{
-    private static final String TAG = "NPC";
+public class Enemy implements Serializable{
 
+    private static final String TAG = "Enemy";
     private transient World world;
-    public transient Body body;
-    public String name;
-    public List<Conversation> conversations;
-    private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
+    public transient Body body, visibleArea;
+    public boolean canMove = false;
+    private int x, y;
 
     public transient Sprite currentSprite;
-    public transient Texture npcTexture;
+    public transient Texture enemyTexture;
     public transient Animation<TextureRegion> walkAnimation;
     public transient Animation<TextureRegion> walkLeftAnimation;
     public transient Animation<TextureRegion> walkRightAnimation;
     public transient Animation<TextureRegion> walkUpAnimation;
     public transient Animation<TextureRegion> walkDownAnimation;
+    private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
     public float stateTime=0f;
     public boolean alive = true;
     public Direction direction = Direction.DOWN;
 
-    public enum Direction{
-        LEFT, RIGHT, UP, DOWN
+    public Enemy(World world){
+        this.world = world;
     }
 
-    public NPC(String dialoguePath, World world){
-        this.world = world;
-        Dialogue dialogue = new Dialogue(dialoguePath);
-        name = dialogue.npcName;
-        conversations = dialogue.conversations;
+    public enum Direction{
+        LEFT, RIGHT, UP, DOWN
     }
 
     public void setup(AssetDescriptor<Texture> sheet){
         Utility ut = new Utility();
         ut.manager.load(sheet);
         ut.manager.finishLoading();
-        npcTexture = ut.manager.get(sheet);
+        enemyTexture = ut.manager.get(sheet);
 
-        currentSprite = new Sprite(npcTexture);
+        currentSprite = new Sprite(enemyTexture);
         currentSprite.setSize(Gdx.graphics.getWidth()/ Constants.UNIT_SCALE, Gdx.graphics.getHeight()/ Constants.UNIT_SCALE);
 
-        TextureRegion[][] tmp = TextureRegion.split(npcTexture, npcTexture.getWidth()/FRAME_COLS, npcTexture.getHeight()/FRAME_ROWS);
+        TextureRegion[][] tmp = TextureRegion.split(enemyTexture, enemyTexture.getWidth()/FRAME_COLS, enemyTexture.getHeight()/FRAME_ROWS);
 
         TextureRegion[] walkUpFrames = new TextureRegion[FRAME_ROWS];
         TextureRegion[] walkDownFrames = new TextureRegion[FRAME_ROWS];
@@ -122,10 +116,21 @@ public class NPC implements Serializable{
         FixtureDef fdef = new FixtureDef();
         fdef.density = 99999;
         fdef.shape = shape;
-        fdef.filter.categoryBits = Constants.BIT_NPC; /* is a... */
-        fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_PLAYER | Constants.BIT_ITEM | Constants.BIT_NPC | Constants.BIT_ENEMY; /* collides with... */
+        fdef.filter.categoryBits = Constants.BIT_ENEMY; /* is a... */
+        fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_PLAYER | Constants.BIT_NPC | Constants.BIT_ENEMY; /* collides with... */
         body.createFixture(fdef).setUserData(this);
         body.setLinearDamping(20f);
-    }
 
+        bdef = new BodyDef();
+        bdef.position.set(currentSprite.getX()-112, currentSprite.getY()-112);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        visibleArea = world.createBody(bdef);
+
+        shape = new PolygonShape();
+        shape.setAsBox(128, 128);
+        fdef = new FixtureDef();
+        fdef.isSensor = true;
+        fdef.shape = shape;
+        body.createFixture(fdef).setUserData(visibleArea);
+    }
 }

@@ -13,6 +13,7 @@ public class Constants {
     public static final short BIT_ITEM = 4;
     public static final short BIT_COLLECTED = 8;
     public static final short BIT_NPC = 16;
+    public static final short BIT_ENEMY = 32;
 
     public static final int UNIT_SCALE = 32;
 

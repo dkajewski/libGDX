@@ -74,7 +74,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
         name = new Label("", whiteFont);
         text = new Label("", whiteFont);
 
-        table.debug();
+        //table.debug();
         checkQuests();
         prepareTable();
 
@@ -190,7 +190,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
         innerTable = new Table();
         outerTable = new Table();
         table = new Table();
-        table.debug();
+        //table.debug();
         table.setPosition(width/2, height);
         NPC npc = PlayScreen.NPCs.get(index);
         Conversation dialogue = getDialogue(npc, nextDialogue);
@@ -284,24 +284,20 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
     }
 
     /**
-     *  Check whether quest can be completed
+     *  Check whether quest can be completed,
+     *  if yes, set visibility of the response to true
      */
     private void checkQuests(){
-        for(int i=0; i<Task.tasks.size(); i++){
-            if(Task.tasks.get(i).id==1 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
-                for(int j=0; j<PlayScreen.player.backpack.itemArr.length; j++){
-                    if(PlayScreen.player.backpack.itemArr[j]!=null && PlayScreen.player.backpack.itemArr[j].type == Item.Type.armor){
-                        for(int k=0; k<PlayScreen.NPCs.size(); k++){
+        for(int i=0; i<Task.tasks.size(); i++)
+            if(Task.tasks.get(i).id==1 && Task.tasks.get(i).active && !Task.tasks.get(i).ended)
+                for(int j=0; j<PlayScreen.player.backpack.itemArr.length; j++)
+                    if(PlayScreen.player.backpack.itemArr[j]!=null && PlayScreen.player.backpack.itemArr[j].type == Item.Type.armor)
+                        for(int k=0; k<PlayScreen.NPCs.size(); k++)
                             if(PlayScreen.NPCs.get(k).name.equals("Test2")){
                                 PlayScreen.player.backpack.itemArr[j] = null;
                                 PlayScreen.NPCs.get(k).conversations.get(0).accessibility[2] = true;
                                 break;
                             }
-                        }
-                    }
-                }
-            }
-        }
     }
 
     @Override

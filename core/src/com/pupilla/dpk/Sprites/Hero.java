@@ -136,7 +136,7 @@ public class Hero implements Serializable{
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fdef.filter.categoryBits = Constants.BIT_PLAYER; /* is a... */
-        fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_PLAYER | Constants.BIT_ITEM | Constants.BIT_NPC; /* collides with... */
+        fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_PLAYER | Constants.BIT_ITEM | Constants.BIT_NPC | Constants.BIT_ENEMY; /* collides with... */
         b2body.createFixture(fdef).setUserData("player");
         b2body.setLinearDamping(20f);
 

@@ -23,6 +23,7 @@ import com.pupilla.dpk.Backend.Item;
 import com.pupilla.dpk.Backend.Level;
 import com.pupilla.dpk.Backend.LoadGame;
 import com.pupilla.dpk.Backend.Task;
+import com.pupilla.dpk.Sprites.Enemy;
 import com.pupilla.dpk.Sprites.NPC;
 import com.pupilla.dpk.MapManager;
 import com.pupilla.dpk.PlayerController;
@@ -70,6 +71,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
     public static ArrayList<Item> spawnedItems = new ArrayList<Item>();
     public static ArrayList<NPC> NPCs = new ArrayList<NPC>();
+    public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public PlayScreen(Game game, boolean newGame){
         spriteBatch = new SpriteBatch();
         this.newGame = newGame;
@@ -88,7 +90,12 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             player.defineBody(new Vector2(16, 16));
             spawnedItems = new ArrayList<Item>();
 
-            Task task = new Task(1, "Zdobyć pancerz", "Test1 prosił o pancerz.");
+            Task task = new Task(1, "Zdobyć pancerz", "Test1 prosił o pancerz.", 10, 5);
+
+            Enemy enemy = new Enemy(world);
+            enemy.setup(Utility.monster1Sheet);
+            enemy.defineBody(new Vector2(250, 250));
+            enemies.add(enemy);
         } else{
             // loading game
             LoadGame load = new LoadGame();
@@ -220,6 +227,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         spawnItems();
         //end test in rendering item
         drawNPCs();
+
+        drawEnemies();
         spriteBatch.draw(currentFrame, player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
 
         if(afterPotion){
@@ -279,6 +288,31 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         for(int i=0; i<NPCs.size(); i++){
             spriteBatch.draw(NPCs.get(i).walkAnimation.getKeyFrame(NPCs.get(i).stateTime, false), NPCs.get(i).body.getPosition().x-16,
                     NPCs.get(i).body.getPosition().y-16);
+        }
+    }
+
+    private void drawEnemies(){
+        for(int i=0; i<enemies.size(); i++){
+            if(enemies.get(i).canMove){
+                enemies.get(i).stateTime += Gdx.graphics.getDeltaTime();
+                TextureRegion currentFrame = enemies.get(i).walkAnimation.getKeyFrame(enemies.get(i).stateTime, true);
+                if(enemies.get(i).walkAnimation.isAnimationFinished(enemies.get(i).stateTime)){
+                    enemies.get(i).alive = false;
+                }
+                if(!enemies.get(i).alive){
+                    currentFrame = enemies.get(i).walkAnimation.getKeyFrame(enemies.get(i).stateTime, false);
+                    enemies.get(i).stateTime = 0f;
+                }
+
+                //test!!!
+                enemies.get(i).body.setLinearVelocity(enemies.get(i).body.getLinearVelocity().x, -(7000*Gdx.graphics.getDeltaTime()));
+                enemies.get(i).currentSprite.setPosition(enemies.get(i).body.getPosition().x-16, enemies.get(i).body.getPosition().y-16);
+                enemies.get(i).alive = true;
+                enemies.get(i).walkAnimation = enemies.get(i).walkDownAnimation;
+                enemies.get(i).direction = Enemy.Direction.DOWN;
+            }
+            spriteBatch.draw(enemies.get(i).walkAnimation.getKeyFrame(enemies.get(i).stateTime, false), enemies.get(i).body.getPosition().x-16,
+                    enemies.get(i).body.getPosition().y-16);
         }
     }
 
