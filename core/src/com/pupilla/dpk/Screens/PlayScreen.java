@@ -54,6 +54,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     boolean newGame;
 
     public static float _3s = 0f;
+    public static float time = 0f;
     public static boolean afterPotion = false;
 
     private String TESTMAP = "maps/testmap.tmx";
@@ -85,10 +86,12 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         //Level.showLevels();
         if(newGame){
             // new game start
+            time = 0f;
             player = new Hero(world);
             player.setup();
             player.defineBody(new Vector2(16, 16));
             spawnedItems = new ArrayList<Item>();
+            enemies = new ArrayList<Enemy>();
 
             Task task = new Task(1, "Zdobyć pancerz", "Test1 prosił o pancerz.", 10, 5);
 
@@ -99,12 +102,14 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         } else{
             // loading game
             LoadGame load = new LoadGame();
+            time=0f;
             player = load.player();
             player.world = world;
             player.setup();
             player.defineBody(new Vector2(player.position.x, player.position.y));
             player.backpack.reloadTextures();
             spawnedItems = new ArrayList<Item>();
+            enemies = new ArrayList<Enemy>();
             Task.tasks = load.taskList();
         }
 
@@ -166,6 +171,10 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if(time<2){
+            time += Gdx.graphics.getDeltaTime();
+        }
+
 
         player.stateTime += Gdx.graphics.getDeltaTime();
         TextureRegion currentFrame = player.walkAnimation.getKeyFrame(player.stateTime, true);
@@ -304,12 +313,36 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
                     enemies.get(i).stateTime = 0f;
                 }
 
-                //test!!!
-                enemies.get(i).body.setLinearVelocity(enemies.get(i).body.getLinearVelocity().x, -(7000*Gdx.graphics.getDeltaTime()));
-                enemies.get(i).currentSprite.setPosition(enemies.get(i).body.getPosition().x-16, enemies.get(i).body.getPosition().y-16);
-                enemies.get(i).alive = true;
-                enemies.get(i).walkAnimation = enemies.get(i).walkDownAnimation;
-                enemies.get(i).direction = Enemy.Direction.DOWN;
+                switch(getDirectionToMove(enemies.get(i))){
+                    case DOWN:
+                        enemies.get(i).body.setLinearVelocity(enemies.get(i).body.getLinearVelocity().x, -(7000*Gdx.graphics.getDeltaTime()));
+                        enemies.get(i).currentSprite.setPosition(enemies.get(i).body.getPosition().x-16, enemies.get(i).body.getPosition().y-16);
+                        enemies.get(i).alive = true;
+                        enemies.get(i).walkAnimation = enemies.get(i).walkDownAnimation;
+                        enemies.get(i).direction = Enemy.Direction.DOWN;
+                        break;
+                    case RIGHT:
+                        enemies.get(i).body.setLinearVelocity(7000*Gdx.graphics.getDeltaTime(), enemies.get(i).body.getLinearVelocity().y);
+                        enemies.get(i).currentSprite.setPosition(enemies.get(i).body.getPosition().x-16, enemies.get(i).body.getPosition().y-16);
+                        enemies.get(i).alive = true;
+                        enemies.get(i).walkAnimation = enemies.get(i).walkRightAnimation;
+                        enemies.get(i).direction = Enemy.Direction.RIGHT;
+                        break;
+                    case LEFT:
+                        enemies.get(i).body.setLinearVelocity(-(7000*Gdx.graphics.getDeltaTime()), enemies.get(i).body.getLinearVelocity().y);
+                        enemies.get(i).currentSprite.setPosition(enemies.get(i).body.getPosition().x-16, enemies.get(i).body.getPosition().y-16);
+                        enemies.get(i).alive = true;
+                        enemies.get(i).walkAnimation = enemies.get(i).walkLeftAnimation;
+                        enemies.get(i).direction = Enemy.Direction.LEFT;
+                        break;
+                    case UP:
+                        enemies.get(i).body.setLinearVelocity(enemies.get(i).body.getLinearVelocity().x, 7000*Gdx.graphics.getDeltaTime());
+                        enemies.get(i).currentSprite.setPosition(enemies.get(i).body.getPosition().x-16, enemies.get(i).body.getPosition().y-16);
+                        enemies.get(i).alive = true;
+                        enemies.get(i).walkAnimation = enemies.get(i).walkUpAnimation;
+                        enemies.get(i).direction = Enemy.Direction.UP;
+                        break;
+                }
             }
             spriteBatch.draw(enemies.get(i).walkAnimation.getKeyFrame(enemies.get(i).stateTime, false), enemies.get(i).body.getPosition().x-16,
                     enemies.get(i).body.getPosition().y-16);
@@ -322,6 +355,67 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             width=0;
         }
         return width;
+    }
+
+    public static float halfSecondMove = 0f;
+    private Enemy.Direction getDirectionToMove(Enemy enemy){
+        float xe = enemy.body.getPosition().x;
+        float ye = enemy.body.getPosition().y;
+
+        float xp = player.b2body.getPosition().x;
+        float yp = player.b2body.getPosition().y;
+
+        halfSecondMove+=Gdx.graphics.getDeltaTime();
+        if(halfSecondMove<0.5f){
+            return enemy.direction;
+        }
+        halfSecondMove = 0f;
+        // if X of enemy is smaller than X of player...
+        // if player is more on the right than enemy...
+        if(xe < xp){
+            // if enemy is above player...
+            if(ye > yp){
+                // if Yenemy-Yplayer is bigger than Xplayer-Xenemy...
+                if((ye-yp)>(xp-xe)){
+                    return Enemy.Direction.DOWN;
+                } else{
+                    return Enemy.Direction.RIGHT;
+                }
+            }
+
+            // if player is above enemy...
+            if(ye < yp){
+                if((yp-ye)>(xp-xe)){
+                    return Enemy.Direction.UP;
+                }else{
+                    return Enemy.Direction.RIGHT;
+                }
+            }
+        }
+
+        // if player is more on the left than enemy...
+        if(xe > xp){
+            // if enemy is above player...
+            if(ye > yp){
+                if((ye-yp)>(xe-xp)){
+                    return Enemy.Direction.DOWN;
+                } else{
+                    return Enemy.Direction.LEFT;
+                }
+            }
+
+            // if player is above enemy...
+            if(ye < yp){
+                if((yp-ye)>(xe-xp)){
+                    return Enemy.Direction.UP;
+                }else{
+                    return Enemy.Direction.LEFT;
+                }
+            }
+
+        }
+
+        return Enemy.Direction.LEFT;
     }
 
 }

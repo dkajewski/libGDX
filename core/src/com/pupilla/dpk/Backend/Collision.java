@@ -49,7 +49,7 @@ public class Collision implements ContactListener {
             Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
             Fixture npc = player==fixA ? fixB : fixA;
 
-            if(npc.getUserData() instanceof NPC){
+            if(npc.getUserData() instanceof NPC && player.getUserData()=="player"){
                 Gdx.app.debug(TAG, "npc!");
                 NPC npc1 = (NPC) npc.getUserData();
                 NPCname = npc1.name;
@@ -63,9 +63,10 @@ public class Collision implements ContactListener {
             Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
             Fixture enemy = player==fixA ? fixB : fixA;
 
-            if(enemy.getUserData() instanceof Enemy){
+            if(enemy.getUserData() instanceof Enemy && player.getUserData()=="player"){
                 Gdx.app.debug(TAG, "enemy collision");
                 Enemy enemy1 = (Enemy) enemy.getUserData();
+                enemy1.canMove = false;
                 //enemy1.body.setLinearVelocity(-400, -500);
             }
         }
@@ -75,10 +76,13 @@ public class Collision implements ContactListener {
             Gdx.app.debug(TAG, "enemy sensor collision");
             Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
             Fixture sensor = player==fixA ? fixB : fixA;
-            Body area = (Body) sensor.getUserData();
-            for(int i=0; i<PlayScreen.enemies.size(); i++){
-                if(PlayScreen.enemies.get(i).visibleArea.equals(area)){
-                    PlayScreen.enemies.get(i).canMove = true;
+            if(sensor.getUserData() instanceof Body){
+                Body area = (Body) sensor.getUserData();
+                for(int i=0; i<PlayScreen.enemies.size(); i++){
+                    if(PlayScreen.enemies.get(i).visibleArea.equals(area) && PlayScreen.time>=2){
+                        PlayScreen.halfSecondMove = 0.6f;
+                        PlayScreen.enemies.get(i).canMove = true;
+                    }
                 }
             }
         }
@@ -87,7 +91,7 @@ public class Collision implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        Gdx.app.debug(TAG, "end contact");
+        //Gdx.app.debug(TAG, "end contact");
         Fixture fixA = contact.getFixtureA();
         Fixture fixB = contact.getFixtureB();
 
@@ -96,7 +100,7 @@ public class Collision implements ContactListener {
             Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
             Fixture npc = player==fixA ? fixB : fixA;
 
-            if(npc.getUserData() instanceof NPC){
+            if(npc.getUserData() instanceof NPC && player.getUserData()=="player"){
                 Gdx.app.debug(TAG, "npc!");
                 //NPC npc1 = (NPC) npc.getUserData();
                 NPCname = "";
@@ -107,14 +111,30 @@ public class Collision implements ContactListener {
 
         // entering "visible" area to enemy
         if(fixA.getUserData() instanceof Body || fixB.getUserData() instanceof Body){
-            Gdx.app.debug(TAG, "enemy sensor end collision");
+
             Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
             Fixture sensor = player==fixA ? fixB : fixA;
-            Body area = (Body) sensor.getUserData();
-            for(int i=0; i<PlayScreen.enemies.size(); i++){
-                if(PlayScreen.enemies.get(i).visibleArea.equals(area)){
-                    PlayScreen.enemies.get(i).canMove = false;
+            if(sensor.getUserData() instanceof Body && player.getUserData()=="player"){
+                Body area = (Body) sensor.getUserData();
+                for(int i=0; i<PlayScreen.enemies.size(); i++){
+                    if(PlayScreen.enemies.get(i).visibleArea.equals(area)){
+                        Gdx.app.debug(TAG, "enemy sensor end collision");
+                        PlayScreen.enemies.get(i).canMove = false;
+                    }
                 }
+            }
+
+        }
+
+        // ending contact with enemy
+        if(fixA.getUserData() instanceof Enemy || fixB.getUserData() instanceof Enemy){
+            Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
+            Fixture enemy = player==fixA ? fixB : fixA;
+
+            if(enemy.getUserData() instanceof Enemy && player.getUserData()=="player"){
+                Gdx.app.debug(TAG, "end enemy collision");
+                Enemy e = (Enemy) enemy.getUserData();
+                e.canMove = true;
             }
         }
     }

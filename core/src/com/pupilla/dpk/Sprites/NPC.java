@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -116,8 +117,8 @@ public class NPC implements Serializable{
         bdef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bdef);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(16, 16);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(16);
 
         FixtureDef fdef = new FixtureDef();
         fdef.density = 99999;

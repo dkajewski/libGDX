@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -110,8 +111,8 @@ public class Enemy implements Serializable{
         bdef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bdef);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(16, 16);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(16);
 
         FixtureDef fdef = new FixtureDef();
         fdef.density = 99999;
@@ -122,15 +123,16 @@ public class Enemy implements Serializable{
         body.setLinearDamping(20f);
 
         bdef = new BodyDef();
-        bdef.position.set(currentSprite.getX()-112, currentSprite.getY()-112);
+        //bdef.position.set(currentSprite.getX()-112, currentSprite.getY()-112);
         bdef.type = BodyDef.BodyType.DynamicBody;
         visibleArea = world.createBody(bdef);
 
-        shape = new PolygonShape();
-        shape.setAsBox(128, 128);
+        CircleShape shape1 = new CircleShape();
+        shape1.setRadius(128);
+        //shape.setAsBox(128, 128);
         fdef = new FixtureDef();
         fdef.isSensor = true;
-        fdef.shape = shape;
+        fdef.shape = shape1;
         body.createFixture(fdef).setUserData(visibleArea);
     }
 }
