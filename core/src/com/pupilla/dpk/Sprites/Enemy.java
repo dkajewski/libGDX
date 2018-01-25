@@ -13,10 +13,13 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.pupilla.dpk.Backend.Constants;
+import com.pupilla.dpk.Screens.PlayScreen;
 import com.pupilla.dpk.Utility;
 
 import java.io.Serializable;
+import java.util.Random;
 
 /**
  * Created by orzech on 23.01.2018.
@@ -42,8 +45,19 @@ public class Enemy implements Serializable{
     public boolean alive = true;
     public Direction direction = Direction.DOWN;
 
-    public Enemy(World world){
+    public float halfSecondMove = 0f;
+    public Sprite healthbar;
+    public int maxHealth, currentHealth;
+    public int attack, defense;
+    public int experience;
+    public int damage;
+
+    public boolean canHit = false;
+    public float hitTimer = 1.2f;
+
+    public Enemy(World world, int enemyLevel){
         this.world = world;
+        setEnemyLevel(enemyLevel);
     }
 
     public enum Direction{
@@ -51,6 +65,9 @@ public class Enemy implements Serializable{
     }
 
     public void setup(AssetDescriptor<Texture> sheet){
+        healthbar = new Sprite(new Texture(Gdx.files.internal(Constants.healthBar)));
+        healthbar.setSize(15, 10);
+
         Utility ut = new Utility();
         ut.manager.load(sheet);
         ut.manager.finishLoading();
@@ -134,5 +151,57 @@ public class Enemy implements Serializable{
         fdef.isSensor = true;
         fdef.shape = shape1;
         body.createFixture(fdef).setUserData(visibleArea);
+    }
+
+    public void hit(){
+        int playerDef = PlayScreen.player.defense+PlayScreen.player.eq.getStatsBoostSum()[1];
+        // if attack of monster is higher or equal to players defense
+        Random r = new Random();
+        int hit = r.nextInt((getMaxDamage()-getMinDamage()))+getMinDamage()+1;
+        if(attack>=playerDef){
+            if((attack-playerDef)<=3){
+                // 60% of attack power
+                PlayScreen.player.currentHealth-=(hit*0.6);
+            }else if(attack-playerDef>3 && attack-playerDef<=8){
+                // 80% of attack power
+                PlayScreen.player.currentHealth-=(hit*0.8);
+            }else{
+                // 100% of attack power
+                PlayScreen.player.currentHealth-=hit;
+            }
+        }else{
+            if(playerDef-attack<=3){
+                // 40% of attack power
+                PlayScreen.player.currentHealth-=(hit*0.4);
+            }else if(playerDef-attack>3 && playerDef-attack<=8){
+                // 20% of attack power
+                PlayScreen.player.currentHealth-=(hit*0.2);
+            }else{
+                // 10% of attack power
+                PlayScreen.player.currentHealth-=(hit*0.1);
+            }
+        }
+    }
+
+    public int getMinDamage(){
+        return (int)(1+(damage*0.1)*4);
+    }
+
+    public int getMaxDamage(){
+        return (int)(2+(damage*0.2)*4.2);
+    }
+
+    private void setEnemyLevel(int level){
+
+        switch (level){
+            case 1:default:
+                maxHealth = 30;
+                currentHealth = maxHealth;
+                attack = 2;
+                defense = 5;
+                experience =8;
+                damage = 2;
+                break;
+        }
     }
 }

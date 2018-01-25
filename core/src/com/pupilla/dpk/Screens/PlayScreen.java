@@ -92,13 +92,18 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             player.defineBody(new Vector2(16, 16));
             spawnedItems = new ArrayList<Item>();
             enemies = new ArrayList<Enemy>();
+            NPCs = new ArrayList<NPC>();
 
             Task task = new Task(1, "Zdobyć pancerz", "Test1 prosił o pancerz.", 10, 5);
 
-            Enemy enemy = new Enemy(world);
+            Enemy enemy = new Enemy(world, 1);
             enemy.setup(Utility.monster1Sheet);
-            enemy.defineBody(new Vector2(250, 250));
+            enemy.defineBody(new Vector2(5*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
+            Enemy enemy1 = new Enemy(world, 1);
+            enemy1.setup(Utility.monster1Sheet);
+            enemy1.defineBody(new Vector2(5*Constants.UNIT_SCALE, 9*Constants.UNIT_SCALE));
             enemies.add(enemy);
+            enemies.add(enemy1);
         } else{
             // loading game
             LoadGame load = new LoadGame();
@@ -175,6 +180,9 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             time += Gdx.graphics.getDeltaTime();
         }
 
+        if(player.hitTimer<1f){
+            player.hitTimer+=Gdx.graphics.getDeltaTime();
+        }
 
         player.stateTime += Gdx.graphics.getDeltaTime();
         TextureRegion currentFrame = player.walkAnimation.getKeyFrame(player.stateTime, true);
@@ -237,9 +245,9 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         //end test in rendering item
         drawNPCs();
 
-        drawEnemies();
         spriteBatch.draw(currentFrame, player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
 
+        drawEnemies();
         if(afterPotion){
             _3s += delta;
             bf.draw(spriteBatch, "+"+player.healed, player.b2body.getPosition().x-16, player.b2body.getPosition().y+30);
@@ -344,8 +352,18 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
                         break;
                 }
             }
+            // fighting
+            if(enemies.get(i).canHit){
+                if(enemies.get(i).hitTimer>=1f){
+                    enemies.get(i).hit();
+                    enemies.get(i).hitTimer=0;
+                }
+                enemies.get(i).hitTimer+=Gdx.graphics.getDeltaTime();
+            }
             spriteBatch.draw(enemies.get(i).walkAnimation.getKeyFrame(enemies.get(i).stateTime, false), enemies.get(i).body.getPosition().x-16,
                     enemies.get(i).body.getPosition().y-16);
+            spriteBatch.draw(enemies.get(i).healthbar, enemies.get(i).body.getPosition().x-16,
+                    enemies.get(i).body.getPosition().y+16, getEnemyHealthbarWidth(enemies.get(i)), 10);
         }
     }
 
@@ -357,7 +375,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         return width;
     }
 
-    public static float halfSecondMove = 0f;
+    //public static float halfSecondMove = 0f;
     private Enemy.Direction getDirectionToMove(Enemy enemy){
         float xe = enemy.body.getPosition().x;
         float ye = enemy.body.getPosition().y;
@@ -365,11 +383,11 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         float xp = player.b2body.getPosition().x;
         float yp = player.b2body.getPosition().y;
 
-        halfSecondMove+=Gdx.graphics.getDeltaTime();
-        if(halfSecondMove<0.5f){
+        enemy.halfSecondMove+=Gdx.graphics.getDeltaTime();
+        if(enemy.halfSecondMove<0.5f){
             return enemy.direction;
         }
-        halfSecondMove = 0f;
+        enemy.halfSecondMove = 0f;
         // if X of enemy is smaller than X of player...
         // if player is more on the right than enemy...
         if(xe < xp){
@@ -412,10 +430,17 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
                     return Enemy.Direction.LEFT;
                 }
             }
-
         }
 
         return Enemy.Direction.LEFT;
+    }
+
+    private float getEnemyHealthbarWidth(Enemy enemy){
+        float width = (enemy.currentHealth*32.0f)/enemy.maxHealth *1.0f;
+        if(width<0){
+            width=0;
+        }
+        return width;
     }
 
 }

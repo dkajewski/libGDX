@@ -251,5 +251,21 @@ public class Hud{
                 game.setScreen(new DialogueScreen(game));
             }
         });
+
+        attackbutton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                boolean hit = false;
+                for(int i=0; i<PlayScreen.enemies.size(); i++){
+                    if(PlayScreen.enemies.get(i).canHit && PlayScreen.player.hitTimer>=1f){
+                        PlayScreen.player.hit(PlayScreen.enemies.get(i));
+                        hit = true;
+                    }
+                }
+                if(hit){
+                    PlayScreen.player.hitTimer=0;
+                }
+            }
+        });
     }
 }

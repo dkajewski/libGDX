@@ -48,6 +48,7 @@ public class Hero implements Serializable{
     public transient Sprite currentSprite;
 
     public int healed = 0;
+    public float hitTimer = 1.2f;
 
     private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
 
@@ -136,6 +137,7 @@ public class Hero implements Serializable{
 
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
+        //fdef.density = 200000;
         fdef.filter.categoryBits = Constants.BIT_PLAYER; /* is a... */
         fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_PLAYER | Constants.BIT_ITEM | Constants.BIT_NPC | Constants.BIT_ENEMY; /* collides with... */
         b2body.createFixture(fdef).setUserData("player");
@@ -176,12 +178,15 @@ public class Hero implements Serializable{
     }
 
     public int getMinDamage(){
-
-        return 1;
+        return (int)(1+((damage+getItemsDmgBonus())*0.1)*4);
     }
 
     public int getMaxDamage(){
-        return 3;
+        return (int)(2+((damage+getItemsDmgBonus())*0.2)*4.2);
+    }
+
+    private int getItemsDmgBonus(){
+        return eq.getStatsBoostSum()[2];
     }
 
     public void increaseAttack(){
@@ -211,5 +216,36 @@ public class Hero implements Serializable{
             skillPoints--;
         }
 
+    }
+
+    public void hit(Enemy enemy){
+        int atk = attack+eq.getStatsBoostSum()[0];
+        int enemyDef = enemy.defense;
+
+        Random r = new Random();
+        int hit = r.nextInt((getMaxDamage()-getMinDamage()))+getMinDamage()+1;
+        if(atk>=enemyDef){
+            if((atk-enemyDef)<=3){
+                // 60% of attack power
+                enemy.currentHealth-=(hit*0.6);
+            }else if(atk-enemyDef>3 && atk-enemyDef<=8){
+                // 80% of attack power
+                enemy.currentHealth-=(hit*0.8);
+            }else{
+                // 100% of attack power
+                enemy.currentHealth-=hit;
+            }
+        }else{
+            if(enemyDef-atk<=3){
+                // 40% of attack power
+                enemy.currentHealth-=(hit*0.4);
+            }else if(enemyDef-atk>3 && enemyDef-atk<=8){
+                // 20% of attack power
+                enemy.currentHealth-=(hit*0.2);
+            }else{
+                // 10% of attack power
+                enemy.currentHealth-=(hit*0.1);
+            }
+        }
     }
 }

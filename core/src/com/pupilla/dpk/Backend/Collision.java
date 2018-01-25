@@ -39,8 +39,6 @@ public class Collision implements ContactListener {
             if(object.getUserData() instanceof Item){
                 Gdx.app.debug(TAG, "item collision");
                 ((Item) object.getUserData()).addToBackpack();
-                // test in resizing healthbar!!!
-                PlayScreen.player.currentHealth -= 20;
             }
         }
 
@@ -67,6 +65,9 @@ public class Collision implements ContactListener {
                 Gdx.app.debug(TAG, "enemy collision");
                 Enemy enemy1 = (Enemy) enemy.getUserData();
                 enemy1.canMove = false;
+                enemy1.canHit = true;
+                // test
+                //enemy1.currentHealth = 0;
                 //enemy1.body.setLinearVelocity(-400, -500);
             }
         }
@@ -80,7 +81,7 @@ public class Collision implements ContactListener {
                 Body area = (Body) sensor.getUserData();
                 for(int i=0; i<PlayScreen.enemies.size(); i++){
                     if(PlayScreen.enemies.get(i).visibleArea.equals(area) && PlayScreen.time>=2){
-                        PlayScreen.halfSecondMove = 0.6f;
+                        PlayScreen.enemies.get(i).halfSecondMove = 0.6f;
                         PlayScreen.enemies.get(i).canMove = true;
                     }
                 }
@@ -135,6 +136,7 @@ public class Collision implements ContactListener {
                 Gdx.app.debug(TAG, "end enemy collision");
                 Enemy e = (Enemy) enemy.getUserData();
                 e.canMove = true;
+                e.canHit = false;
             }
         }
     }
