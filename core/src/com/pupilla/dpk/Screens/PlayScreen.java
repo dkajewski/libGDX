@@ -32,6 +32,7 @@ import com.pupilla.dpk.Sprites.Hero;
 import com.pupilla.dpk.Utility;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Damian on 29.04.2017.
@@ -83,7 +84,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         camera = new OrthographicCamera();
         mapManager = new MapManager(TESTMAP, world);
         Level.generateExperienceTable();
-        //Level.showLevels();
+        Level.showLevels();
         if(newGame){
             // new game start
             time = 0f;
@@ -301,8 +302,71 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         }
     }
 
+    private Random r = new Random();
     private void drawNPCs(){
         for(int i=0; i<NPCs.size(); i++){
+
+            // random NPC movement
+            int willWalk = r.nextInt(101);
+            if(willWalk==10 && !NPCs.get(i).isWalking){
+                NPCs.get(i).isWalking = true;
+                if(NPCs.get(i).walkingTimer>0.5f){
+                    NPCs.get(i).walkingTimer=Gdx.graphics.getDeltaTime();
+                }
+                switch(r.nextInt(4)){
+                    case 0:
+                        NPCs.get(i).direction = NPC.Direction.DOWN;
+                        break;
+                    case 1:
+                        NPCs.get(i).direction = NPC.Direction.LEFT;
+                        break;
+                    case 2:
+                        NPCs.get(i).direction = NPC.Direction.RIGHT;
+                        break;
+                    case 3:
+                        NPCs.get(i).direction = NPC.Direction.UP;
+                        break;
+                }
+            }
+            if(NPCs.get(i).isWalking && NPCs.get(i).walkingTimer>=0f && NPCs.get(i).walkingTimer<0.5f){
+                NPCs.get(i).walkingTimer+=Gdx.graphics.getDeltaTime();
+                NPCs.get(i).stateTime += Gdx.graphics.getDeltaTime();
+                if(NPCs.get(i).walkAnimation.isAnimationFinished(NPCs.get(i).stateTime)){
+                    NPCs.get(i).alive = false;
+                }
+                if(!NPCs.get(i).alive){
+                    NPCs.get(i).stateTime = 0f;
+                }
+                switch(NPCs.get(i).direction){
+                    case DOWN:
+                        NPCs.get(i).body.setLinearVelocity(NPCs.get(i).body.getLinearVelocity().x, -(7000*Gdx.graphics.getDeltaTime()));
+                        NPCs.get(i).currentSprite.setPosition(NPCs.get(i).body.getPosition().x-16, NPCs.get(i).body.getPosition().y-16);
+                        NPCs.get(i).alive = true;
+                        NPCs.get(i).walkAnimation = NPCs.get(i).walkDownAnimation;
+                        break;
+                    case RIGHT:
+                        NPCs.get(i).body.setLinearVelocity(7000*Gdx.graphics.getDeltaTime(), NPCs.get(i).body.getLinearVelocity().y);
+                        NPCs.get(i).currentSprite.setPosition(NPCs.get(i).body.getPosition().x-16, NPCs.get(i).body.getPosition().y-16);
+                        NPCs.get(i).alive = true;
+                        NPCs.get(i).walkAnimation = NPCs.get(i).walkRightAnimation;
+                        break;
+                    case LEFT:
+                        NPCs.get(i).body.setLinearVelocity(-(7000*Gdx.graphics.getDeltaTime()), NPCs.get(i).body.getLinearVelocity().y);
+                        NPCs.get(i).currentSprite.setPosition(NPCs.get(i).body.getPosition().x-16, NPCs.get(i).body.getPosition().y-16);
+                        NPCs.get(i).alive = true;
+                        NPCs.get(i).walkAnimation = NPCs.get(i).walkLeftAnimation;
+                        break;
+                    case UP:
+                        NPCs.get(i).body.setLinearVelocity(NPCs.get(i).body.getLinearVelocity().x, 7000*Gdx.graphics.getDeltaTime());
+                        NPCs.get(i).currentSprite.setPosition(NPCs.get(i).body.getPosition().x-16, NPCs.get(i).body.getPosition().y-16);
+                        NPCs.get(i).alive = true;
+                        NPCs.get(i).walkAnimation = NPCs.get(i).walkUpAnimation;
+                        break;
+                }
+            }
+            if(NPCs.get(i).walkingTimer>0.5f){
+                NPCs.get(i).isWalking = false;
+            }
             spriteBatch.draw(NPCs.get(i).walkAnimation.getKeyFrame(NPCs.get(i).stateTime, false), NPCs.get(i).body.getPosition().x-16,
                     NPCs.get(i).body.getPosition().y-16);
         }
@@ -312,12 +376,10 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         for(int i=0; i<enemies.size(); i++){
             if(enemies.get(i).canMove){
                 enemies.get(i).stateTime += Gdx.graphics.getDeltaTime();
-                TextureRegion currentFrame = enemies.get(i).walkAnimation.getKeyFrame(enemies.get(i).stateTime, true);
                 if(enemies.get(i).walkAnimation.isAnimationFinished(enemies.get(i).stateTime)){
                     enemies.get(i).alive = false;
                 }
                 if(!enemies.get(i).alive){
-                    currentFrame = enemies.get(i).walkAnimation.getKeyFrame(enemies.get(i).stateTime, false);
                     enemies.get(i).stateTime = 0f;
                 }
 
@@ -352,6 +414,69 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
                         break;
                 }
             }
+
+            if(enemies.get(i).randomMovement){
+                int willWalk = r.nextInt(101);
+                if(willWalk==10 && !enemies.get(i).isWalking){
+                    enemies.get(i).isWalking = true;
+                    if(enemies.get(i).walkingTimer>0.5f){
+                        enemies.get(i).walkingTimer=Gdx.graphics.getDeltaTime();
+                    }
+                    switch(r.nextInt(4)){
+                        case 0:
+                            enemies.get(i).direction = Enemy.Direction.DOWN;
+                            break;
+                        case 1:
+                            enemies.get(i).direction = Enemy.Direction.LEFT;
+                            break;
+                        case 2:
+                            enemies.get(i).direction = Enemy.Direction.RIGHT;
+                            break;
+                        case 3:
+                            enemies.get(i).direction = Enemy.Direction.UP;
+                            break;
+                    }
+                }
+                if(enemies.get(i).isWalking && enemies.get(i).walkingTimer>=0f && enemies.get(i).walkingTimer<0.5f){
+                    enemies.get(i).walkingTimer+=Gdx.graphics.getDeltaTime();
+                    enemies.get(i).stateTime += Gdx.graphics.getDeltaTime();
+                    if(enemies.get(i).walkAnimation.isAnimationFinished(enemies.get(i).stateTime)){
+                        enemies.get(i).alive = false;
+                    }
+                    if(!enemies.get(i).alive){
+                        enemies.get(i).stateTime = 0f;
+                    }
+                    switch(enemies.get(i).direction){
+                        case DOWN:
+                            enemies.get(i).body.setLinearVelocity(enemies.get(i).body.getLinearVelocity().x, -(7000*Gdx.graphics.getDeltaTime()));
+                            enemies.get(i).currentSprite.setPosition(enemies.get(i).body.getPosition().x-16, enemies.get(i).body.getPosition().y-16);
+                            enemies.get(i).alive = true;
+                            enemies.get(i).walkAnimation = enemies.get(i).walkDownAnimation;
+                            break;
+                        case RIGHT:
+                            enemies.get(i).body.setLinearVelocity(7000*Gdx.graphics.getDeltaTime(), enemies.get(i).body.getLinearVelocity().y);
+                            enemies.get(i).currentSprite.setPosition(enemies.get(i).body.getPosition().x-16, enemies.get(i).body.getPosition().y-16);
+                            enemies.get(i).alive = true;
+                            enemies.get(i).walkAnimation = enemies.get(i).walkRightAnimation;
+                            break;
+                        case LEFT:
+                            enemies.get(i).body.setLinearVelocity(-(7000*Gdx.graphics.getDeltaTime()), enemies.get(i).body.getLinearVelocity().y);
+                            enemies.get(i).currentSprite.setPosition(enemies.get(i).body.getPosition().x-16, enemies.get(i).body.getPosition().y-16);
+                            enemies.get(i).alive = true;
+                            enemies.get(i).walkAnimation = enemies.get(i).walkLeftAnimation;
+                            break;
+                        case UP:
+                            enemies.get(i).body.setLinearVelocity(enemies.get(i).body.getLinearVelocity().x, 7000*Gdx.graphics.getDeltaTime());
+                            enemies.get(i).currentSprite.setPosition(enemies.get(i).body.getPosition().x-16, enemies.get(i).body.getPosition().y-16);
+                            enemies.get(i).alive = true;
+                            enemies.get(i).walkAnimation = enemies.get(i).walkUpAnimation;
+                            break;
+                    }
+                }
+                if(enemies.get(i).walkingTimer>0.5f){
+                    enemies.get(i).isWalking = false;
+                }
+            }
             // fighting
             if(enemies.get(i).canHit){
                 if(enemies.get(i).hitTimer>=1f){
@@ -364,6 +489,18 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
                     enemies.get(i).body.getPosition().y-16);
             spriteBatch.draw(enemies.get(i).healthbar, enemies.get(i).body.getPosition().x-16,
                     enemies.get(i).body.getPosition().y+16, getEnemyHealthbarWidth(enemies.get(i)), 10);
+            if(enemies.get(i).currentHealth<=0){
+                if(enemies.get(i).loot!=null){
+                    enemies.get(i).loot.spawnItem(enemies.get(i).body.getPosition());
+                }
+                player.experience += enemies.get(i).experience;
+                if(player.level<Level.getActualLevel()){
+                    player.level=Level.getActualLevel();
+                    player.skillPoints+=5;
+                }
+                world.destroyBody(enemies.get(i).body);
+                enemies.remove(i);
+            }
         }
     }
 

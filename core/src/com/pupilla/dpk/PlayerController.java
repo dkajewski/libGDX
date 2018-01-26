@@ -12,9 +12,10 @@ import com.pupilla.dpk.Sprites.Hero;
  */
 
 public class PlayerController implements InputProcessor{
-    OrthographicCamera camera;
-    Hero player;
-    Hud hud;
+    private static final String TAG = "PlayerController";
+    private OrthographicCamera camera;
+    private Hero player;
+    private Hud hud;
 
     public static final int pixelsPerSecond = 430;
 
@@ -73,7 +74,7 @@ public class PlayerController implements InputProcessor{
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-        Gdx.app.debug("klik toczed:", "X: "+screenX+" Y: "+screenY);
+        Gdx.app.debug(TAG, "X: "+screenX+" Y: "+screenY);
 
         return false;
     }

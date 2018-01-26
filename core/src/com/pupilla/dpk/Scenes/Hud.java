@@ -262,6 +262,7 @@ public class Hud{
                         hit = true;
                     }
                 }
+                // if player attacked someone, set hit timer to 0
                 if(hit){
                     PlayScreen.player.hitTimer=0;
                 }

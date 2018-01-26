@@ -77,12 +77,13 @@ public class Collision implements ContactListener {
             Gdx.app.debug(TAG, "enemy sensor collision");
             Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
             Fixture sensor = player==fixA ? fixB : fixA;
-            if(sensor.getUserData() instanceof Body){
+            if(sensor.getUserData() instanceof Body && player.getUserData()=="player"){
                 Body area = (Body) sensor.getUserData();
                 for(int i=0; i<PlayScreen.enemies.size(); i++){
                     if(PlayScreen.enemies.get(i).visibleArea.equals(area) && PlayScreen.time>=2){
                         PlayScreen.enemies.get(i).halfSecondMove = 0.6f;
                         PlayScreen.enemies.get(i).canMove = true;
+                        PlayScreen.enemies.get(i).randomMovement = false;
                     }
                 }
             }
@@ -110,7 +111,7 @@ public class Collision implements ContactListener {
             }
         }
 
-        // entering "visible" area to enemy
+        // exiting "visible" area to enemy
         if(fixA.getUserData() instanceof Body || fixB.getUserData() instanceof Body){
 
             Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
@@ -121,10 +122,10 @@ public class Collision implements ContactListener {
                     if(PlayScreen.enemies.get(i).visibleArea.equals(area)){
                         Gdx.app.debug(TAG, "enemy sensor end collision");
                         PlayScreen.enemies.get(i).canMove = false;
+                        PlayScreen.enemies.get(i).randomMovement = true;
                     }
                 }
             }
-
         }
 
         // ending contact with enemy

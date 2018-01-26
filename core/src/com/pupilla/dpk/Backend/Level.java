@@ -1,6 +1,7 @@
 package com.pupilla.dpk.Backend;
 
 import com.badlogic.gdx.Gdx;
+import com.pupilla.dpk.Screens.PlayScreen;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,17 @@ public class Level {
         for(int i=0; i<levels.size(); i++){
             Gdx.app.debug(TAG, levels.get(i)+"");
         }
+    }
+
+    public static int getActualLevel(){
+        int level = 0;
+        for(int i=0; i<levels.size(); i++){
+            if(PlayScreen.player.experience<levels.get(i)){
+                level = i;
+                break;
+            }
+        }
+        return level;
     }
 
 }

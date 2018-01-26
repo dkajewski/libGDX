@@ -45,6 +45,9 @@ public class NPC implements Serializable{
     public boolean alive = true;
     public Direction direction = Direction.DOWN;
 
+    public float walkingTimer=0f;
+    public boolean isWalking = false;
+
     public enum Direction{
         LEFT, RIGHT, UP, DOWN
     }

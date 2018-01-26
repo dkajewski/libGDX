@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.pupilla.dpk.Backend.Constants;
+import com.pupilla.dpk.Backend.Item;
 import com.pupilla.dpk.Screens.PlayScreen;
 import com.pupilla.dpk.Utility;
 
@@ -52,8 +53,14 @@ public class Enemy implements Serializable{
     public int experience;
     public int damage;
 
+    public boolean randomMovement = true;
+    public float walkingTimer=0f;
+    public boolean isWalking = false;
+
     public boolean canHit = false;
     public float hitTimer = 1.2f;
+
+    public Item loot=null;
 
     public Enemy(World world, int enemyLevel){
         this.world = world;
@@ -162,45 +169,58 @@ public class Enemy implements Serializable{
             if((attack-playerDef)<=3){
                 // 60% of attack power
                 PlayScreen.player.currentHealth-=(hit*0.6);
+                Gdx.app.debug(TAG, "Monster hit: "+(hit*0.6));
             }else if(attack-playerDef>3 && attack-playerDef<=8){
                 // 80% of attack power
                 PlayScreen.player.currentHealth-=(hit*0.8);
+                Gdx.app.debug(TAG, "Monster hit: "+(hit*0.8));
             }else{
                 // 100% of attack power
                 PlayScreen.player.currentHealth-=hit;
+                Gdx.app.debug(TAG, "Monster hit: "+(hit));
             }
         }else{
             if(playerDef-attack<=3){
                 // 40% of attack power
                 PlayScreen.player.currentHealth-=(hit*0.4);
+                Gdx.app.debug(TAG, "Monster hit: "+(hit*0.4));
             }else if(playerDef-attack>3 && playerDef-attack<=8){
                 // 20% of attack power
                 PlayScreen.player.currentHealth-=(hit*0.2);
+                Gdx.app.debug(TAG, "Monster hit: "+(hit*0.2));
             }else{
                 // 10% of attack power
                 PlayScreen.player.currentHealth-=(hit*0.1);
+                Gdx.app.debug(TAG, "Monster hit: "+(hit*0.1));
             }
         }
     }
 
-    public int getMinDamage(){
+    private int getMinDamage(){
         return (int)(1+(damage*0.1)*4);
     }
 
-    public int getMaxDamage(){
+    private int getMaxDamage(){
         return (int)(2+(damage*0.2)*4.2);
     }
 
     private void setEnemyLevel(int level){
-
+        Random r = new Random();
+        int lootID = r.nextInt(11);
         switch (level){
             case 1:default:
-                maxHealth = 30;
+                maxHealth = 10;
                 currentHealth = maxHealth;
                 attack = 2;
                 defense = 5;
-                experience =8;
+                experience = 15;
                 damage = 2;
+                if(lootID>7 && lootID<=9){
+                    loot = new Item(Constants.weapon1,0, Constants.steelSword, Item.Type.weapon);
+                }
+                if(lootID==10){
+                    loot = new Item(Constants.helmet1,0, Constants.leatherHelmet, Item.Type.helmet);
+                }
                 break;
         }
     }
