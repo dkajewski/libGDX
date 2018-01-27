@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Screens.BackpackScreen;
 import com.pupilla.dpk.Screens.DialogueScreen;
@@ -247,8 +248,11 @@ public class Hud{
         dialoguebutton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                PlayScreen.parent = game.getScreen();
-                game.setScreen(new DialogueScreen(game));
+                if(!Collision.NPCname.equals("")){
+                    PlayScreen.parent = game.getScreen();
+                    game.setScreen(new DialogueScreen(game));
+                }
+
             }
         });
 

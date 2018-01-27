@@ -11,9 +11,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
 import com.pupilla.dpk.Screens.PlayScreen;
@@ -216,10 +214,10 @@ public class Enemy implements Serializable{
                 experience = 15;
                 damage = 2;
                 if(lootID>7 && lootID<=9){
-                    loot = new Item(Constants.weapon1,0, Constants.steelSword, Item.Type.weapon);
+                    loot = new Item(Constants.eqSteelSword,0, Item.Type.weapon);
                 }
                 if(lootID==10){
-                    loot = new Item(Constants.helmet1,0, Constants.leatherHelmet, Item.Type.helmet);
+                    loot = new Item(Constants.eqLeatherHelmet,0, Item.Type.helmet);
                 }
                 break;
         }

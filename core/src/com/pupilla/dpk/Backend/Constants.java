@@ -40,17 +40,17 @@ public class Constants {
     public static final String leatherHelmet = "sprites/items/helmets/h1.png";
 
     // items names
-    public static final String weapon1 = "Stalowy miecz";
-    public static final String weapon2 = "Dzida";
-    public static final String weapon3 = "Halabarda";
+    public static final String eqSteelSword = "Stalowy miecz";
+    public static final String eqSpear = "Dzida";
+    public static final String eqHalberd = "Halabarda";
 
-    public static final String shield1 = "Drewniana tarcza";
+    public static final String eqWoodenShield = "Drewniana tarcza";
 
-    public static final String armor1 = "Skórzana zbroja";
+    public static final String eqLeatherArmor = "Skórzana zbroja";
 
-    public static final String legs1 = "Skórzane nogawice";
+    public static final String eqLeatherLegs = "Skórzane nogawice";
 
-    public static final String helmet1 = "Skórzany hełm";
+    public static final String eqLeatherHelmet = "Skórzany hełm";
 
     // strings used in game
     public static final String activeTasks = "Aktywne zadania";
@@ -63,11 +63,15 @@ public class Constants {
     public static final String takeOn = "Załóż";
     public static final String takeOff = "Zdejmij";
     public static final String throwOut = "Wyrzuć";
+    public static final String trade = "Handel";
     public static final String close = "Zamknij";
     public static final String menu = "Menu";
     public static final String exit = "Wyjdź";
     public static final String end = "Koniec";
     public static final String gameOver = "Koniec gry";
+    public static final String player = "Gracz";
+    public static final String seller = "Sprzedawca";
+    public static final String shop = "Sklep";
     public static final String stats = "Statystyki";
     public static final String exp = "Doświadczenie";
     public static final String toNextLevel = "Nast. poziom";

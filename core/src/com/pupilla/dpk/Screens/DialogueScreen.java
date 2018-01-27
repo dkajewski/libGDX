@@ -26,6 +26,7 @@ import com.pupilla.dpk.Backend.Conversation;
 import com.pupilla.dpk.Backend.Item;
 import com.pupilla.dpk.Backend.Task;
 import com.pupilla.dpk.Sprites.NPC;
+import com.pupilla.dpk.Sprites.Seller;
 
 /**
  * Created by orzech on 07.01.2018.
@@ -119,8 +120,8 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
 
     private void prepareTable(){
         index = getNPCindex();
-        NPC npc = PlayScreen.NPCs.get(index);
         if(index!=999){
+            NPC npc = PlayScreen.NPCs.get(index);
             name.setText(npc.name);
             table.add(name);
             table.row();
@@ -152,6 +153,18 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                     innerTable.add(response).fill();
                     innerTable.row();
                 }
+            }
+
+            if(npc instanceof Seller){
+                TextButton trade = new TextButton(Constants.trade, skin);
+                trade.addListener(new ClickListener(){
+                    @Override
+                    public void clicked(InputEvent event, float x, float y){
+                        game.setScreen(new TradeScreen(game));
+                    }
+                });
+                innerTable.add(trade).fill();
+                innerTable.row();
             }
 
             innerTable.add(end).width(width-20);

@@ -37,11 +37,11 @@ public final class Item implements Serializable{
         weapon, shield, legs, armor, helmet
     }
 
-    public Item(String name, int level, String texturePath, Type type){
+    public Item(String name, int level, Type type){
         this.name = name;
         this.type = type;
         this.level = level;
-        this.texturePath = texturePath;
+        setTexturePath(name);
         setStats();
         makeTexture();
     }
@@ -166,6 +166,31 @@ public final class Item implements Serializable{
                 dmgbonus = 0;
                 healthbonus = 0;
                 break;
+        }
+    }
+
+
+    private void setTexturePath(String name){
+        if(name.equals(Constants.eqLeatherArmor)){
+            texturePath = Constants.leatherArmor;
+        }
+        if(name.equals(Constants.eqLeatherHelmet)){
+            texturePath = Constants.leatherHelmet;
+        }
+        if(name.equals(Constants.eqLeatherLegs)){
+            texturePath = Constants.leatherLegs;
+        }
+        if(name.equals(Constants.eqWoodenShield)){
+            texturePath = Constants.woodenShield;
+        }
+        if(name.equals(Constants.eqSteelSword)){
+            texturePath = Constants.steelSword;
+        }
+        if(name.equals(Constants.eqSpear)){
+            texturePath = Constants.spear;
+        }
+        if(name.equals(Constants.eqHalberd)){
+            texturePath = Constants.halberd;
         }
     }
 }

@@ -15,11 +15,10 @@ import static org.junit.Assert.*;
 public class BackpackTest {
     @Test
     public void addItem() throws Exception {
-        String texturePath = Constants.steelSword;
         World world = new World(new Vector2(0,0), false);
         Hero player = new Hero(world);
 
-        Item item = new Item(Constants.weapon1, 0, texturePath, Item.Type.weapon);
+        Item item = new Item(Constants.eqSteelSword, 0, Item.Type.weapon);
         Backpack bp = new Backpack();
         boolean output = bp.addItem(item);
 

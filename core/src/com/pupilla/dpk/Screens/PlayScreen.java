@@ -6,7 +6,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -29,6 +28,7 @@ import com.pupilla.dpk.MapManager;
 import com.pupilla.dpk.PlayerController;
 import com.pupilla.dpk.Scenes.Hud;
 import com.pupilla.dpk.Sprites.Hero;
+import com.pupilla.dpk.Sprites.Seller;
 import com.pupilla.dpk.Utility;
 
 import java.util.ArrayList;
@@ -130,17 +130,22 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         NPC npc1 = new NPC("XML/QuestNPC.xml", world);
         npc1.setup(Utility.heroSheet);
         npc1.defineBody(new Vector2(13*Constants.UNIT_SCALE, Constants.UNIT_SCALE));
+
+        NPC seller = new Seller("XML/Seller.xml", world, 1);
+        seller.setup(Utility.heroSheet);
+        seller.defineBody(new Vector2(10*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
         NPCs.add(npc);
         NPCs.add(npc1);
+        NPCs.add(seller);
 
         //testing items
-        Item item1 = new Item(Constants.weapon1,0, Constants.steelSword, Item.Type.weapon);
-        Item item2 = new Item(Constants.weapon2, 0, Constants.spear, Item.Type.weapon);
-        Item item3 = new Item(Constants.weapon3, 0, Constants.halberd, Item.Type.weapon);
-        Item armor = new Item(Constants.armor1, 0, Constants.leatherArmor, Item.Type.armor);
-        Item helmet = new Item(Constants.helmet1, 0, Constants.leatherHelmet, Item.Type.helmet);
-        Item shield = new Item(Constants.shield1,0, Constants.woodenShield, Item.Type.shield);
-        Item legs = new Item(Constants.legs1, 0, Constants.leatherLegs, Item.Type.legs);
+        Item item1 = new Item(Constants.eqSteelSword,0, Item.Type.weapon);
+        Item item2 = new Item(Constants.eqSpear, 0, Item.Type.weapon);
+        Item item3 = new Item(Constants.eqHalberd, 0, Item.Type.weapon);
+        Item armor = new Item(Constants.eqLeatherArmor, 0, Item.Type.armor);
+        Item helmet = new Item(Constants.eqLeatherHelmet, 0, Item.Type.helmet);
+        Item shield = new Item(Constants.eqWoodenShield,0, Item.Type.shield);
+        Item legs = new Item(Constants.eqLeatherLegs, 0, Item.Type.legs);
         item1.spawnItem(new Vector2(5*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
         item2.spawnItem(new Vector2( 6*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
         item3.spawnItem(new Vector2( 7*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
