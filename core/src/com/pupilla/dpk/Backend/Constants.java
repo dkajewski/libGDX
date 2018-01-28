@@ -54,6 +54,7 @@ public class Constants {
 
     // strings used in game
     public static final String activeTasks = "Aktywne zadania";
+    public static final String buy = "Kup";
     public static final String endedTasks = "Zakończone zadania";
     public static final String ended = "Zakończone";
     public static final String active = "Aktywne";
@@ -69,7 +70,12 @@ public class Constants {
     public static final String exit = "Wyjdź";
     public static final String end = "Koniec";
     public static final String gameOver = "Koniec gry";
+    public static final String inEQ = "Posiadasz";
     public static final String player = "Gracz";
+    public static final String potion = "Mikstura";
+    public static final String price = "Cena";
+    public static final String priceForEach = "Cena za sztukę";
+    public static final String sell = "Sprzedaj";
     public static final String seller = "Sprzedawca";
     public static final String shop = "Sklep";
     public static final String stats = "Statystyki";

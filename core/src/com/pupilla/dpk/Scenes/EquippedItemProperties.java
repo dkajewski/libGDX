@@ -40,6 +40,12 @@ public class EquippedItemProperties extends Dialog {
             table.row();
         }
 
+        if(item.healthbonus > 0){
+            Label health = new Label(Constants.health+": "+item.healthbonus, skin);
+            table.add(health);
+            table.row();
+        }
+
         button(Constants.takeOff, 0);
         button(Constants.close, 1);
         getContentTable().add(table);

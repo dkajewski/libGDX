@@ -196,7 +196,7 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
                 button.addListener(new ClickListener(){
                     @Override
                     public void clicked(InputEvent event, float x, float y){
-                        Gdx.app.debug(TAG, "clicked " + index);
+                        Gdx.app.debug(TAG, "clicked item ID: " + index);
                         ItemProperties ip = new ItemProperties(new Skin(Gdx.files.internal(Constants.skin)), backpack.itemArr[index]);
                         ip.show(stage);
                     }
