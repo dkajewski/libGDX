@@ -14,6 +14,7 @@ public class Constants {
     public static final short BIT_COLLECTED = 8;
     public static final short BIT_NPC = 16;
     public static final short BIT_ENEMY = 32;
+    public static final short BIT_PORTAL = 64;
 
     public static final int UNIT_SCALE = 32;
 
@@ -26,6 +27,7 @@ public class Constants {
     public static final String healthBar = "sprites/others/health.png";
     public static final String attackBtn = "sprites/others/attackbutton.png";
     public static final String dialogueBtn = "sprites/others/dialoguebutton.png";
+    public static final String doors = "sprites/others/doors.png";
 
     public static final String steelSword = "sprites/items/weapons/weapon1.png";
     public static final String spear = "sprites/items/weapons/weapon2.png";

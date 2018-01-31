@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="left-down" width="32" height="32" tilewidth="32" tileheight="32" nextobjectid="4">
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="left-down" width="32" height="32" tilewidth="32" tileheight="32" nextobjectid="16">
  <tileset firstgid="1" name="tileset1" tilewidth="32" tileheight="32" tilecount="256" columns="16">
   <image source="tileset1.png" width="512" height="512"/>
  </tileset>
@@ -111,7 +111,12 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="MAP_COLLISION"/>
+ <objectgroup name="MAP_COLLISION">
+  <object id="5" x="0" y="-1.33333" width="32" height="1024"/>
+  <object id="6" x="36" y="992" width="992" height="32"/>
+  <object id="7" x="994.667" y="-5.33333" width="32" height="992"/>
+  <object id="9" x="34.6667" y="0" width="960" height="32"/>
+ </objectgroup>
  <objectgroup name="MAP_SPAWNS"/>
  <objectgroup name="MAP_PORTAL"/>
 </map>

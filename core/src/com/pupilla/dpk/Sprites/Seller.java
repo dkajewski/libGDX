@@ -1,5 +1,6 @@
 package com.pupilla.dpk.Sprites;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
@@ -15,8 +16,8 @@ public class Seller extends NPC{
     private static final String TAG = "Seller";
     public ArrayList<Item> items = new ArrayList<Item>();
 
-    public Seller(String dialoguePath, World world, int level) {
-        super(dialoguePath, world);
+    public Seller(String dialoguePath, World world, int level, Vector2 position, String map) {
+        super(dialoguePath, world, position, map);
         setProducts(level);
     }
 

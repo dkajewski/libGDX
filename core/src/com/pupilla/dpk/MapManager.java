@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
+import com.pupilla.dpk.Backend.MapConstants;
 
 /**
  * Created by Damian on 18.06.2017.
@@ -23,9 +24,6 @@ import com.pupilla.dpk.Backend.Item;
 public class MapManager {
 
     private static final String TAG = MapManager.class.getSimpleName();
-
-    //maps
-    private final static String TEST = "TESTMAP";
 
     //map layers
     private static final String MAP_COLLISION = "MAP_COLLISION";
@@ -63,9 +61,11 @@ public class MapManager {
             shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
             fdef.shape = shape;
             fdef.filter.categoryBits = Constants.BIT_WALL; // is a...
-            fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_PLAYER; // colides with...
+            fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_PLAYER | Constants.BIT_ENEMY | Constants.BIT_NPC;// colides with...
             body.createFixture(fdef).setUserData(this);
         }
+
+        MapConstants.fillLists(mapPath);
 
     }
 }

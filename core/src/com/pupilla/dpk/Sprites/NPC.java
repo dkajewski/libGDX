@@ -33,6 +33,8 @@ public class NPC implements Serializable{
     public String name;
     public List<Conversation> conversations;
     private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
+    private Vector2 position;
+    public String map;
 
     public transient Sprite currentSprite;
     public transient Texture npcTexture;
@@ -52,8 +54,10 @@ public class NPC implements Serializable{
         LEFT, RIGHT, UP, DOWN
     }
 
-    public NPC(String dialoguePath, World world){
+    public NPC(String dialoguePath, World world, Vector2 position, String map){
         this.world = world;
+        this.position = position;
+        this.map = map;
         Dialogue dialogue = new Dialogue(dialoguePath);
         name = dialogue.npcName;
         conversations = dialogue.conversations;
@@ -111,17 +115,17 @@ public class NPC implements Serializable{
 
     /**
      * Defining body of object
-     * @param position - starting position
      */
-    public void defineBody(Vector2 position){
+    public void defineBody(){
         currentSprite.setPosition(position.x, position.y);
         BodyDef bdef = new BodyDef();
         bdef.position.set(currentSprite.getX(), currentSprite.getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
+        bdef.fixedRotation = true;
         body = world.createBody(bdef);
 
-        CircleShape shape = new CircleShape();
-        shape.setRadius(16);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(16, 16);
 
         FixtureDef fdef = new FixtureDef();
         fdef.density = 99999;

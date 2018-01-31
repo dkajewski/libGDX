@@ -9,6 +9,8 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.utils.Array;
+import com.pupilla.dpk.MapManager;
 import com.pupilla.dpk.Scenes.Hud;
 import com.pupilla.dpk.Screens.PlayScreen;
 import com.pupilla.dpk.Sprites.Enemy;
@@ -29,7 +31,7 @@ public class Collision implements ContactListener {
         Fixture fixB = contact.getFixtureB();
 
         // check if one of colliding objects is a player
-        if(fixA.getUserData() == "player" || fixB.getUserData() == "player"){
+        if(fixA.getUserData() instanceof Item || fixB.getUserData() instanceof Item){
             // if fixA user data equals "player", then player = fixA else player = fixB
             Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
             // if player equals fixA, then object = fixB else object = fixA
@@ -66,18 +68,15 @@ public class Collision implements ContactListener {
                 Enemy enemy1 = (Enemy) enemy.getUserData();
                 enemy1.canMove = false;
                 enemy1.canHit = true;
-                // test
-                //enemy1.currentHealth = 0;
-                //enemy1.body.setLinearVelocity(-400, -500);
             }
         }
 
         // entering "visible" area to enemy
         if(fixA.getUserData() instanceof Body || fixB.getUserData() instanceof Body){
-            Gdx.app.debug(TAG, "enemy sensor collision");
             Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
             Fixture sensor = player==fixA ? fixB : fixA;
             if(sensor.getUserData() instanceof Body && player.getUserData()=="player"){
+                Gdx.app.debug(TAG, "Enemy sensor collision");
                 Body area = (Body) sensor.getUserData();
                 for(int i=0; i<PlayScreen.enemies.size(); i++){
                     if(PlayScreen.enemies.get(i).visibleArea.equals(area) && PlayScreen.time>=2){
@@ -86,6 +85,24 @@ public class Collision implements ContactListener {
                         PlayScreen.enemies.get(i).randomMovement = false;
                     }
                 }
+            }
+        }
+
+        // collision with portal
+        if(fixA.getUserData() instanceof Portal || fixB.getUserData() instanceof Portal){
+            Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
+            Fixture portal = player==fixA ? fixB : fixA;
+            if(portal.getUserData() instanceof Portal && player.getUserData() == "player"){
+                Gdx.app.debug(TAG, "Collision with Portal");
+                Portal p = (Portal) portal.getUserData();
+
+                PlayScreen.player.map = p.destinationMap;
+                PlayScreen.mapChanged = true;
+                PlayScreen.player.position = p.to;
+                /*PlayScreen.mapManager = new MapManager(p.destinationMap, PlayScreen.player.world);
+                PlayScreen.renderer = PlayScreen.mapManager.renderer;*/
+                Gdx.app.debug(TAG, "bodies destroyed");
+
             }
         }
 
@@ -104,7 +121,6 @@ public class Collision implements ContactListener {
 
             if(npc.getUserData() instanceof NPC && player.getUserData()=="player"){
                 Gdx.app.debug(TAG, "npc!");
-                //NPC npc1 = (NPC) npc.getUserData();
                 NPCname = "";
                 Hud.attackbutton.setVisible(true);
                 Hud.dialoguebutton.setVisible(false);
@@ -138,6 +154,15 @@ public class Collision implements ContactListener {
                 Enemy e = (Enemy) enemy.getUserData();
                 e.canMove = true;
                 e.canHit = false;
+            }
+        }
+
+        // collision with portal
+        if(fixA.getUserData() instanceof Portal || fixB.getUserData() instanceof Portal){
+            Fixture player = fixA.getUserData() == "player" ? fixA : fixB;
+            Fixture portal = player==fixA ? fixB : fixA;
+            if(portal.getUserData() instanceof Portal && player.getUserData() == "player"){
+                Gdx.app.debug(TAG, "End collision with portal");
             }
         }
     }

@@ -14,13 +14,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
 import com.pupilla.dpk.Backend.Level;
 import com.pupilla.dpk.Backend.LoadGame;
+import com.pupilla.dpk.Backend.MapConstants;
+import com.pupilla.dpk.Backend.Portal;
 import com.pupilla.dpk.Backend.Task;
 import com.pupilla.dpk.Sprites.Enemy;
 import com.pupilla.dpk.Sprites.NPC;
@@ -52,13 +56,13 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     public static Screen parent;
     //private Viewport gamePort;
 
-    boolean newGame;
+    private boolean newGame;
+
+    public static boolean mapChanged = false;
 
     public static float _3s = 0f;
     public static float time = 0f;
     public static boolean afterPotion = false;
-
-    private String TESTMAP = "maps/testmap.tmx";
 
     private OrthogonalTiledMapRenderer renderer;
     private MapManager mapManager;
@@ -70,10 +74,12 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     private int height;
 
     private BitmapFont bf;
+    private Texture doors;
 
     public static ArrayList<Item> spawnedItems = new ArrayList<Item>();
     public static ArrayList<NPC> NPCs = new ArrayList<NPC>();
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    public static ArrayList<Portal> portals = new ArrayList<Portal>();
     public PlayScreen(Game game, boolean newGame){
         spriteBatch = new SpriteBatch();
         this.newGame = newGame;
@@ -82,7 +88,9 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         world.setContactListener(new Collision());
         b2dr = new Box2DDebugRenderer();
         camera = new OrthographicCamera();
-        mapManager = new MapManager(TESTMAP, world);
+        mapManager = new MapManager(MapConstants.TESTMAP, world);
+        doors = new Texture(Gdx.files.internal(Constants.doors));
+        createPortalBodies();
         Level.generateExperienceTable();
         Level.showLevels();
         if(newGame){
@@ -90,10 +98,14 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             time = 0f;
             player = new Hero(world);
             player.setup();
-            player.defineBody(new Vector2(16, 16));
+            player.defineBody(new Vector2(2*Constants.UNIT_SCALE, 2*Constants.UNIT_SCALE));
             spawnedItems = new ArrayList<Item>();
             enemies = new ArrayList<Enemy>();
+            MapConstants.fillNPClist(MapConstants.TESTMAP, world);
+            player.map = MapConstants.TESTMAP;
             NPCs = new ArrayList<NPC>();
+            MapConstants.getNPCsFromCurrentMap(MapConstants.TESTMAP);
+            createNPCsBodies();
 
             Task task = new Task(1, "Zdobyć pancerz", "Test1 prosił o pancerz.", 10, 5);
 
@@ -123,23 +135,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         bf.getData().setScale(0.5f);
         //Label.LabelStyle whiteFont = new Label.LabelStyle(bf, Color.WHITE);
 
-        //testing npc and dialogues
-        NPC npc = new NPC("XML/NPC1.xml", world);
-        npc.setup(Utility.heroSheet);
-        npc.defineBody(new Vector2(8*Constants.UNIT_SCALE, Constants.UNIT_SCALE));
-        NPC npc1 = new NPC("XML/QuestNPC.xml", world);
-        npc1.setup(Utility.heroSheet);
-        npc1.defineBody(new Vector2(13*Constants.UNIT_SCALE, Constants.UNIT_SCALE));
-
-        NPC seller = new Seller("XML/Seller.xml", world, 1);
-        seller.setup(Utility.heroSheet);
-        seller.defineBody(new Vector2(10*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
-        NPCs.add(npc);
-        NPCs.add(npc1);
-        NPCs.add(seller);
-
         //testing items
-        Item item1 = new Item(Constants.eqSteelSword,0, Item.Type.weapon);
+        /*Item item1 = new Item(Constants.eqSteelSword,0, Item.Type.weapon);
         Item item2 = new Item(Constants.eqSpear, 0, Item.Type.weapon);
         Item item3 = new Item(Constants.eqHalberd, 0, Item.Type.weapon);
         Item armor = new Item(Constants.eqLeatherArmor, 0, Item.Type.armor);
@@ -152,7 +149,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         armor.spawnItem(new Vector2( 5*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
         helmet.spawnItem(new Vector2( 6*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
         shield.spawnItem(new Vector2( 7*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
-        legs.spawnItem(new Vector2( 5*Constants.UNIT_SCALE, 7*Constants.UNIT_SCALE));
+        legs.spawnItem(new Vector2( 5*Constants.UNIT_SCALE, 7*Constants.UNIT_SCALE));*/
     }
 
     @Override
@@ -182,57 +179,15 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if(mapChanged){
+            loadComponents();
+            mapChanged = false;
+        }
         if(time<2){
             time += Gdx.graphics.getDeltaTime();
         }
 
-        if(player.hitTimer<1f){
-            player.hitTimer+=Gdx.graphics.getDeltaTime();
-        }
-
-        player.stateTime += Gdx.graphics.getDeltaTime();
-        TextureRegion currentFrame = player.walkAnimation.getKeyFrame(player.stateTime, true);
-        if(player.walkAnimation.isAnimationFinished(player.stateTime)){
-            player.alive = false;
-        }
-        if(!player.alive){
-            currentFrame = player.walkAnimation.getKeyFrame(player.stateTime, false);
-            player.stateTime = 0f;
-        }
-
-        if(hud.isTouched){
-            switch(hud.direction){
-                case LEFT:
-                    player.b2body.setLinearVelocity(-(55000*Gdx.graphics.getDeltaTime()), player.b2body.getLinearVelocity().y);
-                    player.currentSprite.setPosition(player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
-                    player.alive = true;
-                    player.walkAnimation = player.walkLeftAnimation;
-                    player.direction = Hero.Direction.LEFT;
-                    break;
-                case RIGHT:
-                    player.b2body.setLinearVelocity(55000*Gdx.graphics.getDeltaTime(), player.b2body.getLinearVelocity().y);
-                    player.currentSprite.setPosition(player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
-                    player.alive = true;
-                    player.walkAnimation = player.walkRightAnimation;
-                    player.direction = Hero.Direction.RIGHT;
-                    break;
-                case UP:
-                    player.b2body.setLinearVelocity(player.b2body.getLinearVelocity().x, 55000*Gdx.graphics.getDeltaTime());
-                    player.currentSprite.setPosition(player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
-                    player.alive = true;
-                    player.walkAnimation = player.walkUpAnimation;
-                    player.direction = Hero.Direction.UP;
-                    break;
-                case DOWN:
-                    player.b2body.setLinearVelocity(player.b2body.getLinearVelocity().x, -(55000*Gdx.graphics.getDeltaTime()));
-                    player.currentSprite.setPosition(player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
-                    player.alive = true;
-                    player.walkAnimation = player.walkDownAnimation;
-                    player.direction = Hero.Direction.DOWN;
-                    break;
-                default: break;
-            }
-        }
+        TextureRegion currentFrame = renderPlayer();
 
         world.step(1/60f, 6, 2);
         camera.position.x = player.b2body.getPosition().x;
@@ -246,6 +201,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
+        renderPortals();
         // test in rendering item
         spawnItems();
         //end test in rendering item
@@ -305,6 +261,58 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             spriteBatch.draw(spawnedItems.get(i).texture, spawnedItems.get(i).pos.x-(spawnedItems.get(i).texture.getWidth()/2),
                     spawnedItems.get(i).pos.y-(spawnedItems.get(i).texture.getHeight()/2));
         }
+    }
+
+    private TextureRegion renderPlayer(){
+        if(player.hitTimer<1f){
+            player.hitTimer+=Gdx.graphics.getDeltaTime();
+        }
+
+        player.stateTime += Gdx.graphics.getDeltaTime();
+        TextureRegion currentFrame = player.walkAnimation.getKeyFrame(player.stateTime, true);
+        if(player.walkAnimation.isAnimationFinished(player.stateTime)){
+            player.alive = false;
+        }
+        if(!player.alive){
+            currentFrame = player.walkAnimation.getKeyFrame(player.stateTime, false);
+            player.stateTime = 0f;
+        }
+
+        if(hud.isTouched){
+            switch(hud.direction){
+                case LEFT:
+                    player.b2body.setLinearVelocity(-(55000*Gdx.graphics.getDeltaTime()), player.b2body.getLinearVelocity().y);
+                    player.currentSprite.setPosition(player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
+                    player.alive = true;
+                    player.walkAnimation = player.walkLeftAnimation;
+                    player.direction = Hero.Direction.LEFT;
+                    break;
+                case RIGHT:
+                    player.b2body.setLinearVelocity(55000*Gdx.graphics.getDeltaTime(), player.b2body.getLinearVelocity().y);
+                    player.currentSprite.setPosition(player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
+                    player.alive = true;
+                    player.walkAnimation = player.walkRightAnimation;
+                    player.direction = Hero.Direction.RIGHT;
+                    break;
+                case UP:
+                    player.b2body.setLinearVelocity(player.b2body.getLinearVelocity().x, 55000*Gdx.graphics.getDeltaTime());
+                    player.currentSprite.setPosition(player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
+                    player.alive = true;
+                    player.walkAnimation = player.walkUpAnimation;
+                    player.direction = Hero.Direction.UP;
+                    break;
+                case DOWN:
+                    player.b2body.setLinearVelocity(player.b2body.getLinearVelocity().x, -(55000*Gdx.graphics.getDeltaTime()));
+                    player.currentSprite.setPosition(player.b2body.getPosition().x-16, player.b2body.getPosition().y-16);
+                    player.alive = true;
+                    player.walkAnimation = player.walkDownAnimation;
+                    player.direction = Hero.Direction.DOWN;
+                    break;
+                default: break;
+            }
+        }
+
+        return currentFrame;
     }
 
     private Random r = new Random();
@@ -532,9 +540,9 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         enemy.halfSecondMove = 0f;
         // if X of enemy is smaller than X of player...
         // if player is more on the right than enemy...
-        if(xe < xp){
+        if(xe <= xp){
             // if enemy is above player...
-            if(ye > yp){
+            if(ye >= yp){
                 // if Yenemy-Yplayer is bigger than Xplayer-Xenemy...
                 if((ye-yp)>(xp-xe)){
                     return Enemy.Direction.DOWN;
@@ -583,6 +591,42 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             width=0;
         }
         return width;
+    }
+
+    private void renderPortals(){
+        for(int i=0; i<portals.size(); i++){
+            spriteBatch.draw(doors, portals.get(i).from.x-16, portals.get(i).from.y-16);
+        }
+    }
+
+    private void createPortalBodies(){
+        for(int i=0; i<portals.size(); i++){
+            //creating portal body
+            portals.get(i).createBody(world);
+        }
+    }
+
+    private void createNPCsBodies(){
+        for(int i=0; i<NPCs.size(); i++){
+            NPCs.get(i).defineBody();
+        }
+    }
+
+    private void loadComponents(){
+        Gdx.app.debug(TAG, "loadComponents");
+
+        MapConstants.getNPCsFromCurrentMap(player.map);
+        mapManager = new MapManager(player.map, world);
+        renderer = mapManager.renderer;
+        Array<Body> bodies = new Array<Body>();
+        world.getBodies(bodies);
+        for(Body body : bodies) {
+            world.destroyBody(body);
+        }
+        player.defineBody(player.position);
+        createNPCsBodies();
+        createPortalBodies();
+        enemies = new ArrayList<Enemy>();
     }
 
 }

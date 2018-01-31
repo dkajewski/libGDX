@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Item;
@@ -131,10 +132,11 @@ public class Enemy implements Serializable{
         BodyDef bdef = new BodyDef();
         bdef.position.set(currentSprite.getX(), currentSprite.getY());
         bdef.type = BodyDef.BodyType.DynamicBody;
+        bdef.fixedRotation = true;
         body = world.createBody(bdef);
 
-        CircleShape shape = new CircleShape();
-        shape.setRadius(16);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(14, 14);
 
         FixtureDef fdef = new FixtureDef();
         fdef.density = 99999;
