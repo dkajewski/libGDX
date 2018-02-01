@@ -16,8 +16,8 @@ public class Seller extends NPC{
     private static final String TAG = "Seller";
     public ArrayList<Item> items = new ArrayList<Item>();
 
-    public Seller(String dialoguePath, World world, int level, Vector2 position, String map) {
-        super(dialoguePath, world, position, map);
+    public Seller(String dialoguePath, World world, int level, Vector2 position, String map, String path) {
+        super(dialoguePath, world, position, map, path);
         setProducts(level);
     }
 

@@ -60,9 +60,11 @@ public class Enemy implements Serializable{
     public float hitTimer = 1.2f;
 
     public Item loot=null;
+    private Vector2 position;
 
-    public Enemy(World world, int enemyLevel){
+    public Enemy(World world, int enemyLevel, Vector2 position){
         this.world = world;
+        this.position = position;
         setEnemyLevel(enemyLevel);
     }
 
@@ -125,9 +127,8 @@ public class Enemy implements Serializable{
 
     /**
      * Defining body of object
-     * @param position - starting position
      */
-    public void defineBody(Vector2 position){
+    public void defineBody(){
         currentSprite.setPosition(position.x, position.y);
         BodyDef bdef = new BodyDef();
         bdef.position.set(currentSprite.getX(), currentSprite.getY());

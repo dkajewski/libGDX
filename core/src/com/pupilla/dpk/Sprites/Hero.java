@@ -19,6 +19,7 @@ import com.pupilla.dpk.Screens.PlayScreen;
 import com.pupilla.dpk.Utility;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -63,6 +64,8 @@ public class Hero implements Serializable{
     public float stateTime;
     public boolean alive = true;
     public Direction direction = Direction.DOWN;
+
+    public ArrayList<Integer> changedNPCs = new ArrayList<Integer>();
 
     public enum Direction{
         LEFT, RIGHT, UP, DOWN

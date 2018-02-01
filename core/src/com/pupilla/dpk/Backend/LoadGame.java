@@ -2,6 +2,7 @@ package com.pupilla.dpk.Backend;
 
 import com.badlogic.gdx.Gdx;
 import com.pupilla.dpk.Sprites.Hero;
+import com.pupilla.dpk.Sprites.NPC;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -45,6 +46,25 @@ public class LoadGame {
             FileInputStream fis = new FileInputStream(Gdx.files.getLocalStoragePath()+"tasklist.sav");
             ObjectInputStream ois = new ObjectInputStream(fis);
             ArrayList<Task> obj = (ArrayList) ois.readObject();
+            ois.close();
+            fis.close();
+            return obj;
+        } catch (FileNotFoundException e){
+            Gdx.app.debug(TAG, "loadtasks");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<NPC> NPCs(){
+        try{
+            FileInputStream fis = new FileInputStream(Gdx.files.getLocalStoragePath()+"npcs.sav");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            ArrayList<NPC> obj = (ArrayList) ois.readObject();
             ois.close();
             fis.close();
             return obj;

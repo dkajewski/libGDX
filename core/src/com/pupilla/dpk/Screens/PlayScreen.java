@@ -36,6 +36,7 @@ import com.pupilla.dpk.Sprites.Seller;
 import com.pupilla.dpk.Utility;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -92,7 +93,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         doors = new Texture(Gdx.files.internal(Constants.doors));
         createPortalBodies();
         Level.generateExperienceTable();
-        Level.showLevels();
+        //Level.showLevels();
         if(newGame){
             // new game start
             time = 0f;
@@ -102,21 +103,14 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             spawnedItems = new ArrayList<Item>();
             enemies = new ArrayList<Enemy>();
             MapConstants.fillNPClist(MapConstants.TESTMAP, world);
+            MapConstants.fillEnemiesList(MapConstants.TESTMAP, world);
             player.map = MapConstants.TESTMAP;
             NPCs = new ArrayList<NPC>();
             MapConstants.getNPCsFromCurrentMap(MapConstants.TESTMAP);
             createNPCsBodies();
-
+            createEnemyBodies();
             Task task = new Task(1, "Zdobyć pancerz", "Test1 prosił o pancerz.", 10, 5);
 
-            Enemy enemy = new Enemy(world, 1);
-            enemy.setup(Utility.monster1Sheet);
-            enemy.defineBody(new Vector2(5*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
-            Enemy enemy1 = new Enemy(world, 1);
-            enemy1.setup(Utility.monster1Sheet);
-            enemy1.defineBody(new Vector2(5*Constants.UNIT_SCALE, 9*Constants.UNIT_SCALE));
-            enemies.add(enemy);
-            enemies.add(enemy1);
         } else{
             // loading game
             LoadGame load = new LoadGame();
@@ -129,6 +123,10 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             spawnedItems = new ArrayList<Item>();
             enemies = new ArrayList<Enemy>();
             Task.tasks = load.taskList();
+            MapConstants.allNPCs = new ArrayList<NPC>();
+            MapConstants.allNPCs = load.NPCs();
+            MapConstants.setupNPCs();
+            loadComponents();
         }
 
         bf = new BitmapFont(Gdx.files.internal(Constants.font));
@@ -612,21 +610,31 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         }
     }
 
+    private void createEnemyBodies(){
+        for(int i=0; i<enemies.size(); i++){
+            enemies.get(i).defineBody();
+        }
+    }
+
     private void loadComponents(){
         Gdx.app.debug(TAG, "loadComponents");
 
+        spawnedItems = new ArrayList<Item>();
         MapConstants.getNPCsFromCurrentMap(player.map);
-        mapManager = new MapManager(player.map, world);
-        renderer = mapManager.renderer;
+        MapConstants.fillEnemiesList(player.map, world);
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
         for(Body body : bodies) {
             world.destroyBody(body);
         }
+        mapManager = new MapManager(player.map, world);
+        renderer = mapManager.renderer;
+
         player.defineBody(player.position);
         createNPCsBodies();
         createPortalBodies();
-        enemies = new ArrayList<Enemy>();
+        createEnemyBodies();
+
     }
 
 }

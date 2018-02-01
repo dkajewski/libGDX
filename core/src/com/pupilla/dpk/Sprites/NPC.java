@@ -28,13 +28,14 @@ import java.util.List;
 public class NPC implements Serializable{
     private static final String TAG = "NPC";
 
-    private transient World world;
+    public transient World world;
     public transient Body body;
     public String name;
     public List<Conversation> conversations;
     private static final int FRAME_COLS = 4, FRAME_ROWS = 4;
-    private Vector2 position;
+    public Vector2 position;
     public String map;
+    public String path;
 
     public transient Sprite currentSprite;
     public transient Texture npcTexture;
@@ -54,16 +55,18 @@ public class NPC implements Serializable{
         LEFT, RIGHT, UP, DOWN
     }
 
-    public NPC(String dialoguePath, World world, Vector2 position, String map){
+    public NPC(String dialoguePath, World world, Vector2 position, String map, String path){
         this.world = world;
         this.position = position;
         this.map = map;
+        this.path = path;
         Dialogue dialogue = new Dialogue(dialoguePath);
         name = dialogue.npcName;
         conversations = dialogue.conversations;
     }
 
-    public void setup(AssetDescriptor<Texture> sheet){
+    public void setup(){
+        AssetDescriptor<Texture> sheet = new AssetDescriptor<Texture>(path, Texture.class);
         Utility ut = new Utility();
         ut.manager.load(sheet);
         ut.manager.finishLoading();

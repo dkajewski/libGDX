@@ -102,6 +102,7 @@ public class SettingsScreen extends ApplicationAdapter implements Screen {
                 SaveGame save = new SaveGame();
                 save.player();
                 save.taskList();
+                save.NPCs();
             }
         });
 

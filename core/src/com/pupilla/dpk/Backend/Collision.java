@@ -16,6 +16,8 @@ import com.pupilla.dpk.Screens.PlayScreen;
 import com.pupilla.dpk.Sprites.Enemy;
 import com.pupilla.dpk.Sprites.NPC;
 
+import java.util.Collections;
+
 /**
  * Created by orzech on 18.12.2017.
  */
@@ -99,10 +101,11 @@ public class Collision implements ContactListener {
                 PlayScreen.player.map = p.destinationMap;
                 PlayScreen.mapChanged = true;
                 PlayScreen.player.position = p.to;
-                /*PlayScreen.mapManager = new MapManager(p.destinationMap, PlayScreen.player.world);
-                PlayScreen.renderer = PlayScreen.mapManager.renderer;*/
-                Gdx.app.debug(TAG, "bodies destroyed");
-
+                for(int i=0; i<PlayScreen.player.changedNPCs.size(); i++){
+                    MapConstants.allNPCs.add(PlayScreen.NPCs.get(i));
+                    Collections.swap(MapConstants.allNPCs, PlayScreen.player.changedNPCs.get(i), MapConstants.allNPCs.size()-1);
+                    MapConstants.allNPCs.remove(MapConstants.allNPCs.size()-1);
+                }
             }
         }
 

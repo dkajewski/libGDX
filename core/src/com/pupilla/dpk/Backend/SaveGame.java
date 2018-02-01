@@ -57,6 +57,22 @@ public class SaveGame{
         }
     }
 
+    public void NPCs(){
+        try{
+            FileHandle fh = Gdx.files.local(Gdx.files.getLocalStoragePath()+"npcs.sav");
+            Gdx.app.debug(TAG, Gdx.files.getLocalStoragePath());
+            FileOutputStream fos = new FileOutputStream(fh.path());
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(MapConstants.allNPCs);
+            fos.close();
+            oos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /*public void backpack(){
         try{
             FileHandle fh = Gdx.files.local(Gdx.files.getLocalStoragePath()+"backpack.sav");
