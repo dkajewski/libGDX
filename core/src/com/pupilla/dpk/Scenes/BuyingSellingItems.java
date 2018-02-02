@@ -74,9 +74,10 @@ public class BuyingSellingItems extends Dialog{
                     break;
                 case 1:
                     // buying item
-                    if (PlayScreen.player.gold>=(sum*4+1)) {
+                    if (PlayScreen.player.gold>=(sum*4+1) && PlayScreen.player.backpack.addItem(item)) {
                         PlayScreen.player.gold-=(sum*4+1);
-                        PlayScreen.player.backpack.addItem(item);
+
+                        //PlayScreen.player.backpack.addItem(item);
                         TradeScreen.refreshPlayerTable = true;
                     }
                     remove();

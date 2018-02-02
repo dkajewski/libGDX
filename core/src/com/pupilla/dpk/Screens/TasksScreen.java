@@ -20,10 +20,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Task;
+import com.pupilla.dpk.Scenes.TaskProperties;
 
 import java.util.ArrayList;
 
@@ -177,6 +179,13 @@ public class TasksScreen extends ApplicationAdapter implements Screen {
             }
         }
 
+        if(scrollPane!=null)
+            scrollPane.remove();
+        if(outerTable!=null)
+            outerTable.remove();
+        if(innerTable!=null)
+            innerTable.remove();
+
         title = new Label(Constants.endedTasks, whiteFont);
         title.setPosition(width/2-title.getWidth()/2, height-title.getHeight()-5);
         stage.addActor(title);
@@ -188,33 +197,50 @@ public class TasksScreen extends ApplicationAdapter implements Screen {
 
         for(int i=0; i<endedTasks.size(); i++){
             TextButton tb = new TextButton(endedTasks.get(i).title, uiSkin);
+            final Task task = endedTasks.get(i);
+            tb.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y){
+                    TaskProperties tp = new TaskProperties(uiSkin, task);
+                    tp.show(stage);
+                }
+            });
             innerTable.add(tb).width(width-20);
             innerTable.row();
         }
 
         // testing displaying of scroll pane
-        for(int i=30; i>0; i--){
+        /*for(int i=30; i>0; i--){
             innerTable.add(new TextButton(i+"", uiSkin)).width(width-20);
             innerTable.row();
-        }
+        }*/
 
         scrollPane = new ScrollPane(innerTable, uiSkin);
         outerTable.setSize(width, height-50);
         outerTable.add(scrollPane);
         outerTable.row();
-
-        stage.addActor(outerTable);
+        outerTable.align(Align.top);
+        if(endedTasks.size()>0)
+            stage.addActor(outerTable);
     }
 
     private void showActiveTasks(){
         for(int i=0; i<stage.getActors().size; i++){
             if(stage.getActors().get(i).equals(outerTable)){
+                Gdx.app.debug(TAG, "remove outerTable");
                 stage.getActors().removeIndex(i);
             }
             if(stage.getActors().get(i).equals(title)){
                 stage.getActors().removeIndex(i);
             }
         }
+
+        if(scrollPane!=null)
+            scrollPane.remove();
+        if(outerTable!=null)
+            outerTable.remove();
+        if(innerTable!=null)
+            innerTable.remove();
 
         title = new Label(Constants.activeTasks, whiteFont);
         title.setPosition(width/2-title.getWidth()/2, height-title.getHeight()-5);
@@ -227,21 +253,30 @@ public class TasksScreen extends ApplicationAdapter implements Screen {
 
         for(int i=0; i<activeTasks.size(); i++){
             TextButton tb = new TextButton(activeTasks.get(i).title, uiSkin);
+            final Task task = activeTasks.get(i);
+            tb.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y){
+                    TaskProperties tp = new TaskProperties(uiSkin, task);
+                    tp.show(stage);
+                }
+            });
             innerTable.add(tb).width(width-20);
             innerTable.row();
         }
 
         // testing displaying of scroll pane
-        for(int i=0; i<30; i++){
+        /*for(int i=0; i<30; i++){
             innerTable.add(new TextButton(i+"", uiSkin)).width(width-20);
             innerTable.row();
-        }
+        }*/
 
         scrollPane = new ScrollPane(innerTable, uiSkin);
         outerTable.setSize(width, height-50);
         outerTable.add(scrollPane);
         outerTable.row();
-
-        stage.addActor(outerTable);
+        outerTable.align(Align.top);
+        if(activeTasks.size()>0)
+            stage.addActor(outerTable);
     }
 }

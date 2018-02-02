@@ -6,10 +6,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -17,6 +19,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Constants;
@@ -76,6 +80,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
     private BitmapFont bf;
     private Texture doors;
+    private GlyphLayout gl;
 
     public static ArrayList<Item> spawnedItems = new ArrayList<Item>();
     public static ArrayList<NPC> NPCs = new ArrayList<NPC>();
@@ -131,6 +136,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
 
         bf = new BitmapFont(Gdx.files.internal(Constants.font));
         bf.getData().setScale(0.5f);
+        gl = new GlyphLayout();
         //Label.LabelStyle whiteFont = new Label.LabelStyle(bf, Color.WHITE);
 
         //testing items
@@ -215,6 +221,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
                 afterPotion=false;
             }
         }
+        drawNPCsNames();
+        drawEnemiesHealth();
         spriteBatch.end();
         spriteBatch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.health.setWidth(getHealthbarWidth());
@@ -498,8 +506,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             }
             spriteBatch.draw(enemies.get(i).walkAnimation.getKeyFrame(enemies.get(i).stateTime, false), enemies.get(i).body.getPosition().x-16,
                     enemies.get(i).body.getPosition().y-16);
-            spriteBatch.draw(enemies.get(i).healthbar, enemies.get(i).body.getPosition().x-16,
-                    enemies.get(i).body.getPosition().y+16, getEnemyHealthbarWidth(enemies.get(i)), 10);
             if(enemies.get(i).currentHealth<=0){
                 if(enemies.get(i).loot!=null){
                     enemies.get(i).loot.spawnItem(enemies.get(i).body.getPosition());
@@ -635,6 +641,20 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         createPortalBodies();
         createEnemyBodies();
 
+    }
+
+    private void drawNPCsNames(){
+        for(int i=0; i<NPCs.size(); i++){
+            gl.setText(bf, NPCs.get(i).name);
+            bf.draw(spriteBatch, NPCs.get(i).name, NPCs.get(i).body.getPosition().x-gl.width/2, NPCs.get(i).body.getPosition().y+30);
+        }
+    }
+
+    private void drawEnemiesHealth(){
+        for(int i=0; i<enemies.size(); i++){
+            spriteBatch.draw(enemies.get(i).healthbar, enemies.get(i).body.getPosition().x-16,
+                    enemies.get(i).body.getPosition().y+16, getEnemyHealthbarWidth(enemies.get(i)), 10);
+        }
     }
 
 }

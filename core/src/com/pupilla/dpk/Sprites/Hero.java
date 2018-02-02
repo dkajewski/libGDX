@@ -44,7 +44,7 @@ public class Hero implements Serializable{
     public int damage = 0;
     public int level = 1;
     public int skillPoints = 10;
-    public int gold = 0;
+    public int gold = 40000;
     public int potioncount;
     public int maxHealth;
     public int currentHealth;

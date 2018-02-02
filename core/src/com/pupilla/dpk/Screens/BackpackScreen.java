@@ -47,7 +47,7 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
     private Backpack backpack;
     private int width, height;
 
-    public static Screen parent;
+    static Screen parent;
     public static boolean refresh = false;
 
     private Image weapon, helmet, shield, armor, legs;
@@ -70,15 +70,14 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         region = new TextureRegion(backbuttontexture);
         drawableRegion = new TextureRegionDrawable(region);
         backbutton = new ImageButton(drawableRegion);
-        backbutton.setX(5);
-        backbutton.setY(5);
+        backbutton.setPosition(22, height-backbutton.getHeight()-5);
 
         BitmapFont bf = new BitmapFont(Gdx.files.internal(Constants.font));
         Label.LabelStyle style = new Label.LabelStyle(bf, Color.WHITE);
         Label level = new Label(Constants.level+": "+PlayScreen.player.level, style);
         level.setFontScale(0.5f);
-        level.setX(15);
-        level.setY(height-22-level.getHeight());
+        level.setX(22);
+        level.setY(height-45-level.getHeight());
         Label exp = new Label(Constants.exp+": "+PlayScreen.player.experience, style);
         exp.setFontScale(0.5f);
         exp.setX(level.getX());
@@ -96,12 +95,12 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
         stats = new TextButton(Constants.stats, skin);
         stats.setTransform(true);
         stats.setScale(0.7f);
-        stats.setPosition(width-(0.7f*stats.getWidth()), 2);
+        stats.setPosition(width/2-(stats.getWidth()/2*0.7f), 5);
 
         region = new TextureRegion(new Texture("sprites/others/taskbook.png"));
         drawableRegion = new TextureRegionDrawable(region);
         tasksbutton = new ImageButton(drawableRegion);
-        tasksbutton.setX(width-tasksbutton.getWidth()-5);
+        tasksbutton.setX(width-tasksbutton.getWidth()-22);
         tasksbutton.setY(height-tasksbutton.getHeight()-5);
         backpack = PlayScreen.player.backpack;
         backpackSlots = new Image[backpack.itemArr.length];
@@ -197,7 +196,7 @@ public class BackpackScreen extends ApplicationAdapter implements Screen {
                     @Override
                     public void clicked(InputEvent event, float x, float y){
                         Gdx.app.debug(TAG, "clicked item ID: " + index);
-                        ItemProperties ip = new ItemProperties(new Skin(Gdx.files.internal(Constants.skin)), backpack.itemArr[index]);
+                        ItemProperties ip = new ItemProperties(new Skin(Gdx.files.internal(Constants.skin)), index, backpack.itemArr[index].name);
                         ip.show(stage);
                     }
                 });

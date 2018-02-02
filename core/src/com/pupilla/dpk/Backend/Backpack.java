@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Backpack implements Serializable{
     public Item[] itemArr;
+    public int itemsInBp = 0;
 
     public Backpack(){
         itemArr = new Item[52];
@@ -19,7 +20,8 @@ public class Backpack implements Serializable{
 
     public boolean addItem(Item item){
         for(int i=0; i<itemArr.length; i++){
-            if(itemArr[i]==null){
+            if(itemArr[i]==null && itemsInBp!=52){
+                itemsInBp++;
                 itemArr[i] = item;
                 return true;
             }
@@ -29,6 +31,7 @@ public class Backpack implements Serializable{
 
     public void removeItem(int i){
         itemArr[i] = null;
+        itemsInBp--;
     }
 
     public void reloadTextures(){

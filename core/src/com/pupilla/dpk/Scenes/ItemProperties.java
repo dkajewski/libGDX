@@ -23,11 +23,13 @@ public class ItemProperties extends Dialog{
     private static final String TAG = "ItemProperties";
 
     private Skin skin;
+    private int index;
     private Item item;
-    public ItemProperties(Skin skin, Item item) {
-        super(item.name, skin);
+    public ItemProperties(Skin skin, int index, String name) {
+        super(name, skin);
         this.skin = skin;
-        this.item = item;
+        this.index = index;
+        item = PlayScreen.player.backpack.itemArr[index];
 
         prepareWindow();
     }
@@ -36,27 +38,37 @@ public class ItemProperties extends Dialog{
     protected void result(Object object){
         if(object!=null){
             int action = (Integer) object;
-            int a = Arrays.asList(PlayScreen.player.backpack.itemArr).indexOf(item);
+            int a = index;
             switch(action){
                 case 0:
                     switch(item.type){
                         case weapon:
+                            if(PlayScreen.player.eq.weapon==null)
+                                PlayScreen.player.backpack.itemsInBp--;
                             PlayScreen.player.backpack.itemArr[a] = PlayScreen.player.eq.weapon;
                             PlayScreen.player.eq.weapon = item;
                             break;
                         case shield:
+                            if(PlayScreen.player.eq.shield==null)
+                                PlayScreen.player.backpack.itemsInBp--;
                             PlayScreen.player.backpack.itemArr[a] = PlayScreen.player.eq.shield;
                             PlayScreen.player.eq.shield = item;
                             break;
                         case armor:
+                            if(PlayScreen.player.eq.armor==null)
+                                PlayScreen.player.backpack.itemsInBp--;
                             PlayScreen.player.backpack.itemArr[a] = PlayScreen.player.eq.armor;
                             PlayScreen.player.eq.armor = item;
                             break;
                         case helmet:
+                            if(PlayScreen.player.eq.helmet==null)
+                                PlayScreen.player.backpack.itemsInBp--;
                             PlayScreen.player.backpack.itemArr[a] = PlayScreen.player.eq.helmet;
                             PlayScreen.player.eq.helmet = item;
                             break;
                         case legs:
+                            if(PlayScreen.player.eq.legs==null)
+                                PlayScreen.player.backpack.itemsInBp--;
                             PlayScreen.player.backpack.itemArr[a] = PlayScreen.player.eq.legs;
                             PlayScreen.player.eq.legs = item;
                             break;
