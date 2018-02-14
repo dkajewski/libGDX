@@ -94,9 +94,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         world.setContactListener(new Collision());
         b2dr = new Box2DDebugRenderer();
         camera = new OrthographicCamera();
-        mapManager = new MapManager(MapConstants.TESTMAP, world);
+        mapManager = new MapManager(MapConstants.FOREST1, world);
         doors = new Texture(Gdx.files.internal(Constants.doors));
-        createPortalBodies();
         Level.generateExperienceTable();
         //Level.showLevels();
         if(newGame){
@@ -104,16 +103,17 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             time = 0f;
             player = new Hero(world);
             player.setup();
-            player.defineBody(new Vector2(2*Constants.UNIT_SCALE, 2*Constants.UNIT_SCALE));
+            player.defineBody(new Vector2(12*Constants.UNIT_SCALE, 28*Constants.UNIT_SCALE));
             spawnedItems = new ArrayList<Item>();
             enemies = new ArrayList<Enemy>();
-            MapConstants.fillNPClist(MapConstants.TESTMAP, world);
-            MapConstants.fillEnemiesList(MapConstants.TESTMAP, world);
-            player.map = MapConstants.TESTMAP;
+            MapConstants.fillNPClist(world);
+            MapConstants.fillEnemiesList(MapConstants.FOREST1, world);
+            player.map = MapConstants.FOREST1;
             NPCs = new ArrayList<NPC>();
-            MapConstants.getNPCsFromCurrentMap(MapConstants.TESTMAP);
+            MapConstants.getNPCsFromCurrentMap(player.map);
             createNPCsBodies();
             createEnemyBodies();
+            createPortalBodies();
             Task task = new Task(1, "Zdobyć pancerz", "Test1 prosił o pancerz.", 10, 5);
 
         } else{

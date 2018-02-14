@@ -216,11 +216,137 @@ public class Enemy implements Serializable{
                 defense = 5;
                 experience = 15;
                 damage = 2;
+                if(lootID>=5 && lootID<=6){
+                    loot = new Item(Constants.eqHalberd, 0, Item.Type.weapon);
+                }
                 if(lootID>7 && lootID<=9){
                     loot = new Item(Constants.eqSteelSword,0, Item.Type.weapon);
                 }
                 if(lootID==10){
                     loot = new Item(Constants.eqLeatherHelmet,0, Item.Type.helmet);
+                }
+                break;
+            case 2:
+                maxHealth = 15;
+                currentHealth = maxHealth;
+                attack = 5;
+                defense = 6;
+                experience = 25;
+                damage = 4;
+                if(lootID>=4 && lootID<=5){
+                    loot = new Item(Constants.eqSpear, 1, Item.Type.weapon);
+                }
+                if(lootID>=6 && lootID<=7){
+                    loot = new Item(Constants.eqWoodenShield, 1, Item.Type.shield);
+                }
+                if(lootID>=8 && lootID<=9){
+                    loot = new Item(Constants.eqLeatherLegs, 1, Item.Type.legs);
+                }
+                if(lootID==10){
+                    loot = new Item(Constants.eqLeatherArmor, 1, Item.Type.armor);
+                }
+                break;
+            case 3:
+                maxHealth = 30;
+                currentHealth = maxHealth;
+                attack = 8;
+                defense = 12;
+                experience =40;
+                damage = 7;
+                if(lootID>=4 && lootID<=5){
+                    loot = new Item(Constants.eqHatchet, 2, Item.Type.weapon);
+                }
+                if(lootID>=6 && lootID<=7){
+                    loot = new Item(Constants.eqSteelShield, 2, Item.Type.shield);
+                }
+                if(lootID>=8 && lootID<=9){
+                    loot = new Item(Constants.eqKnightLegs, 2, Item.Type.legs);
+                }
+                if(lootID==10){
+                    loot = new Item(Constants.eqKnightHelmet, 2, Item.Type.helmet);
+                }
+                break;
+            case 4:
+                maxHealth = 60;
+                currentHealth = maxHealth;
+                attack = 15;
+                defense = 15;
+                experience = 70;
+                damage = 14;
+                if(lootID>=4 && lootID<=5){
+                    loot = new Item(Constants.eqMace, 2, Item.Type.weapon);
+                }
+                if(lootID>=6 && lootID<=7){
+                    loot = new Item(Constants.eqEmeraldShield, 2, Item.Type.shield);
+                }
+                if(lootID>=8 && lootID<=9){
+                    loot = new Item(Constants.eqKnightLegs, 3, Item.Type.legs);
+                }
+                if(lootID==10){
+                    loot = new Item(Constants.eqEmeraldArmor, 3, Item.Type.armor);
+                }
+                break;
+            case 5:
+                maxHealth = 160;
+                currentHealth = maxHealth;
+                attack = 28;
+                defense = 20;
+                experience = 120;
+                damage = 19;
+                if(lootID>=4 && lootID<=5){
+                    loot = new Item(Constants.eqSabre, 3, Item.Type.weapon);
+                }
+                if(lootID>=6 && lootID<=7){
+                    loot = new Item(Constants.eqEmeraldShield, 3, Item.Type.shield);
+                }
+                if(lootID>=8 && lootID<=9){
+                    loot = new Item(Constants.eqEmeraldLegs, 3, Item.Type.legs);
+                }
+                if(lootID==10){
+                    loot = new Item(Constants.eqEmeraldHelmet, 3, Item.Type.helmet);
+                }
+                break;
+            case 6:
+                maxHealth = 250;
+                currentHealth = maxHealth;
+                attack = 40;
+                defense = 30;
+                experience = 200;
+                damage = 25;
+                if(lootID>=4 && lootID<=5){
+                    loot = new Item(Constants.eqSabre, 3, Item.Type.weapon);
+                }
+                if(lootID>=6 && lootID<=7){
+                    loot = new Item(Constants.eqGuardianShield, 4, Item.Type.shield);
+                }
+                if(lootID>=8 && lootID<=9){
+                    loot = new Item(Constants.eqEmeraldLegs, 4, Item.Type.legs);
+                }
+                if(lootID==10){
+                    loot = new Item(Constants.eqEmeraldHelmet, 4, Item.Type.helmet);
+                }
+                break;
+            case 7:
+                maxHealth = 500;
+                currentHealth = maxHealth;
+                attack = 50;
+                defense = 40;
+                experience = 450;
+                damage = 40;
+                if(lootID==6){
+                    loot = new Item(Constants.eqRoyalArmor, 5, Item.Type.armor);
+                }
+                if(lootID==7){
+                    loot = new Item(Constants.eqWarAxe, 5, Item.Type.weapon);
+                }
+                if(lootID==8){
+                    loot = new Item(Constants.eqRoyalShield, 5, Item.Type.shield);
+                }
+                if(lootID==9){
+                    loot = new Item(Constants.eqEmeraldLegs, 5, Item.Type.legs);
+                }
+                if(lootID==10){
+                    loot = new Item(Constants.eqVikingHelmet, 5, Item.Type.helmet);
                 }
                 break;
         }

@@ -27,8 +27,6 @@ public class MapManager {
 
     //map layers
     private static final String MAP_COLLISION = "MAP_COLLISION";
-    private static final String MAP_SPAWNS = "MAP_SPAWNS";
-    private static final String MAP_PORTAL = "MAP_PORTAL";
 
 
     private TmxMapLoader mapLoader;

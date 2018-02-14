@@ -26,6 +26,20 @@ public class Seller extends NPC{
             case 0:case 1:default:
                 items.add(new Item(Constants.eqSteelSword, 1, Item.Type.weapon));
                 items.add(new Item(Constants.eqWoodenShield, 1, Item.Type.shield));
+                items.add(new Item(Constants.eqLeatherArmor, 1, Item.Type.armor));
+                break;
+            case 2:
+                items.add(new Item(Constants.eqLeatherHelmet, 1, Item.Type.helmet));
+                items.add(new Item(Constants.eqHalberd, 1, Item.Type.weapon));
+                items.add(new Item(Constants.eqLeatherLegs, 1, Item.Type.legs));
+                items.add(new Item(Constants.eqHatchet, 2, Item.Type.weapon));
+                items.add(new Item(Constants.eqSteelShield, 2, Item.Type.shield));
+                break;
+            case 3:
+                items.add(new Item(Constants.eqSabre, 2, Item.Type.weapon));
+                items.add(new Item(Constants.eqKnightHelmet, 2, Item.Type.helmet));
+                items.add(new Item(Constants.eqHatchet, 2, Item.Type.weapon));
+                items.add(new Item(Constants.eqEmeraldShield, 3, Item.Type.shield));
                 break;
         }
     }
