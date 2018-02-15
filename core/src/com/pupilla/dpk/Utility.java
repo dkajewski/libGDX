@@ -22,16 +22,16 @@ public final class Utility {
     public static final String monster3Path = "sprites/monsters/monster3.png";
     public static final String monster4Path = "sprites/monsters/monster4.png";
     public static final String monster5Path = "sprites/monsters/monster5.png";
-    public static final String monster6Path = "sprites/monsters/monster1.png";
+    public static final String monster6Path = "sprites/monsters/monster6.png";
 
-    public static final String NPC1path = "sprites/characters/NPC1.png";
-    public static final String NPC2path = "sprites/characters/NPC2.png";
-    public static final String NPC3path = "sprites/characters/NPC3.png";
-    public static final String NPC4path = "sprites/characters/NPC4.png";
-    public static final String NPC5path = "sprites/characters/NPC5.png";
-    public static final String NPC6path = "sprites/characters/NPC6.png";
-    public static final String NPC7path = "sprites/characters/NPC7.png";
-    public static final String NPC8path = "sprites/characters/NPC8.png";
+    public static final String mage = "sprites/characters/NPC1.png";
+    public static final String joseph = "sprites/characters/NPC2.png";
+    public static final String frederick = "sprites/characters/NPC3.png";
+    public static final String henrick = "sprites/characters/NPC4.png";
+    public static final String louis = "sprites/characters/NPC5.png";
+    public static final String eremite = "sprites/characters/NPC6.png";
+    public static final String seller = "sprites/characters/NPC7.png";
+    public static final String mayor = "sprites/characters/NPC8.png";
 
     public static final AssetDescriptor<Texture> heroSheet = new AssetDescriptor<Texture>(Gdx.files.internal(heroPath), Texture.class);
     public static final AssetDescriptor<Texture> monster1Sheet = new AssetDescriptor<Texture>(Gdx.files.internal(monster1Path), Texture.class);
@@ -41,7 +41,14 @@ public final class Utility {
     public static final AssetDescriptor<Texture> demon = new AssetDescriptor<Texture>(Gdx.files.internal(monster5Path), Texture.class);
     public static final AssetDescriptor<Texture> desertWolf = new AssetDescriptor<Texture>(Gdx.files.internal(monster6Path), Texture.class);
 
-    public static final AssetDescriptor<Texture> citizen1 = new AssetDescriptor<Texture>(Gdx.files.internal(NPC1path), Texture.class);
+    //public static final AssetDescriptor<Texture> mayor = new AssetDescriptor<Texture>(Gdx.files.internal(NPC8path), Texture.class);
+    //public static final AssetDescriptor<Texture> joseph = new AssetDescriptor<Texture>(Gdx.files.internal(NPC2path), Texture.class);
+    //public static final AssetDescriptor<Texture> frederick = new AssetDescriptor<Texture>(Gdx.files.internal(NPC3path), Texture.class);
+    //public static final AssetDescriptor<Texture> louis = new AssetDescriptor<Texture>(Gdx.files.internal(NPC5path), Texture.class);
+    //public static final AssetDescriptor<Texture> mage = new AssetDescriptor<Texture>(Gdx.files.internal(NPC1path), Texture.class);
+    //public static final AssetDescriptor<Texture> henrick = new AssetDescriptor<Texture>(Gdx.files.internal(NPC4path), Texture.class);
+    //public static final AssetDescriptor<Texture> eremite = new AssetDescriptor<Texture>(Gdx.files.internal(NPC6path), Texture.class);
+    //public static final AssetDescriptor<Texture> seller = new AssetDescriptor<Texture>(Gdx.files.internal(NPC7path), Texture.class);
 
     public void load(){
         //manager.load(playerTexture);

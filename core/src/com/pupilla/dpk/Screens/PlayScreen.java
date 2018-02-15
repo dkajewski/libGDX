@@ -114,7 +114,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             createNPCsBodies();
             createEnemyBodies();
             createPortalBodies();
-            Task task = new Task(1, "Zdobyć pancerz", "Test1 prosił o pancerz.", 10, 5);
+            Task task = new Task(1, "Zdobyć pancerz", "Józef prosił o pancerz.", 10, 5);
 
         } else{
             // loading game

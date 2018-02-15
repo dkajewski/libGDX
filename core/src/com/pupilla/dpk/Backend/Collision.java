@@ -16,6 +16,7 @@ import com.pupilla.dpk.Screens.PlayScreen;
 import com.pupilla.dpk.Sprites.Enemy;
 import com.pupilla.dpk.Sprites.NPC;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 /**
@@ -40,7 +41,7 @@ public class Collision implements ContactListener {
             Fixture object = player == fixA ? fixB : fixA;
 
             // if object is an instance of item add it to backpack
-            if(object.getUserData() instanceof Item){
+            if(object.getUserData() instanceof Item && player.getUserData()=="player"){
                 Gdx.app.debug(TAG, "item collision");
                 ((Item) object.getUserData()).addToBackpack();
             }
@@ -138,11 +139,17 @@ public class Collision implements ContactListener {
             if(sensor.getUserData() instanceof Body && player.getUserData()=="player"){
                 Body area = (Body) sensor.getUserData();
                 for(int i=0; i<PlayScreen.enemies.size(); i++){
-                    if(PlayScreen.enemies.get(i).visibleArea.equals(area)){
-                        Gdx.app.debug(TAG, "enemy sensor end collision");
-                        PlayScreen.enemies.get(i).canMove = false;
-                        PlayScreen.enemies.get(i).randomMovement = true;
+                    // do nothing if there is a collision with the enemy and portal at the same time
+                    try{
+                        if(PlayScreen.enemies.get(i).visibleArea.equals(area)){
+                            Gdx.app.debug(TAG, "enemy sensor end collision");
+                            PlayScreen.enemies.get(i).canMove = false;
+                            PlayScreen.enemies.get(i).randomMovement = true;
+                        }
+                    } catch (Exception e){
+                        Gdx.app.debug(TAG, "critical error");
                     }
+
                 }
             }
         }

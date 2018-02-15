@@ -122,7 +122,7 @@ public class ItemProperties extends Dialog{
                     a = PlayScreen.player.eq.armor.atk;
                     d = PlayScreen.player.eq.armor.def;
                     b = PlayScreen.player.eq.armor.dmgbonus;
-                    h = PlayScreen.player.eq.weapon.healthbonus;
+                    h = PlayScreen.player.eq.shield.healthbonus;
                 }
 
                 fillTable(table, a, d, b, h);
@@ -137,7 +137,7 @@ public class ItemProperties extends Dialog{
                     a = PlayScreen.player.eq.shield.atk;
                     d = PlayScreen.player.eq.shield.def;
                     b = PlayScreen.player.eq.shield.dmgbonus;
-                    h = PlayScreen.player.eq.weapon.healthbonus;
+                    h = PlayScreen.player.eq.shield.healthbonus;
                 }
 
                 fillTable(table, a, d, b, h);
@@ -152,7 +152,7 @@ public class ItemProperties extends Dialog{
                     a = PlayScreen.player.eq.helmet.atk;
                     d = PlayScreen.player.eq.helmet.def;
                     b = PlayScreen.player.eq.helmet.dmgbonus;
-                    h = PlayScreen.player.eq.weapon.healthbonus;
+                    h = PlayScreen.player.eq.helmet.healthbonus;
                 }
 
                 fillTable(table, a, d, b, h);
@@ -167,7 +167,7 @@ public class ItemProperties extends Dialog{
                     a = PlayScreen.player.eq.legs.atk;
                     d = PlayScreen.player.eq.legs.def;
                     b = PlayScreen.player.eq.legs.dmgbonus;
-                    h = PlayScreen.player.eq.weapon.healthbonus;
+                    h = PlayScreen.player.eq.legs.healthbonus;
                 }
 
                 fillTable(table, a, d, b, h);

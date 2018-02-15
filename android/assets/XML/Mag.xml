@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Mag">
+    <dialogue id="0">
+        <text>Czego tu szukasz? Wynoś się stąd! Natychmiast!</text>
+        <response nextDialogue="1">Nieźle się ukryłeś.</response>
+        <response nextDialogue="2">Wiem, że to ty odpowiadasz za całe zło na wyspie!</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>Nie mam ochoty na pogaduszki, odejdź stąd!</text>
+        <response nextDialogue="0">Już się robi...</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>HAHAHA! Jednak jesteś bystrzejszy niż myślałem. Brawo.</text>
+        <response nextDialogue="3">To teraz wyzywam cię na pojedynek! Stawaj do walki!</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>Nie mam zamiaru. Nie powstrzymasz zła, które opanowało wyspę. Zmywam się stąd, żegnaj!</text>
+    </dialogue>
+</npc>

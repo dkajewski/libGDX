@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<npc name="Test2">
+<npc name="Józef">
     <dialogue id="0">
         <text>
             Witaj, wędrowcze. Co cię sprowadza do tej krainy?
@@ -51,10 +51,10 @@
     </dialogue>
     <dialogue id="5">
         <text>
-            To miłe, że przyniosłeś to, o co prosiłem.
+            To miłe, że przyniosłeś to, o co prosiłem. Zajdź do mojego brata, Fryderyka, może będzie miał dla ciebie zadanie.
         </text>
         <response nextDialogue="0">
-            Porozmawiajmy o czymś jeszcze.
+            Dzięki za informacje. Porozmawiajmy o czymś jeszcze.
         </response>
     </dialogue>
 </npc>

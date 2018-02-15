@@ -227,12 +227,12 @@ public class Enemy implements Serializable{
                 }
                 break;
             case 2:
-                maxHealth = 15;
+                maxHealth = 30;
                 currentHealth = maxHealth;
                 attack = 5;
                 defense = 6;
                 experience = 25;
-                damage = 4;
+                damage = 8;
                 if(lootID>=4 && lootID<=5){
                     loot = new Item(Constants.eqSpear, 1, Item.Type.weapon);
                 }
@@ -247,12 +247,12 @@ public class Enemy implements Serializable{
                 }
                 break;
             case 3:
-                maxHealth = 30;
+                maxHealth = 40;
                 currentHealth = maxHealth;
                 attack = 8;
                 defense = 12;
-                experience =40;
-                damage = 7;
+                experience = 40;
+                damage = 12;
                 if(lootID>=4 && lootID<=5){
                     loot = new Item(Constants.eqHatchet, 2, Item.Type.weapon);
                 }
@@ -272,7 +272,7 @@ public class Enemy implements Serializable{
                 attack = 15;
                 defense = 15;
                 experience = 70;
-                damage = 14;
+                damage = 18;
                 if(lootID>=4 && lootID<=5){
                     loot = new Item(Constants.eqMace, 2, Item.Type.weapon);
                 }
@@ -292,7 +292,7 @@ public class Enemy implements Serializable{
                 attack = 28;
                 defense = 20;
                 experience = 120;
-                damage = 19;
+                damage = 25;
                 if(lootID>=4 && lootID<=5){
                     loot = new Item(Constants.eqSabre, 3, Item.Type.weapon);
                 }
@@ -312,7 +312,7 @@ public class Enemy implements Serializable{
                 attack = 40;
                 defense = 30;
                 experience = 200;
-                damage = 25;
+                damage = 35;
                 if(lootID>=4 && lootID<=5){
                     loot = new Item(Constants.eqSabre, 3, Item.Type.weapon);
                 }

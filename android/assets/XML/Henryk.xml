@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Henryk">
+    <dialogue id="0">
+        <text>
+            Nowa twarz w mieście! Może się ze mną napijesz?
+        </text>
+        <response nextDialogue="1">Nie, dzięki, może innym razem.</response>
+        <response nextDialogue="2" accessibility="false">Fryderyk prosił, żebyś do niego przyszedł.</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>Wiedziałem, że tak będzie. Na pierwszy rzut oka wyglądasz na takiego.</text>
+        <response nextDialogue="0">Jak tam sobie chcesz.</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Pójdę jak skończę pić. Powiedz mu to.</text>
+        <response nextDialogue="3">Henryk nie ma z tobą łatwego życia.</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>Człowiek nie wielbłąd i pić musi!</text>
+        <response nextDialogue="0">Masz całkowitą rację.</response>
+    </dialogue>
+</npc>

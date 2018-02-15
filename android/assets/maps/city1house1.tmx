@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="left-down" width="10" height="10" tilewidth="32" tileheight="32" nextobjectid="12">
+ <tileset firstgid="1" name="tileset1" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+  <image source="tileset1.png" width="512" height="512"/>
+ </tileset>
+ <layer name="Background" width="10" height="10">
+  <data encoding="csv">
+209,210,210,210,210,210,210,210,210,211,
+225,226,226,226,226,226,226,226,226,227,
+225,162,162,162,162,162,146,146,146,227,
+225,162,162,162,162,162,146,146,146,227,
+225,162,162,162,162,162,146,146,146,227,
+225,162,162,162,162,162,162,162,162,227,
+225,162,162,162,162,162,162,162,162,227,
+225,162,162,162,162,162,162,162,162,227,
+225,162,162,162,162,162,162,162,162,227,
+241,242,242,242,242,242,242,242,242,243
+</data>
+ </layer>
+ <layer name="Ground" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,57,0,0,0,0,22,0,0,
+0,18,0,0,20,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,19,0,0,0,0,0,0,21,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,62,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Decoration" width="10" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup name="MAP_COLLISION">
+  <object id="2" x="32" y="32" width="256" height="32"/>
+  <object id="4" x="260" y="163" width="23" height="26"/>
+  <object id="5" x="34" y="171" width="27" height="20"/>
+  <object id="6" x="39" y="260" width="18" height="23"/>
+  <object id="7" x="36" y="72" width="21" height="21"/>
+  <object id="8" x="133" y="82" width="25" height="10"/>
+  <object id="9" x="288" y="32" width="32" height="288"/>
+  <object id="10" x="0" y="288" width="288" height="32"/>
+  <object id="11" x="0" y="32" width="32" height="256"/>
+ </objectgroup>
+</map>

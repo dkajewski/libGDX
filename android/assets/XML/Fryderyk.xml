@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Fryderyk">
+    <dialogue id="0">
+        <text>
+            Witaj, co cię do mnie sprowadza?
+        </text>
+        <response nextDialogue="1">
+            Czym się zajmujesz?
+        </response>
+        <response nextDialogue="2" accessibility="false">
+            Józef mówił, że możesz mieć dla mnie jakieś zadanie.
+        </response>
+        <response nextDialogue="4" accessibility="false">
+            Powiedziałem Henrykowi, żeby się tu zjawił. Nie rwał się do tego.
+        </response>
+    </dialogue>
+    <dialogue id="1">
+        <text>
+            Jestem zwykłym rolnikiem, ciężka praca. Sam pewnie wiesz jak to jest.
+        </text>
+        <response nextDialogue="0">Tak, jasne.</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>
+            Mam jedno zadanie, zajdź do tawerny i powiedz Henrykowi, żeby przyszedł do mnie.
+        </text>
+        <response nextDialogue="3">Już się robi.</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>
+            Dziękuję, że chcesz to dla mnie zrobić.
+        </text>
+        <response nextDialogue="0">Porozmawiajmy o czymś jeszcze.</response>
+    </dialogue>
+    <dialogue id="4">
+        <text>To cały Henryk. Można tego się ponim spodziewać. Za fatygę coś ci się należy. Burmistrz coś od Ciebie chce.</text>
+        <response nextDialogue="0">Dzięki.</response>
+    </dialogue>
+</npc>

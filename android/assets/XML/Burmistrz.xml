@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Burmistrz">
+    <dialogue id="0">
+        <text>Witaj w moim mieście, podróżniku. Co cię do mnie sprowadza?</text>
+        <response nextDialogue="1">Opowiedz mi o swoim mieście.</response>
+        <response nextDialogue="2" accessibility="false">Henryk wspominał, że mnie wzywałeś.</response>
+        <response nextDialogue="6" accessibility="false">Zabiłem stwory.</response>
+        <response nextDialogue="11" accessibility="false">Wiem kto stoi za tym wszystkim.</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>Na tej wyspie to jedyne miasto. Wcześniej kwitło tu życie, ale wtedy przybyły te stwory.</text>
+        <response nextDialogue="3">Wiesz skąd się wzięły?</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Tak, tak! Więc to ty jesteś tym nowym, o którym zrobiło się głośno. Mam zadanie dla ciebie.</text>
+        <response nextDialogue="4">Co to za zadanie?</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>Nie mam pojęcia. To się stało nagle. Od tamtej pory wiele ludzi siedzi w domach i nikomu nie chcą otwierać.</text>
+        <response nextDialogue="0">To straszne. Postaram się pomóc</response>
+    </dialogue>
+    <dialogue id="4">
+        <text>Zabij 15 potworów i wróć po nagrodę.</text>
+        <response nextDialogue="5">Nie ma sprawy.</response>
+    </dialogue>
+    <dialogue id="5">
+        <text>Dobrze, że mogę na Ciebie liczyć.</text>
+        <response nextDialogue="0">Chciałbym o coś jeszcze zapytać.</response>
+    </dialogue>
+    <dialogue id="6">
+        <text>To naprawdę wspaniale. Szkoda, że zaraz pojawią się następne... To twoja nagroda.</text>
+        <response nextDialogue="7">Jest jeszcze coś, co mogę dla Ciebie zrobić?</response>
+    </dialogue>
+    <dialogue nextDialogue="7">
+        <text>Tak... Dostałem zaszyfrowany list, może mógłbyś go odczytać?</text>
+        <response nextDialogue="8">Niestety, nie potrafię czytać...</response>
+    </dialogue>
+    <dialogue nextDialogue="9">
+        <text>Och... No to nieważne, jest w mieście ktoś, kto umie rozszyfrować takie rzeczy.</text>
+        <response nextDialogue="10">Daj mi ten list i powiedz gdzie mam iść.</response>
+    </dialogue>
+    <dialogue id="10">
+        <text>Idź do Ludwika, mieszka niedaleko, przygotuj się na wydanie 500 złotych monet.</text>
+        <response nextDialogue="0">Nieźle się wpakowałem... No nic. Dzięki i bywaj.</response>
+    </dialogue>
+    <dialogue id="11">
+        <text>Kto to jest?</text>
+        <response nextDialogue="12">To mag. Nie znam jego imienia.</response>
+    </dialogue>
+    <dialogue id="12">
+        <text>Ale dopadłeś go?</text>
+        <response nextDialogue="13">Niestety nie. Chciałem z nim walczyć, lecz uciekł mi.</response>
+    </dialogue>
+    <dialogue id="13">
+        <text>Powiedział coś jeszcze?</text>
+        <response nextDialogue="14">Powiedział, że nie zdołam powstrzymać tego zła.</response>
+    </dialogue>
+    <dialogue id="14">
+        <text>Czyli wciąż musimy walczyć z potworami... Dziękuję za wszystko. Bywaj.</text>
+    </dialogue>
+</npc>

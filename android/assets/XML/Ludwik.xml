@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Ludwik">
+    <dialogue id="0">
+        <text>Cześć. Co tu robisz?</text>
+        <response nextDialogue="1">Nic szczególnego, tylko się rozglądam.</response>
+        <response nextDialogue="2" accessibility="false">Podobno potrafisz rozszyfrować różne wiadomości.</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>Rozglądaj się do woli, tylko niczego nie zepsuj, proszę.</text>
+        <response nextDialogue="0">Nie ma sprawy.</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Nie jestem wybitnym specjalistą, ale mogę spróbować. Jednak będzie to kosztować 500 złotych monet.</text>
+        <response nextDialogue="3">Proszę, oto twoja zapłata.</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>W liście zawarta jest prośba o spotkanie się na plaży. Tamtędy przechadza się zwykle Pustelnik.</text>
+        <response nextDialogue="0">Dzięki, naprawdę mi pomogłeś.</response>
+    </dialogue>
+</npc>

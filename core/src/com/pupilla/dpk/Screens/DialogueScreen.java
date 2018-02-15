@@ -270,13 +270,13 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
      */
     private void startQuest(int dialogue){
         //NPC npc = null;
-        if(Collision.NPCname.equals("Test2")){
+        if(Collision.NPCname.equals("Józef")){
             if(dialogue==4)
                 for(int i=0; i<Task.tasks.size(); i++)
                     if(Task.tasks.get(i).id==1 && !Task.tasks.get(i).active){
                         Task.tasks.get(i).active=true;
                         for(int j=0; j<PlayScreen.NPCs.size(); j++)
-                            if(PlayScreen.NPCs.get(j).name.equals("Test2")) {
+                            if(PlayScreen.NPCs.get(j).name.equals("Józef")) {
                                 PlayScreen.NPCs.get(j).conversations.get(0).accessibility[1] = false;
                                 break;
                             }
@@ -288,7 +288,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         Task.tasks.get(i).active = false;
                         Task.tasks.get(i).ended = true;
                         for(int j=0; j<PlayScreen.NPCs.size(); j++)
-                            if(PlayScreen.NPCs.get(j).name.equals("Test2")){
+                            if(PlayScreen.NPCs.get(j).name.equals("Józef")){
                                 PlayScreen.NPCs.get(j).conversations.get(0).accessibility[2] = false;
                                 break;
                             }
@@ -306,7 +306,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                 for(int j=0; j<PlayScreen.player.backpack.itemArr.length; j++)
                     if(PlayScreen.player.backpack.itemArr[j]!=null && PlayScreen.player.backpack.itemArr[j].type == Item.Type.armor)
                         for(int k=0; k<PlayScreen.NPCs.size(); k++)
-                            if(PlayScreen.NPCs.get(k).name.equals("Test2")){
+                            if(PlayScreen.NPCs.get(k).name.equals("Józef")){
                                 PlayScreen.player.backpack.itemArr[j] = null;
                                 PlayScreen.NPCs.get(k).conversations.get(0).accessibility[2] = true;
                                 break;

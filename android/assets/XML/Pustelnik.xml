@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Pustelnik">
+    <dialogue id="0">
+        <text>Niezbyt często widuję tu ludzi.</text>
+        <response nextDialogue="1">Dlaczego trzymasz się na uboczu?</response>
+        <response nextDialogue="2" accessibility="false">To ty jesteś autorem listu?</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>Nie lubię zgiełku miasta. Wolę chodzić sobie po wybrzeżu i słuchać szumu morza.</text>
+        <response nextDialogue="0">I wszystko stało się jasne.</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Tak, chciałem się podzielić z tobą informacjami na temat zła, które opanowało wyspę.</text>
+        <response nextDialogue="3">Przejdź więc do rzeczy.</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>Widziałem, jak jakiś Mag wchodził do jaskini na pustyni, na zachód stąd. Potwory go nie atakowały.</text>
+        <response nextDialogue="4">To całkiem przydatne informacje.</response>
+    </dialogue>
+    <dialogue id="4">
+        <text>Udaj się w to miejsce najszybciej jak to możliwe.</text>
+        <response nextDialogue="0">Tak zrobię, dzięki za wszystko.</response>
+    </dialogue>
+</npc>
