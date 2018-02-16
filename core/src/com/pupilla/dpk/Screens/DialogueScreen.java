@@ -24,9 +24,12 @@ import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Conversation;
 import com.pupilla.dpk.Backend.Item;
+import com.pupilla.dpk.Backend.MapConstants;
 import com.pupilla.dpk.Backend.Task;
 import com.pupilla.dpk.Sprites.NPC;
 import com.pupilla.dpk.Sprites.Seller;
+
+import java.util.Map;
 
 /**
  * Created by orzech on 07.01.2018.
@@ -79,6 +82,9 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
         checkQuests();
         prepareTable();
 
+        if(!Collision.NPCname.equals("Sprzedawca"))
+            setNewResponses(0);
+
         addListeners();
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
@@ -125,7 +131,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
             name.setText(npc.name);
             table.add(name);
             table.row();
-            Gdx.app.debug(TAG, npc.conversations.size()+"");
+            //Gdx.app.debug(TAG, npc.conversations.size()+"");
             text.setText(npc.conversations.get(0).text);
             text.setWrap(true);
             text.setFontScale(0.7f);
@@ -145,7 +151,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         response.addListener(new ClickListener(){
                             @Override
                             public void clicked(InputEvent event, float x, float y){
-                                Gdx.app.debug(TAG, "next Dialogue: "+next);
+                                //Gdx.app.debug(TAG, "next Dialogue: "+next);
                                 setNewResponses(next);
                             }
                         });
@@ -280,19 +286,274 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                                 PlayScreen.NPCs.get(j).conversations.get(0).accessibility[1] = false;
                                 break;
                             }
+                        Gdx.app.debug(TAG, "Quest with ID 1 started.");
                     }
 
             if(dialogue==5)
-                for(int i=0; i<Task.tasks.size(); i++)
+                for(int i=0; i<Task.tasks.size(); i++){
                     if(Task.tasks.get(i).id==1 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
                         Task.tasks.get(i).active = false;
                         Task.tasks.get(i).ended = true;
+                        PlayScreen.player.experience += Task.tasks.get(i).exp;
+                        PlayScreen.player.gold += Task.tasks.get(i).gold;
+                        for(int j=0; j<PlayScreen.player.backpack.itemArr.length; j++){
+                            if(PlayScreen.player.backpack.itemArr[j]!=null && PlayScreen.player.backpack.itemArr[j].type == Item.Type.armor){
+                                PlayScreen.player.backpack.removeItem(j);
+                                break;
+                            }
+                        }
                         for(int j=0; j<PlayScreen.NPCs.size(); j++)
                             if(PlayScreen.NPCs.get(j).name.equals("Józef")){
                                 PlayScreen.NPCs.get(j).conversations.get(0).accessibility[2] = false;
                                 break;
                             }
+                        Gdx.app.debug(TAG, "Quest with ID 1 completed.");
                     }
+
+                    if(Task.tasks.get(i).id==2 && !Task.tasks.get(i).active){
+                        Task.tasks.get(i).active = true;
+                        Gdx.app.debug(TAG, "Quest with ID 2 started.");
+                        for(int j=0; j< MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Fryderyk")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=true;
+                                break;
+                            }
+                        }
+                    }
+                }
+        }
+
+        if(Collision.NPCname.equals("Fryderyk")){
+            if(dialogue==0)
+                for(int i=0; i<Task.tasks.size(); i++)
+                    if(Task.tasks.get(i).id==2 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active = false;
+                        Task.tasks.get(i).ended = true;
+                        PlayScreen.player.experience += Task.tasks.get(i).exp;
+                        PlayScreen.player.gold += Task.tasks.get(i).gold;
+                        Gdx.app.debug(TAG, "Quest with ID 2 completed.");
+                    }
+
+            if(dialogue==3)
+                for(int i=0; i<Task.tasks.size(); i++)
+                    if(Task.tasks.get(i).id==3 && !Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active=true;
+                        Gdx.app.debug(TAG, "Quest with ID 3 started.");
+                        for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Henryk")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1] = true;
+                            }
+                            if(MapConstants.allNPCs.get(j).name.equals("Fryderyk")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1] = false;
+                            }
+                        }
+                    }
+
+            if(dialogue==4)
+                for(int i=0; i<Task.tasks.size(); i++){
+                    if(Task.tasks.get(i).id==4 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active = false;
+                        Task.tasks.get(i).ended = true;
+                        PlayScreen.player.experience += Task.tasks.get(i).exp;
+                        PlayScreen.player.gold += Task.tasks.get(i).gold;
+                        for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Fryderyk")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=false;
+                            }
+                            if(MapConstants.allNPCs.get(j).name.equals("Burmistrz")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1] = true;
+                            }
+                        }
+                        Gdx.app.debug(TAG, "Quest with ID 4 completed.");
+                    }
+
+                    if(Task.tasks.get(i).id==5 && !Task.tasks.get(i).active){
+                        Task.tasks.get(i).active = true;
+                        Gdx.app.debug(TAG, "Quest with ID 5 started.");
+                    }
+                }
+        }
+
+        if(Collision.NPCname.equals("Henryk")){
+            if(dialogue==3)
+                for(int i=0; i<Task.tasks.size(); i++){
+                    if(Task.tasks.get(i).id==3 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).ended = true;
+                        Task.tasks.get(i).active = false;
+                        Gdx.app.debug(TAG, "Quest with ID 3 completed.");
+                        PlayScreen.player.experience += Task.tasks.get(i).exp;
+                        PlayScreen.player.gold += Task.tasks.get(i).gold;
+                        for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Henryk")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1] = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    if(Task.tasks.get(i).id==4 && !Task.tasks.get(i).active){
+                        Task.tasks.get(i).active = true;
+                        Gdx.app.debug(TAG, "Quest with ID 4 started.");
+                        for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Fryderyk")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=true;
+                                break;
+                            }
+                        }
+                    }
+                }
+        }
+
+        if(Collision.NPCname.equals("Burmistrz")){
+            if(dialogue==0){
+                for(int i=0; i<Task.tasks.size(); i++){
+                    if(Task.tasks.get(i).id==5 && Task.tasks.get(i).active){
+                        Task.tasks.get(i).active = false;
+                        Task.tasks.get(i).ended = true;
+                        Gdx.app.debug(TAG, "Quest with ID 5 completed.");
+                        PlayScreen.player.experience += Task.tasks.get(i).exp;
+                        PlayScreen.player.gold += Task.tasks.get(i).gold;
+                    }
+                }
+            }
+
+            if(dialogue==5){
+                for(int i=0; i<Task.tasks.size(); i++){
+                    if(Task.tasks.get(i).id==6 && !Task.tasks.get(i).active){
+                        Task.tasks.get(i).active = true;
+                        Gdx.app.debug(TAG, "Quest with ID 6 started.");
+                        for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Burmistrz")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=false;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(dialogue==10){
+                for(int i=0; i<Task.tasks.size(); i++){
+                    if(Task.tasks.get(i).id==6 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active = false;
+                        Task.tasks.get(i).ended = true;
+                        Gdx.app.debug(TAG, "Quest with ID 6 completed.");
+                        PlayScreen.player.experience += Task.tasks.get(i).exp;
+                        PlayScreen.player.gold += Task.tasks.get(i).gold;
+                        for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Burmistrz")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=false;
+                                break;
+                            }
+                        }
+                    }
+                    if(Task.tasks.get(i).id==7 && !Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active = true;
+                        Gdx.app.debug(TAG, "Quest with ID 7 started.");
+                    }
+                }
+            }
+
+            if(dialogue==14){
+                for(int i=0; i<Task.tasks.size(); i++){
+                    if(Task.tasks.get(i).id==10 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active=false;
+                        Task.tasks.get(i).ended=true;
+                        Gdx.app.debug(TAG, "Quest with ID 10 completed.");
+                        PlayScreen.player.experience += Task.tasks.get(i).exp;
+                        PlayScreen.player.gold += Task.tasks.get(i).gold;
+                        for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Burmistrz")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[3]=false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if(Collision.NPCname.equals("Ludwik")){
+            if(dialogue==3){
+                for(int i=0; i<Task.tasks.size(); i++){
+                    if(Task.tasks.get(i).id==7 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active = false;
+                        Task.tasks.get(i).ended = true;
+                        Gdx.app.debug(TAG, "Quest with ID 7 completed.");
+                        PlayScreen.player.experience += Task.tasks.get(i).exp;
+                        PlayScreen.player.gold += Task.tasks.get(i).gold;
+                        PlayScreen.player.gold -= 500;
+                        for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Ludwik")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=false;
+                            }
+
+                            if(MapConstants.allNPCs.get(j).name.equals("Pustelnik")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1] = true;
+                            }
+                        }
+                    }
+                    if(Task.tasks.get(i).id==8 && !Task.tasks.get(i).active){
+                        Task.tasks.get(i).active=true;
+                        Gdx.app.debug(TAG, "Quest with ID 8 started.");
+                    }
+                }
+            }
+        }
+
+        if(Collision.NPCname.equals("Pustelnik")){
+            if(dialogue==4){
+                for(int i=0; i<Task.tasks.size(); i++){
+                    if(Task.tasks.get(i).id==8 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active=false;
+                        Task.tasks.get(i).ended=true;
+                        Gdx.app.debug(TAG, "Quest with ID 8 completed.");
+                        PlayScreen.player.experience += Task.tasks.get(i).exp;
+                        PlayScreen.player.gold += Task.tasks.get(i).gold;
+                        for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Pustelnik")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=false;
+                            }
+
+                            if(MapConstants.allNPCs.get(j).name.equals("Mag")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=true;
+                            }
+                        }
+                    }
+                    if(Task.tasks.get(i).id==9 && !Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active = true;
+                        Gdx.app.debug(TAG, "Quest with ID 9 started.");
+                    }
+                }
+
+            }
+        }
+
+        if(Collision.NPCname.equals("Mag")){
+            if(dialogue==3){
+                for(int i=0; i<Task.tasks.size(); i++){
+                    if(Task.tasks.get(i).id==9 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active=false;
+                        Task.tasks.get(i).ended=true;
+                        Gdx.app.debug(TAG, "Quest with ID 9 completed.");
+                        PlayScreen.player.experience += Task.tasks.get(i).exp;
+                        PlayScreen.player.gold += Task.tasks.get(i).gold;
+                        for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Mag")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=false;
+                            }
+
+                            if(MapConstants.allNPCs.get(j).name.equals("Burmistrz")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[3]=true;
+                            }
+                        }
+                    }
+
+                    if(Task.tasks.get(i).id==10 && !Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active = true;
+                        Gdx.app.debug(TAG, "Quest with ID 10 started.");
+                    }
+                }
+            }
         }
     }
 
@@ -301,16 +562,55 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
      *  if yes, set visibility of the response to true
      */
     private void checkQuests(){
-        for(int i=0; i<Task.tasks.size(); i++)
-            if(Task.tasks.get(i).id==1 && Task.tasks.get(i).active && !Task.tasks.get(i).ended)
-                for(int j=0; j<PlayScreen.player.backpack.itemArr.length; j++)
+        for(int i=0; i<Task.tasks.size(); i++){
+            if(Task.tasks.get(i).id==1 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                    if(MapConstants.allNPCs.get(j).name.equals("Józef")){
+                        MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=false;
+                        for(int k=0; k<PlayScreen.player.backpack.itemArr.length; k++){
+                            if(PlayScreen.player.backpack.itemArr[k]!=null && PlayScreen.player.backpack.itemArr[k].type==Item.Type.armor){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=true;
+                            }
+                        }
+                    }
+                }
+
+                /*for(int j=0; j<PlayScreen.player.backpack.itemArr.length; j++)
                     if(PlayScreen.player.backpack.itemArr[j]!=null && PlayScreen.player.backpack.itemArr[j].type == Item.Type.armor)
                         for(int k=0; k<PlayScreen.NPCs.size(); k++)
                             if(PlayScreen.NPCs.get(k).name.equals("Józef")){
                                 PlayScreen.player.backpack.itemArr[j] = null;
                                 PlayScreen.NPCs.get(k).conversations.get(0).accessibility[2] = true;
                                 break;
-                            }
+                            }*/
+            }
+
+            if(Task.tasks.get(i).id==6 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                if(PlayScreen.player.killedMonsters>=15){
+                    for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                        if(MapConstants.allNPCs.get(j).name.equals("Burmistrz")){
+                            MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=true;
+                        }
+                    }
+                }
+            }
+
+            if(Task.tasks.get(i).id==7 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                if(PlayScreen.player.gold>=500){
+                    for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                        if(MapConstants.allNPCs.get(j).name.equals("Ludwik")){
+                            MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=true;
+                        }
+                    }
+                }else{
+                    for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                        if(MapConstants.allNPCs.get(j).name.equals("Ludwik")){
+                            MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=false;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override

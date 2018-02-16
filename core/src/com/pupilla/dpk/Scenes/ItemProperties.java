@@ -122,7 +122,7 @@ public class ItemProperties extends Dialog{
                     a = PlayScreen.player.eq.armor.atk;
                     d = PlayScreen.player.eq.armor.def;
                     b = PlayScreen.player.eq.armor.dmgbonus;
-                    h = PlayScreen.player.eq.shield.healthbonus;
+                    h = PlayScreen.player.eq.armor.healthbonus;
                 }
 
                 fillTable(table, a, d, b, h);

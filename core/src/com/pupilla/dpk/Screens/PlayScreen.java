@@ -96,6 +96,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         camera = new OrthographicCamera();
         mapManager = new MapManager(MapConstants.FOREST1, world);
         doors = new Texture(Gdx.files.internal(Constants.doors));
+        Task.tasks = new ArrayList<Task>();
         Level.generateExperienceTable();
         //Level.showLevels();
         if(newGame){
@@ -114,7 +115,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             createNPCsBodies();
             createEnemyBodies();
             createPortalBodies();
-            Task task = new Task(1, "Zdobyć pancerz", "Józef prosił o pancerz.", 10, 5);
+            createTasks();
+
 
         } else{
             // loading game
@@ -507,6 +509,13 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             spriteBatch.draw(enemies.get(i).walkAnimation.getKeyFrame(enemies.get(i).stateTime, false), enemies.get(i).body.getPosition().x-16,
                     enemies.get(i).body.getPosition().y-16);
             if(enemies.get(i).currentHealth<=0){
+                for(int j=0; j<Task.tasks.size(); j++){
+                    if(Task.tasks.get(j).id==6 && Task.tasks.get(j).active && !Task.tasks.get(j).ended && player.killedMonsters<16){
+                        player.killedMonsters++;
+                        Gdx.app.debug(TAG, "Quest 6, killed monsters: "+player.killedMonsters);
+                    }
+                }
+
                 if(enemies.get(i).loot!=null){
                     enemies.get(i).loot.spawnItem(enemies.get(i).body.getPosition());
                 }
@@ -655,6 +664,20 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             spriteBatch.draw(enemies.get(i).healthbar, enemies.get(i).body.getPosition().x-16,
                     enemies.get(i).body.getPosition().y+16, getEnemyHealthbarWidth(enemies.get(i)), 10);
         }
+    }
+
+    private void createTasks(){
+        Task task1 = new Task(1, "Zdobyć pancerz", "Józef prosił o pancerz.", 10, 15);
+        Task task2 = new Task(2, "Znaleźć Fryderyka", "Znajdź Fryderyka, być może będzie miał zadanie.", 0, 5);
+        Task task3 = new Task(3, "Porozmawiać z Henrykiem", "Fryderyk potrzebuje pomocy Henryka, znaleźć można go w tawernie.", 0, 5);
+        Task task4 = new Task(4, "Zdać relację Fryderykowi", "Powiedz Fryderykowi o decyzji Henryka.", 10, 15);
+        Task task5 = new Task(5, "Rozmowa z burmistrzem", "Fryderyk powiedział, że burmistrz chce porozmawiać.", 0, 20);
+        Task task6 = new Task(6, "Zabić 15 potworów", "Burmistrz poprosił o zabicie 15 potworów.", 30, 50);
+        Task task7 = new Task(7, "Znaleźć Ludwika", "Ludwik powinien pomóc w rozszyfrowaniu listu za 500 sztuk złota.", 0, 40);
+        Task task8 = new Task(8, "Pójść na plażę", "Na plaży przebywa Pustelnik posiadający ważne informacje.", 0, 75);
+        Task task9 = new Task(9, "Znaleźć Maga", "Pustelnik widział jak do jaskini na pustyni wchodzi mag.", 0, 150);
+        Task task10 = new Task(10, "Spotkanie z burmistrzem", "Burmistrzowi należą się informacje o magu.", 80, 200);
+
     }
 
 }

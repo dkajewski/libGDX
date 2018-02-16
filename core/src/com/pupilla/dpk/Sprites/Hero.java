@@ -41,10 +41,10 @@ public class Hero implements Serializable{
     public int experience = 0;
     public int attack = 0;
     public int defense = 0;
-    public int damage = 0;
+    public int damage = 55550;
     public int level = 1;
     public int skillPoints = 10;
-    public int gold = 0;
+    public int gold = 540;
     public int potioncount;
     public int maxHealth;
     public int currentHealth;
@@ -64,6 +64,8 @@ public class Hero implements Serializable{
     public float stateTime;
     public boolean alive = true;
     public Direction direction = Direction.DOWN;
+
+    public int killedMonsters = 0;
 
     public ArrayList<Integer> changedNPCs = new ArrayList<Integer>();
 

@@ -3,7 +3,7 @@
     <dialogue id="0">
         <text>Witaj w moim mieście, podróżniku. Co cię do mnie sprowadza?</text>
         <response nextDialogue="1">Opowiedz mi o swoim mieście.</response>
-        <response nextDialogue="2" accessibility="false">Henryk wspominał, że mnie wzywałeś.</response>
+        <response nextDialogue="2" accessibility="false">Fryderyk wspominał, że mnie wzywałeś.</response>
         <response nextDialogue="6" accessibility="false">Zabiłem stwory.</response>
         <response nextDialogue="11" accessibility="false">Wiem kto stoi za tym wszystkim.</response>
     </dialogue>
@@ -31,11 +31,11 @@
         <text>To naprawdę wspaniale. Szkoda, że zaraz pojawią się następne... To twoja nagroda.</text>
         <response nextDialogue="7">Jest jeszcze coś, co mogę dla Ciebie zrobić?</response>
     </dialogue>
-    <dialogue nextDialogue="7">
+    <dialogue id="7">
         <text>Tak... Dostałem zaszyfrowany list, może mógłbyś go odczytać?</text>
-        <response nextDialogue="8">Niestety, nie potrafię czytać...</response>
+        <response nextDialogue="9">Niestety, nie potrafię czytać...</response>
     </dialogue>
-    <dialogue nextDialogue="9">
+    <dialogue id="9">
         <text>Och... No to nieważne, jest w mieście ktoś, kto umie rozszyfrować takie rzeczy.</text>
         <response nextDialogue="10">Daj mi ten list i powiedz gdzie mam iść.</response>
     </dialogue>

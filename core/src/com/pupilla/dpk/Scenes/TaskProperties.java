@@ -18,12 +18,13 @@ public class TaskProperties extends Dialog {
         Table table = new Table();
         Label description = new Label(task.description, skin);
         description.setFontScale(0.7f);
+        description.setWrap(true);
         Label gold = new Label(Constants.gold+": "+task.gold, skin);
         gold.setFontScale(0.7f);
         Label exp = new Label(Constants.exp+": "+task.exp, skin);
         exp.setFontScale(0.7f);
 
-        table.add(description);
+        table.add(description).width(600);
         table.row();
         table.add(gold);
         table.row();

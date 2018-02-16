@@ -33,7 +33,7 @@
         <response nextDialogue="0">Porozmawiajmy o czymś jeszcze.</response>
     </dialogue>
     <dialogue id="4">
-        <text>To cały Henryk. Można tego się ponim spodziewać. Za fatygę coś ci się należy. Burmistrz coś od Ciebie chce.</text>
+        <text>To cały Henryk. Można tego się ponim spodziewać. Za fatygę coś ci się należy. Zgłoś się do burmistrza, mówił, że chce się z tobą zobaczyć.</text>
         <response nextDialogue="0">Dzięki.</response>
     </dialogue>
 </npc>

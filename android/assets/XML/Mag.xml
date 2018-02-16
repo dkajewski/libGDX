@@ -3,7 +3,7 @@
     <dialogue id="0">
         <text>Czego tu szukasz? Wynoś się stąd! Natychmiast!</text>
         <response nextDialogue="1">Nieźle się ukryłeś.</response>
-        <response nextDialogue="2">Wiem, że to ty odpowiadasz za całe zło na wyspie!</response>
+        <response nextDialogue="2" accessibility="false">Wiem, że to ty odpowiadasz za całe zło na wyspie!</response>
     </dialogue>
     <dialogue id="1">
         <text>Nie mam ochoty na pogaduszki, odejdź stąd!</text>
