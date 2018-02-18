@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Uzdrowiciel">
+    <dialogue id="0">
+        <text>Jestem uzdrowicielem. W czym mogę służyć?</text>
+        <response nextDialogue="1">Ulecz mnie.</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>Proszę bardzo.</text>
+    </dialogue>
+</npc>

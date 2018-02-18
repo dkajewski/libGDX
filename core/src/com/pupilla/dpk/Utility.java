@@ -32,6 +32,11 @@ public final class Utility {
     public static final String eremite = "sprites/characters/NPC6.png";
     public static final String seller = "sprites/characters/NPC7.png";
     public static final String mayor = "sprites/characters/NPC8.png";
+    public static final String ignatius = "sprites/characters/NPC9.png";
+    public static final String healer = "sprites/characters/NPC10.png";
+    public static final String oldMan = "sprites/characters/NPC11.png";
+    public static final String clement = "sprites/characters/NPC12.png";
+    public static final String anthony = "sprites/characters/NPC13.png";
 
     public static final AssetDescriptor<Texture> heroSheet = new AssetDescriptor<Texture>(Gdx.files.internal(heroPath), Texture.class);
     public static final AssetDescriptor<Texture> monster1Sheet = new AssetDescriptor<Texture>(Gdx.files.internal(monster1Path), Texture.class);

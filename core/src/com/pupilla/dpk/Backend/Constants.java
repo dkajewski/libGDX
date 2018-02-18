@@ -89,6 +89,7 @@ public class Constants {
     public static final String buy = "Kup";
     public static final String endedTasks = "Zakończone zadania";
     public static final String ended = "Zakończone";
+    public static final String informations = "Informacje";
     public static final String active = "Aktywne";
     public static final String start = "Start";
     public static final String save = "Zapisz";

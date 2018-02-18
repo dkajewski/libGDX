@@ -15,8 +15,6 @@ import static org.junit.Assert.*;
 public class BackpackTest {
     @Test
     public void addItem() throws Exception {
-        World world = new World(new Vector2(0,0), false);
-        Hero player = new Hero(world);
 
         Item item = new Item(Constants.eqSteelSword, 0, Item.Type.weapon);
         Backpack bp = new Backpack();

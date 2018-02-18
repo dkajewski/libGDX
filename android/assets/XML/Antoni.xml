@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Antoni">
+    <dialogue id="0">
+        <text>Przez te stwory ludzie oszaleli!</text>
+        <response nextDialogue="1">Co masz na myśli?</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>Kiedyś miasto tętniło życiem, a teraz...</text>
+        <response nextDialogue="2">A teraz?</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Szkoda gadać. Większość pozamykała się w domach, boją się potworów.</text>
+        <response nextDialogue="3">Żyją jeszcze?</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>Żyją. Tacy jak ja dbają, by mieli co zjeść. Przynoszę im codziennie jedzenie.</text>
+        <response nextDialogue="4">Dlaczego ty się nie boisz potworów?</response>
+    </dialogue>
+    <dialogue id="4">
+        <text>Potrafię sobie z nimi poradzić. Ktoś musi bronić miasta.</text>
+        <response nextDialogue="0">Rozumiem.</response>
+    </dialogue>
+</npc>

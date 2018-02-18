@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Ignacy">
+    <dialogue id="0">
+        <text>Na trzeźwo świat nie jest taki kolorowy.</text>
+        <response nextDialogue="1">Pomóc ci w czymś?</response>
+        <response nextDialogue="2">Uszy do góry!</response>
+        <response nextDialogue="4" accessibility="false">Proszę, oto twoje 5 sztuk złota.</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>Byłbym wdzięczny gdybyś zechciał dać mi 5 sztuk złota.</text>
+        <response nextDialogue="3">Nie ma sprawy. Zobaczę, co da się zrobić.</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Łatwo powiedzieć...</text>
+    </dialogue>
+    <dialogue id="3">
+        <text>Dzięki, kierowniku!</text>
+    </dialogue>
+    <dialogue id="4">
+        <text>Królu złoty, ratujesz mi życie!</text>
+    </dialogue>
+</npc>

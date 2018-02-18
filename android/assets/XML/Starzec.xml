@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Starzec">
+    <dialogue id="0">
+        <text>O, wreszcie się obudziłeś.</text>
+        <response nextDialogue="1">Co to za miejsce?</response>
+        <response nextDialogue="2">Skąd się tu wziąłem?</response>
+        <response nextDialogue="3">Gdzie powinienem iść?</response>
+        <response nextDialogue="4">Masz dla mnie jakieś wskazówki?</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>To jedyna wyspa w okolicy. Inaczej jak statkiem się stąd nie wydostaniesz.</text>
+        <response nextDialogue="0">Rozumiem.</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Ktoś musiał cię tu przywieźć statkiem i zostawić na pewną śmierć.</text>
+        <response nextDialogue="0">To prawdopodobne, czuję się jakbym stracił pamięć z ostatniego tygodnia.</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>Idąc na zachód stąd dotrzesz do miasta. Po drodze miniesz farmę Józefa.</text>
+        <response nextDialogue="0">Dzięki, twoje informacje naprawdę mi się przydadzą.</response>
+    </dialogue>
+    <dialogue id="4">
+        <text>Uważaj na siebie, okolica od niedawna stała się bardzo niebezpieczna</text>
+        <response nextDialogue="0">Będę na siebie uważał.</response>
+    </dialogue>
+</npc>

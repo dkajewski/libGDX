@@ -678,6 +678,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         Task task9 = new Task(9, "Znaleźć Maga", "Pustelnik widział jak do jaskini na pustyni wchodzi mag.", 0, 150);
         Task task10 = new Task(10, "Spotkanie z burmistrzem", "Burmistrzowi należą się informacje o magu.", 80, 200);
 
+        Task task11 = new Task(11, "Złoto dla Ignacego", "Ignacy prosił o 5 sztuk złota.", 0, 20);
     }
 
 }

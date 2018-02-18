@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -27,10 +28,11 @@ public class StartScreen extends ApplicationAdapter implements Screen {
     private Stage stage;
     private Viewport viewport;
     private SpriteBatch batch;
-    private TextButton startGame, loadGame;
+    private TextButton startGame, loadGame, information;
+    public static Screen parent;
+    private Texture logo;
 
     public StartScreen(Game game){
-        Gdx.app.debug(TAG, "hello world");
         this.game = game;
         batch = new SpriteBatch();
         int width = 640;
@@ -47,6 +49,13 @@ public class StartScreen extends ApplicationAdapter implements Screen {
         loadGame.setWidth(200);
         loadGame.setPosition(startGame.getX(), startGame.getY()-startGame.getHeight());
 
+        information = new TextButton(Constants.informations, skin);
+        information.setHeight(60);
+        information.setWidth(200);
+        information.setPosition(loadGame.getX(), loadGame.getY()-loadGame.getHeight());
+
+        logo = new Texture(Gdx.files.internal("sprites/others/logo.png"));
+
         addListeners();
     }
 
@@ -55,6 +64,7 @@ public class StartScreen extends ApplicationAdapter implements Screen {
         stage = new Stage(viewport, batch);
         stage.addActor(startGame);
         stage.addActor(loadGame);
+        stage.addActor(information);
         Gdx.input.setInputProcessor(stage);
 
     }
@@ -65,6 +75,7 @@ public class StartScreen extends ApplicationAdapter implements Screen {
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+        batch.draw(logo, 165, 150, 300, 200);
         batch.end();
         stage.draw();
     }
@@ -89,6 +100,14 @@ public class StartScreen extends ApplicationAdapter implements Screen {
                PlayScreen playScreen = new PlayScreen(game, false);
                game.setScreen(playScreen);
            }
+        });
+
+        information.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                parent = game.getScreen();
+                game.setScreen(new InformationScreen(game));
+            }
         });
     }
 }

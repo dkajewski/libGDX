@@ -5,10 +5,10 @@
             Witam, Witam.
         </text>
         <response nextDialogue="1">
-            Siema.
+            Witam.
         </response>
         <response nextDialogue="2">
-            elo
+            Witam serdecznie.
         </response>
     </dialogue>
 	<dialogue id="1">

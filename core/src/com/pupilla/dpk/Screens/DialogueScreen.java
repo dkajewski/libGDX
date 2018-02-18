@@ -24,6 +24,7 @@ import com.pupilla.dpk.Backend.Collision;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Conversation;
 import com.pupilla.dpk.Backend.Item;
+import com.pupilla.dpk.Backend.Level;
 import com.pupilla.dpk.Backend.MapConstants;
 import com.pupilla.dpk.Backend.Task;
 import com.pupilla.dpk.Sprites.NPC;
@@ -555,6 +556,50 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                 }
             }
         }
+
+        if(Collision.NPCname.equals("Ignacy")){
+            if(dialogue==3){
+                for(int i=0; i<Task.tasks.size(); i++){
+                    if(Task.tasks.get(i).id==11 && !Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).active=true;
+                        Gdx.app.debug(TAG, "Quest with ID 11 started.");
+                        for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Ignacy")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[0]=false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(dialogue==4){
+                for(int i=0; i<Task.tasks.size(); i++){
+                    if(Task.tasks.get(i).id==1 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                        Task.tasks.get(i).ended=true;
+                        Task.tasks.get(i).active=false;
+                        Gdx.app.debug(TAG, "Quest with ID 11 completed.");
+                        PlayScreen.player.experience += Task.tasks.get(i).exp;
+                        PlayScreen.player.gold += Task.tasks.get(i).gold;
+                        for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                            if(MapConstants.allNPCs.get(j).name.equals("Ignacy")){
+                                MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if(Collision.NPCname.equals("Uzdrowiciel")){
+            if(dialogue==1){
+                PlayScreen.player.currentHealth=PlayScreen.player.maxHealth;
+            }
+        }
+
+        if(PlayScreen.player.level< Level.getActualLevel()){
+            PlayScreen.player.level=Level.getActualLevel();
+            PlayScreen.player.skillPoints+=5;
+        }
     }
 
     /**
@@ -574,15 +619,6 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         }
                     }
                 }
-
-                /*for(int j=0; j<PlayScreen.player.backpack.itemArr.length; j++)
-                    if(PlayScreen.player.backpack.itemArr[j]!=null && PlayScreen.player.backpack.itemArr[j].type == Item.Type.armor)
-                        for(int k=0; k<PlayScreen.NPCs.size(); k++)
-                            if(PlayScreen.NPCs.get(k).name.equals("Józef")){
-                                PlayScreen.player.backpack.itemArr[j] = null;
-                                PlayScreen.NPCs.get(k).conversations.get(0).accessibility[2] = true;
-                                break;
-                            }*/
             }
 
             if(Task.tasks.get(i).id==6 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
@@ -606,6 +642,22 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                     for(int j=0; j<MapConstants.allNPCs.size(); j++){
                         if(MapConstants.allNPCs.get(j).name.equals("Ludwik")){
                             MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=false;
+                        }
+                    }
+                }
+            }
+
+            if(Task.tasks.get(i).id==11 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                if(PlayScreen.player.gold>=5){
+                    for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                        if(MapConstants.allNPCs.get(j).name.equals("Ignacy")){
+                            MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=true;
+                        }
+                    }
+                } else{
+                    for(int j=0; j<MapConstants.allNPCs.size(); j++){
+                        if(MapConstants.allNPCs.get(j).name.equals("Ignacy")){
+                            MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=false;
                         }
                     }
                 }

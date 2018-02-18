@@ -352,6 +352,27 @@ public class MapConstants implements Serializable{
         NPC eremite = new NPC("XML/Pustelnik.xml", world, new Vector2(36*Constants.UNIT_SCALE, 32*Constants.UNIT_SCALE), BEACH1, Utility.eremite);
         eremite.setup();
 
+        NPC anthony = new NPC("XML/Antoni.xml", world, new Vector2(40*Constants.UNIT_SCALE, 60*Constants.UNIT_SCALE), CITY1, Utility.anthony);
+        anthony.setup();
+
+        NPC ignatius = new NPC("XML/Ignacy.xml", world, new Vector2(53*Constants.UNIT_SCALE, 45*Constants.UNIT_SCALE), CITY1, Utility.ignatius);
+        ignatius.setup();
+
+        NPC clement = new NPC("XML/Klemens.xml", world, new Vector2(57*Constants.UNIT_SCALE, 57*Constants.UNIT_SCALE), CITY1, Utility.clement);
+        clement.setup();
+
+        NPC oldMan = new NPC("XML/Starzec.xml", world, new Vector2(18*Constants.UNIT_SCALE, 23*Constants.UNIT_SCALE), FOREST1, Utility.oldMan);
+        oldMan.setup();
+
+        NPC healer = new NPC("XML/Uzdrowiciel.xml", world, new Vector2(3*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE), CITY1HOUSE4, Utility.healer);
+        healer.setup();
+
+        NPC seller2 = new Seller("XML/Seller.xml", world, 2, new Vector2(37*Constants.UNIT_SCALE, 28*Constants.UNIT_SCALE), FOREST3, Utility.seller);
+        seller2.setup();
+
+        NPC seller3 = new Seller("XML/Seller.xml", world, 3, new Vector2(31*Constants.UNIT_SCALE, 28*Constants.UNIT_SCALE), BEACH1, Utility.seller);
+        seller3.setup();
+
         allNPCs.add(npc);
         allNPCs.add(joseph);
         allNPCs.add(seller);
@@ -361,6 +382,13 @@ public class MapConstants implements Serializable{
         allNPCs.add(mage);
         allNPCs.add(louis);
         allNPCs.add(eremite);
+        allNPCs.add(anthony);
+        allNPCs.add(ignatius);
+        allNPCs.add(clement);
+        allNPCs.add(oldMan);
+        allNPCs.add(healer);
+        allNPCs.add(seller2);
+        allNPCs.add(seller3);
     }
 
     public static void fillEnemiesList(String map, World world){

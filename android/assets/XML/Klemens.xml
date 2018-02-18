@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Klemens">
+    <dialogue id="0">
+        <text>Wszystko wyglądało lepiej dopóki nie zjawiły się tu te stwory!</text>
+        <response nextDialogue="1">Wiesz skąd się wzięły?</response>
+        <response nextDialogue="2">Próbowałeś z nimi walczyć?</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>Nie mam pojęcia. To stało się w jedną noc. Mam już tego dość.</text>
+        <response nextDialogue="0">Interesujące...</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Owszem, ale ciągle pojawiają się nowe. Jeszcze trochę i zaczną wchodzić do miasta!</text>
+        <response nextDialogue="0">To naprawdę straszne.</response>
+    </dialogue>
+</npc>
