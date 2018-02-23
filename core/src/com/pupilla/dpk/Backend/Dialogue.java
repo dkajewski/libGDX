@@ -44,7 +44,6 @@ public class Dialogue {
                     boolean accessibilityKey = false;
                     //fill responses array
                     c.responses[j] = responses.get(j).getText();
-                    //c.accessibility[j] = true;
                     Array<String> keys;
                     if(responses.get(j).getAttributes() != null){
                         keys = responses.get(j).getAttributes().keys().toArray();
@@ -71,12 +70,6 @@ public class Dialogue {
                     }else{
                         c.nextDialogues[j] = 999;
                     }
-
-                    /*if(accessibility){
-                        c.accessibility[j] = responses.get(j).getBoolean("accessibility");
-                    }else{
-                        c.accessibility[j] = true;
-                    }*/
                     conversations.add(c);
 
                 }

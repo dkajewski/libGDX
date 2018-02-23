@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public final class Utility {
     public AssetManager manager = new AssetManager();
-    //public static final AssetDescriptor<Texture> playerTexture = new AssetDescriptor<Texture>("sprites/characters/test.png", Texture.class);
 
     public static final String heroPath = "sprites/characters/hero.png";
     public static final String monster1Path = "sprites/monsters/monster1.png";
@@ -46,21 +45,4 @@ public final class Utility {
     public static final AssetDescriptor<Texture> demon = new AssetDescriptor<Texture>(Gdx.files.internal(monster5Path), Texture.class);
     public static final AssetDescriptor<Texture> desertWolf = new AssetDescriptor<Texture>(Gdx.files.internal(monster6Path), Texture.class);
 
-    //public static final AssetDescriptor<Texture> mayor = new AssetDescriptor<Texture>(Gdx.files.internal(NPC8path), Texture.class);
-    //public static final AssetDescriptor<Texture> joseph = new AssetDescriptor<Texture>(Gdx.files.internal(NPC2path), Texture.class);
-    //public static final AssetDescriptor<Texture> frederick = new AssetDescriptor<Texture>(Gdx.files.internal(NPC3path), Texture.class);
-    //public static final AssetDescriptor<Texture> louis = new AssetDescriptor<Texture>(Gdx.files.internal(NPC5path), Texture.class);
-    //public static final AssetDescriptor<Texture> mage = new AssetDescriptor<Texture>(Gdx.files.internal(NPC1path), Texture.class);
-    //public static final AssetDescriptor<Texture> henrick = new AssetDescriptor<Texture>(Gdx.files.internal(NPC4path), Texture.class);
-    //public static final AssetDescriptor<Texture> eremite = new AssetDescriptor<Texture>(Gdx.files.internal(NPC6path), Texture.class);
-    //public static final AssetDescriptor<Texture> seller = new AssetDescriptor<Texture>(Gdx.files.internal(NPC7path), Texture.class);
-
-    public void load(){
-        //manager.load(playerTexture);
-        manager.load(heroSheet);
-    }
-
-    public void dispose(){
-        manager.dispose();
-    }
 }

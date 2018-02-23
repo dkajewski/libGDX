@@ -56,12 +56,8 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     private SpriteBatch spriteBatch;
     public static Hero player;
     private OrthographicCamera camera;
-    private PlayerController controller;
     private Hud hud;
     public static Screen parent;
-    //private Viewport gamePort;
-
-    private boolean newGame;
 
     public static boolean mapChanged = false;
 
@@ -88,7 +84,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     public static ArrayList<Portal> portals = new ArrayList<Portal>();
     public PlayScreen(Game game, boolean newGame){
         spriteBatch = new SpriteBatch();
-        this.newGame = newGame;
         this.game = game;
         world = new World(new Vector2(0,0), false);
         world.setContactListener(new Collision());
@@ -116,46 +111,48 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             createEnemyBodies();
             createPortalBodies();
             createTasks();
-
-
         } else{
-            // loading game
-            LoadGame load = new LoadGame();
-            time=0f;
-            player = load.player();
-            player.world = world;
-            player.setup();
-            player.defineBody(new Vector2(player.position.x, player.position.y));
-            player.backpack.reloadTextures();
-            spawnedItems = new ArrayList<Item>();
-            enemies = new ArrayList<Enemy>();
-            Task.tasks = load.taskList();
-            MapConstants.allNPCs = new ArrayList<NPC>();
-            MapConstants.allNPCs = load.NPCs();
-            MapConstants.setupNPCs();
-            loadComponents();
+            try{
+                // loading game
+                LoadGame load = new LoadGame();
+                time=0f;
+                player = load.player();
+                player.world = world;
+                player.setup();
+                player.defineBody(new Vector2(player.position.x, player.position.y));
+                player.backpack.reloadTextures();
+                spawnedItems = new ArrayList<Item>();
+                enemies = new ArrayList<Enemy>();
+                Task.tasks = load.taskList();
+                MapConstants.allNPCs = new ArrayList<NPC>();
+                MapConstants.allNPCs = load.NPCs();
+                MapConstants.setupNPCs();
+                loadComponents();
+            }catch(Exception e){
+                // new game start
+                Gdx.app.debug(TAG, "There is no saved data, starting new game. ");
+                e.printStackTrace();
+                time = 0f;
+                player = new Hero(world);
+                player.setup();
+                player.defineBody(new Vector2(12*Constants.UNIT_SCALE, 28*Constants.UNIT_SCALE));
+                spawnedItems = new ArrayList<Item>();
+                enemies = new ArrayList<Enemy>();
+                MapConstants.fillNPClist(world);
+                MapConstants.fillEnemiesList(MapConstants.FOREST1, world);
+                player.map = MapConstants.FOREST1;
+                NPCs = new ArrayList<NPC>();
+                MapConstants.getNPCsFromCurrentMap(player.map);
+                createNPCsBodies();
+                createEnemyBodies();
+                createPortalBodies();
+                createTasks();
+            }
         }
 
         bf = new BitmapFont(Gdx.files.internal(Constants.font));
         bf.getData().setScale(0.5f);
         gl = new GlyphLayout();
-        //Label.LabelStyle whiteFont = new Label.LabelStyle(bf, Color.WHITE);
-
-        //testing items
-        /*Item item1 = new Item(Constants.eqSteelSword,0, Item.Type.weapon);
-        Item item2 = new Item(Constants.eqSpear, 0, Item.Type.weapon);
-        Item item3 = new Item(Constants.eqHalberd, 0, Item.Type.weapon);
-        Item armor = new Item(Constants.eqLeatherArmor, 0, Item.Type.armor);
-        Item helmet = new Item(Constants.eqLeatherHelmet, 0, Item.Type.helmet);
-        Item shield = new Item(Constants.eqWoodenShield,0, Item.Type.shield);
-        Item legs = new Item(Constants.eqLeatherLegs, 0, Item.Type.legs);
-        item1.spawnItem(new Vector2(5*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
-        item2.spawnItem(new Vector2( 6*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
-        item3.spawnItem(new Vector2( 7*Constants.UNIT_SCALE, 5*Constants.UNIT_SCALE));
-        armor.spawnItem(new Vector2( 5*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
-        helmet.spawnItem(new Vector2( 6*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
-        shield.spawnItem(new Vector2( 7*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE));
-        legs.spawnItem(new Vector2( 5*Constants.UNIT_SCALE, 7*Constants.UNIT_SCALE));*/
     }
 
     @Override
@@ -172,7 +169,7 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         hud = new Hud(width, height, game);
 
         //input controller
-        controller = new PlayerController(camera, player, hud);
+        PlayerController controller = new PlayerController(camera, player, hud);
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(controller);
         multiplexer.addProcessor(hud.stage);
@@ -538,7 +535,6 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
         return width;
     }
 
-    //public static float halfSecondMove = 0f;
     private Enemy.Direction getDirectionToMove(Enemy enemy){
         float xe = enemy.body.getPosition().x;
         float ye = enemy.body.getPosition().y;
@@ -565,13 +561,13 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
             }
 
             // if player is above enemy...
-            if(ye < yp){
-                if((yp-ye)>(xp-xe)){
+            if(ye < yp)
+                if((yp-ye)>(xp-xe))
                     return Enemy.Direction.UP;
-                }else{
+                else
                     return Enemy.Direction.RIGHT;
-                }
-            }
+
+
         }
 
         // if player is more on the left than enemy...

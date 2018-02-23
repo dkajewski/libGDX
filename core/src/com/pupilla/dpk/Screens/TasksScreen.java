@@ -209,12 +209,6 @@ public class TasksScreen extends ApplicationAdapter implements Screen {
             innerTable.row();
         }
 
-        // testing displaying of scroll pane
-        /*for(int i=30; i>0; i--){
-            innerTable.add(new TextButton(i+"", uiSkin)).width(width-20);
-            innerTable.row();
-        }*/
-
         scrollPane = new ScrollPane(innerTable, uiSkin);
         outerTable.setSize(width, height-50);
         outerTable.add(scrollPane);
@@ -265,11 +259,6 @@ public class TasksScreen extends ApplicationAdapter implements Screen {
             innerTable.row();
         }
 
-        // testing displaying of scroll pane
-        /*for(int i=0; i<30; i++){
-            innerTable.add(new TextButton(i+"", uiSkin)).width(width-20);
-            innerTable.row();
-        }*/
 
         scrollPane = new ScrollPane(innerTable, uiSkin);
         outerTable.setSize(width, height-50);

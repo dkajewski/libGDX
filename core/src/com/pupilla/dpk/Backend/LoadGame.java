@@ -78,23 +78,4 @@ public class LoadGame {
         }
         return null;
     }
-
-    /*public Backpack backpack(){
-        try{
-            FileInputStream fis = new FileInputStream(Gdx.files.getLocalStoragePath()+"backpack.sav");
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            Backpack obj = (Backpack) ois.readObject();
-            ois.close();
-            fis.close();
-            return obj;
-        } catch (FileNotFoundException e){
-            Gdx.app.debug(TAG, "loadbackpack");
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }*/
 }

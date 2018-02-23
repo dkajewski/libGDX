@@ -27,6 +27,7 @@ import com.pupilla.dpk.Backend.Item;
 import com.pupilla.dpk.Backend.Level;
 import com.pupilla.dpk.Backend.MapConstants;
 import com.pupilla.dpk.Backend.Task;
+import com.pupilla.dpk.PlayerController;
 import com.pupilla.dpk.Sprites.NPC;
 import com.pupilla.dpk.Sprites.Seller;
 
@@ -574,10 +575,11 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
 
             if(dialogue==4){
                 for(int i=0; i<Task.tasks.size(); i++){
-                    if(Task.tasks.get(i).id==1 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
+                    if(Task.tasks.get(i).id==11 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
                         Task.tasks.get(i).ended=true;
                         Task.tasks.get(i).active=false;
                         Gdx.app.debug(TAG, "Quest with ID 11 completed.");
+                        PlayScreen.player.gold -= 5;
                         PlayScreen.player.experience += Task.tasks.get(i).exp;
                         PlayScreen.player.gold += Task.tasks.get(i).gold;
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){

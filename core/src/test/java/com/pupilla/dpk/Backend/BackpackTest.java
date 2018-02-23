@@ -14,9 +14,23 @@ import static org.junit.Assert.*;
 
 public class BackpackTest {
     @Test
+    public void removeItem() throws Exception {
+        Backpack bp = new Backpack();
+        Item item = new Item(null, 0, Item.Type.weapon);
+        bp.addItem(item);
+
+        bp.removeItem(0);
+        boolean output = false;
+        if(bp.itemArr[0]==null)
+            output = true;
+
+        assertEquals(true, output);
+    }
+
+    @Test
     public void addItem() throws Exception {
 
-        Item item = new Item(Constants.eqSteelSword, 0, Item.Type.weapon);
+        Item item = new Item(null, 0, Item.Type.weapon);
         Backpack bp = new Backpack();
         boolean output = bp.addItem(item);
 

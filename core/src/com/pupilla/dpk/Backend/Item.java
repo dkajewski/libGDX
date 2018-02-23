@@ -86,7 +86,8 @@ public final class Item implements Serializable{
     }
 
     public void makeTexture(){
-        texture = new Texture(Gdx.files.internal(texturePath));
+        if(texturePath!=null)
+            texture = new Texture(Gdx.files.internal(texturePath));
     }
 
     private void setStats(){
@@ -320,92 +321,94 @@ public final class Item implements Serializable{
     }
 
     private void setTexturePath(String name){
-        if(name.equals(Constants.eqLeatherArmor)){
-            texturePath = Constants.leatherArmor;
-            return;
-        }
-        if(name.equals(Constants.eqEmeraldArmor)){
-            texturePath = Constants.emeraldArmor;
-            return;
-        }
-        if(name.equals(Constants.eqRoyalArmor)){
-            texturePath = Constants.royalArmor;
-            return;
-        }
-        if(name.equals(Constants.eqLeatherHelmet)){
-            texturePath = Constants.leatherHelmet;
-            return;
-        }
-        if(name.equals(Constants.eqKnightHelmet)){
-            texturePath = Constants.knightHelmet;
-            return;
-        }
-        if(name.equals(Constants.eqEmeraldHelmet)){
-            texturePath = Constants.emeraldHelmet;
-            return;
-        }
-        if(name.equals(Constants.eqVikingHelmet)){
-            texturePath = Constants.vikingHelmet;
-            return;
-        }
-        if(name.equals(Constants.eqLeatherLegs)){
-            texturePath = Constants.leatherLegs;
-            return;
-        }
-        if(name.equals(Constants.eqKnightLegs)){
-            texturePath = Constants.knightLegs;
-            return;
-        }
-        if(name.equals(Constants.eqEmeraldLegs)){
-            texturePath = Constants.emeraldLegs;
-            return;
-        }
-        if(name.equals(Constants.eqWoodenShield)){
-            texturePath = Constants.woodenShield;
-            return;
-        }
-        if(name.equals(Constants.eqSteelShield)){
-            texturePath = Constants.steelShield;
-            return;
-        }
-        if(name.equals(Constants.eqEmeraldShield)){
-            texturePath = Constants.emeraldShield;
-            return;
-        }
-        if(name.equals(Constants.eqGuardianShield)){
-            texturePath = Constants.guardianShield;
-            return;
-        }
-        if(name.equals(Constants.eqRoyalShield)){
-            texturePath = Constants.royalShield;
-            return;
-        }
-        if(name.equals(Constants.eqSteelSword)){
-            texturePath = Constants.steelSword;
-            return;
-        }
-        if(name.equals(Constants.eqSpear)){
-            texturePath = Constants.spear;
-            return;
-        }
-        if(name.equals(Constants.eqHalberd)){
-            texturePath = Constants.halberd;
-            return;
-        }
-        if(name.equals(Constants.eqHatchet)){
-            texturePath = Constants.hatchet;
-            return;
-        }
-        if(name.equals(Constants.eqMace)){
-            texturePath = Constants.mace;
-            return;
-        }
-        if(name.equals(Constants.eqSabre)){
-            texturePath = Constants.sabre;
-            return;
-        }
-        if(name.equals(Constants.eqWarAxe)){
-            texturePath = Constants.warAxe;
+        if(name!=null){
+            if(name.equals(Constants.eqLeatherArmor)){
+                texturePath = Constants.leatherArmor;
+                return;
+            }
+            if(name.equals(Constants.eqEmeraldArmor)){
+                texturePath = Constants.emeraldArmor;
+                return;
+            }
+            if(name.equals(Constants.eqRoyalArmor)){
+                texturePath = Constants.royalArmor;
+                return;
+            }
+            if(name.equals(Constants.eqLeatherHelmet)){
+                texturePath = Constants.leatherHelmet;
+                return;
+            }
+            if(name.equals(Constants.eqKnightHelmet)){
+                texturePath = Constants.knightHelmet;
+                return;
+            }
+            if(name.equals(Constants.eqEmeraldHelmet)){
+                texturePath = Constants.emeraldHelmet;
+                return;
+            }
+            if(name.equals(Constants.eqVikingHelmet)){
+                texturePath = Constants.vikingHelmet;
+                return;
+            }
+            if(name.equals(Constants.eqLeatherLegs)){
+                texturePath = Constants.leatherLegs;
+                return;
+            }
+            if(name.equals(Constants.eqKnightLegs)){
+                texturePath = Constants.knightLegs;
+                return;
+            }
+            if(name.equals(Constants.eqEmeraldLegs)){
+                texturePath = Constants.emeraldLegs;
+                return;
+            }
+            if(name.equals(Constants.eqWoodenShield)){
+                texturePath = Constants.woodenShield;
+                return;
+            }
+            if(name.equals(Constants.eqSteelShield)){
+                texturePath = Constants.steelShield;
+                return;
+            }
+            if(name.equals(Constants.eqEmeraldShield)){
+                texturePath = Constants.emeraldShield;
+                return;
+            }
+            if(name.equals(Constants.eqGuardianShield)){
+                texturePath = Constants.guardianShield;
+                return;
+            }
+            if(name.equals(Constants.eqRoyalShield)){
+                texturePath = Constants.royalShield;
+                return;
+            }
+            if(name.equals(Constants.eqSteelSword)){
+                texturePath = Constants.steelSword;
+                return;
+            }
+            if(name.equals(Constants.eqSpear)){
+                texturePath = Constants.spear;
+                return;
+            }
+            if(name.equals(Constants.eqHalberd)){
+                texturePath = Constants.halberd;
+                return;
+            }
+            if(name.equals(Constants.eqHatchet)){
+                texturePath = Constants.hatchet;
+                return;
+            }
+            if(name.equals(Constants.eqMace)){
+                texturePath = Constants.mace;
+                return;
+            }
+            if(name.equals(Constants.eqSabre)){
+                texturePath = Constants.sabre;
+                return;
+            }
+            if(name.equals(Constants.eqWarAxe)){
+                texturePath = Constants.warAxe;
+            }
         }
     }
 }

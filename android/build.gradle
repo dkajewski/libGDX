@@ -19,7 +19,7 @@ android {
     }
     defaultConfig {
         applicationId "com.pupilla.dpk"
-        minSdkVersion 9
+        minSdkVersion 16
         targetSdkVersion 25
     }
 }
