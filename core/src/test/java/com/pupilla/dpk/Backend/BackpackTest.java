@@ -24,6 +24,10 @@ public class BackpackTest {
         if(bp.itemArr[0]==null)
             output = true;
 
+        if(output){
+            System.out.println("removeItem() test passed.");
+        }
+
         assertEquals(true, output);
     }
 
@@ -33,7 +37,9 @@ public class BackpackTest {
         Item item = new Item(null, 0, Item.Type.weapon);
         Backpack bp = new Backpack();
         boolean output = bp.addItem(item);
-
+        if(output){
+            System.out.println("addItem() test passed.");
+        }
         assertEquals(true, output);
     }
 
