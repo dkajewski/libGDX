@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Mayor">
+    <dialogue id="0">
+        <text></text>
+        <response nextDialogue="1">Welcome to my city, traveler. What brings you to me?</response>
+        <response nextDialogue="2" accessibility="false">Frederick mentioned that you summoned me.</response>
+        <response nextDialogue="6" accessibility="false">I killed the monsters.</response>
+        <response nextDialogue="11" accessibility="false">I know who is behind all of this.</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>This is the only city on this island. Life used to flourish here, but then these ugly creatures came.</text>
+        <response nextDialogue="3">Do you know where they came from?</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Yes, yes! So you're the new one who's been making noise. I've got a task for you.</text>
+        <response nextDialogue="4">What is this task?</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>I have no idea. It happened suddenly. Since then, many people have been sitting at home and don't want to open the door to anyone.</text>
+        <response nextDialogue="0">This is terrible. I'll try to help</response>
+    </dialogue>
+    <dialogue id="4">
+        <text>Kill 15 monsters and return for your reward.</text>
+        <response nextDialogue="5">No problem.</response>
+    </dialogue>
+    <dialogue id="5">
+        <text>It's good that I can count on you.</text>
+        <response nextDialogue="0">I would like to ask something else.</response>
+    </dialogue>
+    <dialogue id="6">
+        <text>This is really great. Too bad there will be more soon... This is your reward.</text>
+        <response nextDialogue="7">Is there anything else I can do for you?</response>
+    </dialogue>
+    <dialogue id="7">
+        <text>Yes... I received an encrypted letter, maybe you could read it?</text>
+        <response nextDialogue="9">Unfortunately, I can't read...</response>
+    </dialogue>
+    <dialogue id="9">
+        <text>Oh... Well, never mind, there's someone in town who can decipher things like that.</text>
+        <response nextDialogue="10">Give me that letter and tell me where to go.</response>
+    </dialogue>
+    <dialogue id="10">
+        <text>Go to Ludwik, he lives nearby, be prepared to spend 500 gold coins.</text>
+        <response nextDialogue="0">I got myself into quite a mess... Oh well. Thanks and goodbye.</response>
+    </dialogue>
+    <dialogue id="11">
+        <text>Who's that?</text>
+        <response nextDialogue="12">He's a mage. I don't know his name.</response>
+    </dialogue>
+    <dialogue id="12">
+        <text>But did you catch him?</text>
+        <response nextDialogue="13">Unfortunately no. I wanted to fight him, but he ran away from me.</response>
+    </dialogue>
+    <dialogue id="13">
+        <text>Did he say anything else?</text>
+        <response nextDialogue="14">He said I would not be able to stop this evil.</response>
+    </dialogue>
+    <dialogue id="14">
+        <text>So we still have to fight monsters... Thanks for everything. Bye.</text>
+    </dialogue>
+</npc>

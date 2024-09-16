@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Eremite">
+    <dialogue id="0">
+        <text>I don't see people here very often.</text>
+        <response nextDialogue="1">Why do you stay on the sidelines?</response>
+        <response nextDialogue="2" accessibility="false">Are you the author of the letter?</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>I don't like the hustle and bustle of the city. I prefer to walk along the coast and listen to the sound of the sea.</text>
+        <response nextDialogue="0">And everything became clear.</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Yes, I wanted to share with you information about the evil that has taken over the island.</text>
+        <response nextDialogue="3">So let's get to the point.</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>I saw a Mage enter a cave in the desert, west of here. Monsters didn't attack him.</text>
+        <response nextDialogue="4">This is quite useful information.</response>
+    </dialogue>
+    <dialogue id="4">
+        <text>Go to his place as soon as possible.</text>
+        <response nextDialogue="0">I will do that, thanks for everything.</response>
+    </dialogue>
+</npc>

@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.pupilla.dpk.Backend.Constants;
 import com.pupilla.dpk.Backend.Conversation;
 import com.pupilla.dpk.Backend.Dialogue;
+import com.pupilla.dpk.Pupilla;
 import com.pupilla.dpk.Utility;
 
 import java.io.Serializable;
@@ -60,7 +61,8 @@ public class NPC implements Serializable{
         this.position = position;
         this.map = map;
         this.path = path;
-        Dialogue dialogue = new Dialogue(dialoguePath);
+        String fullDialoguePath = "XML/" + Pupilla.locale + "/" + dialoguePath;
+        Dialogue dialogue = new Dialogue(fullDialoguePath);
         name = dialogue.npcName;
         conversations = dialogue.conversations;
     }

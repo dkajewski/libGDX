@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Old Man">
+    <dialogue id="0">
+        <text>Oh, you finally woke up.</text>
+        <response nextDialogue="1">What is this place?</response>
+        <response nextDialogue="2">How did I get here?</response>
+        <response nextDialogue="3">Where should I go?</response>
+        <response nextDialogue="4">Do you have any tips for me?</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>This is the only island in the area. You can't get out of here except by boat.</text>
+        <response nextDialogue="0">I see.</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Someone must have brought you here by ship and left you to die.</text>
+        <response nextDialogue="0">It's likely, I feel like I've lost my memory for the past week.</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>Going west from here will take you to the city. On the way you'll pass Joseph's farm.</text>
+        <response nextDialogue="0">Thanks, your information will really help me.</response>
+    </dialogue>
+    <dialogue id="4">
+        <text>Be careful, the area has recently become very dangerous</text>
+        <response nextDialogue="0">I will take care of myself.</response>
+    </dialogue>
+</npc>

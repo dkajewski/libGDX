@@ -1,7 +1,7 @@
 # 2D RPG Android Game
 
 ## Overview
-Project discontinued. No new features will be added (maybe some day I will add the English translations for dialogue files).  
+Project discontinued. No new features will be added.  
 This project is a 2D RPG game for Android system developed as part of an engineering thesis at Białystok University of Technology. 
 The game is built using Java with the LibGDX framework and Box2D for physics simulation. It features core RPG mechanics including monster battles, 
 NPC interactions, item trading, quest completion, and character stat improvements. Additionally, the game supports saving and loading progress.
@@ -15,6 +15,7 @@ It was my first larger project, I wasn't experienced, so the code quality is at 
 - **Quest System**: Complete quests assigned by NPCs to earn rewards and progress in the game.
 - **Character Development**: Improve and enhance your character's statistics by leveling up and/or putting on equipment found in the game world.
 - **Save/Load Game**: Save your progress at any time and load it later to continue your adventure.
+- **En/Pl Version**: Changing language is available in the game code. Default is English.
 
 ## Technology
 

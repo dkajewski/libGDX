@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Henrick">
+    <dialogue id="0">
+        <text>
+            A new face in town! Maybe you'll have a drink with me?
+        </text>
+        <response nextDialogue="1">No thanks, maybe another time.</response>
+        <response nextDialogue="2" accessibility="false">Frederick asked you to come to him.</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>I knew this would happen. At first glance, you look like one.</text>
+        <response nextDialogue="0">As you wish.</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>I'll go when I finish drinking. Tell him that.</text>
+        <response nextDialogue="3">Henrick doesn't have an easy life with you.</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>Man is not a camel and must drink!</text>
+        <response nextDialogue="0">You are absolutely right.</response>
+    </dialogue>
+</npc>

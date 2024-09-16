@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Healer">
+    <dialogue id="0">
+        <text>I am a healer. How can I help you?</text>
+        <response nextDialogue="1">Heal me.</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>Here you go.</text>
+    </dialogue>
+</npc>

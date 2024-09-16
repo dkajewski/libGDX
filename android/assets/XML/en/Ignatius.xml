@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Ignatius">
+    <dialogue id="0">
+        <text>The world is not so colorful when you're sober.</text>
+        <response nextDialogue="1">Can I help you with something?</response>
+        <response nextDialogue="2">Chin up!</response>
+        <response nextDialogue="4" accessibility="false">Here are your 5 gold pieces.</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>I would be grateful if you could give me 5 gold pieces.</text>
+        <response nextDialogue="3">No problem. I'll see what I can do.</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Easy to say...</text>
+    </dialogue>
+    <dialogue id="3">
+        <text>Thanks, manager!</text>
+    </dialogue>
+    <dialogue id="4">
+        <text>You're saving my life, man!</text>
+    </dialogue>
+</npc>

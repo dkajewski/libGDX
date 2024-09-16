@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Joseph">
+    <dialogue id="0">
+        <text>
+            Welcome, traveler. What brings you to this land?
+        </text>
+        <response nextDialogue="1">
+            I come with peaceful intentions. Can I ask you something?
+        </response>
+        <response nextDialogue="2">
+            Do you have a task for me?
+        </response>
+        <response nextDialogue="5" accessibility="false">
+            I brought what you asked for.
+        </response>
+    </dialogue>
+    <dialogue id="1">
+        <text>
+            Ask.
+        </text>
+        <response nextDialogue="0">
+            I changed my mind...
+        </response>
+        <response nextDialogue="3">
+            What is this place?
+        </response>
+    </dialogue>
+    <dialogue id="2">
+        <text>
+            Bring me some armor.
+        </text>
+        <response nextDialogue="4">
+            It's already being done.
+        </response>
+    </dialogue>
+    <dialogue id="3">
+        <text>
+            This land is overrun by evil creatures. Every pair of hands will come in handy to fight them.
+        </text>
+        <response nextDialogue="0">
+            Thanks for the info...
+        </response>
+    </dialogue>
+    <dialogue id="4">
+        <text>
+            Thank you for wanting to help me.
+        </text>
+        <response nextDialogue="0">
+            I want to ask you something else.
+        </response>
+    </dialogue>
+    <dialogue id="5">
+        <text>
+            It's nice that you brought what I asked for. Go to my brother, Frederick, maybe he has a task for you.
+        </text>
+        <response nextDialogue="0">
+            Thanks for the info. Let's talk about something else.
+        </response>
+    </dialogue>
+</npc>

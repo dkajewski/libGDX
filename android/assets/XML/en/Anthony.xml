@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Anthony">
+    <dialogue id="0">
+        <text>People went crazy because of these creatures!</text>
+        <response nextDialogue="1">What do you mean?</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>Once the city was bustling with life, but now...</text>
+        <response nextDialogue="2">But now?</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>It's not worth talking about. Most of them have locked themselves in their homes, they're afraid of monsters.</text>
+        <response nextDialogue="3">Are they still alive?</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>They live. People like me make sure they have something to eat. I bring them food every day.</text>
+        <response nextDialogue="4">Why aren't you afraid of monsters?</response>
+    </dialogue>
+    <dialogue id="4">
+        <text>I can handle them. Someone has to defend the city.</text>
+        <response nextDialogue="0">I see.</response>
+    </dialogue>
+</npc>

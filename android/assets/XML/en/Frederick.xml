@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Frederick">
+    <dialogue id="0">
+        <text>
+            Hello, what brings you to me?
+        </text>
+        <response nextDialogue="1">
+            What do you do?
+        </response>
+        <response nextDialogue="2" accessibility="false">
+            Joseph said you might have some work for me.
+        </response>
+        <response nextDialogue="4" accessibility="false">
+            I told Henryk to come here. He wasn't eager to do so.
+        </response>
+    </dialogue>
+    <dialogue id="1">
+        <text>
+            I'm just a farmer, hard work. You probably know how it is.
+        </text>
+        <response nextDialogue="0">Yes, of course.</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>
+            I have one task, go to the tavern and tell Henry to come to me.
+        </text>
+        <response nextDialogue="3">Roger that.</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>
+            Thank you for wanting to do this for me.
+        </text>
+        <response nextDialogue="0">Let's talk about something else.</response>
+    </dialogue>
+    <dialogue id="4">
+        <text>That's Henryk all over again. You can expect that from him. You deserve something for your trouble. Go to the mayor, he said he wanted to see you.</text>
+        <response nextDialogue="0">Thanks.</response>
+    </dialogue>
+</npc>

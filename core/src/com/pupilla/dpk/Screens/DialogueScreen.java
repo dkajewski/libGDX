@@ -84,7 +84,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
         checkQuests();
         prepareTable();
 
-        if(!Collision.NPCname.equals("Sprzedawca"))
+        if(!Collision.NPCname.equals(Constants.seller))
             setNewResponses(0);
 
         addListeners();
@@ -278,13 +278,13 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
      */
     private void startQuest(int dialogue){
         //NPC npc = null;
-        if(Collision.NPCname.equals("Józef")){
+        if(Collision.NPCname.equals(Constants.joseph)){
             if(dialogue==4)
                 for(int i=0; i<Task.tasks.size(); i++)
                     if(Task.tasks.get(i).id==1 && !Task.tasks.get(i).active){
                         Task.tasks.get(i).active=true;
                         for(int j=0; j<PlayScreen.NPCs.size(); j++)
-                            if(PlayScreen.NPCs.get(j).name.equals("Józef")) {
+                            if(PlayScreen.NPCs.get(j).name.equals(Constants.joseph)) {
                                 PlayScreen.NPCs.get(j).conversations.get(0).accessibility[1] = false;
                                 break;
                             }
@@ -305,7 +305,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                             }
                         }
                         for(int j=0; j<PlayScreen.NPCs.size(); j++)
-                            if(PlayScreen.NPCs.get(j).name.equals("Józef")){
+                            if(PlayScreen.NPCs.get(j).name.equals(Constants.joseph)){
                                 PlayScreen.NPCs.get(j).conversations.get(0).accessibility[2] = false;
                                 break;
                             }
@@ -316,7 +316,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         Task.tasks.get(i).active = true;
                         Gdx.app.debug(TAG, "Quest with ID 2 started.");
                         for(int j=0; j< MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Fryderyk")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.frederick)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=true;
                                 break;
                             }
@@ -325,7 +325,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                 }
         }
 
-        if(Collision.NPCname.equals("Fryderyk")){
+        if(Collision.NPCname.equals(Constants.frederick)){
             if(dialogue==0)
                 for(int i=0; i<Task.tasks.size(); i++)
                     if(Task.tasks.get(i).id==2 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
@@ -342,10 +342,10 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         Task.tasks.get(i).active=true;
                         Gdx.app.debug(TAG, "Quest with ID 3 started.");
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Henryk")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.henrick)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1] = true;
                             }
-                            if(MapConstants.allNPCs.get(j).name.equals("Fryderyk")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.frederick)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1] = false;
                             }
                         }
@@ -359,10 +359,10 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         PlayScreen.player.experience += Task.tasks.get(i).exp;
                         PlayScreen.player.gold += Task.tasks.get(i).gold;
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Fryderyk")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.frederick)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=false;
                             }
-                            if(MapConstants.allNPCs.get(j).name.equals("Burmistrz")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.mayor)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1] = true;
                             }
                         }
@@ -376,7 +376,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                 }
         }
 
-        if(Collision.NPCname.equals("Henryk")){
+        if(Collision.NPCname.equals(Constants.henrick)){
             if(dialogue==3)
                 for(int i=0; i<Task.tasks.size(); i++){
                     if(Task.tasks.get(i).id==3 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
@@ -386,7 +386,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         PlayScreen.player.experience += Task.tasks.get(i).exp;
                         PlayScreen.player.gold += Task.tasks.get(i).gold;
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Henryk")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.henrick)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1] = false;
                                 break;
                             }
@@ -397,7 +397,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         Task.tasks.get(i).active = true;
                         Gdx.app.debug(TAG, "Quest with ID 4 started.");
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Fryderyk")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.frederick)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=true;
                                 break;
                             }
@@ -406,7 +406,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                 }
         }
 
-        if(Collision.NPCname.equals("Burmistrz")){
+        if(Collision.NPCname.equals(Constants.mayor)){
             if(dialogue==0){
                 for(int i=0; i<Task.tasks.size(); i++){
                     if(Task.tasks.get(i).id==5 && Task.tasks.get(i).active){
@@ -425,7 +425,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         Task.tasks.get(i).active = true;
                         Gdx.app.debug(TAG, "Quest with ID 6 started.");
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Burmistrz")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.mayor)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=false;
                                 break;
                             }
@@ -443,7 +443,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         PlayScreen.player.experience += Task.tasks.get(i).exp;
                         PlayScreen.player.gold += Task.tasks.get(i).gold;
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Burmistrz")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.mayor)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=false;
                                 break;
                             }
@@ -465,7 +465,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         PlayScreen.player.experience += Task.tasks.get(i).exp;
                         PlayScreen.player.gold += Task.tasks.get(i).gold;
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Burmistrz")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.mayor)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[3]=false;
                             }
                         }
@@ -474,7 +474,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
             }
         }
 
-        if(Collision.NPCname.equals("Ludwik")){
+        if(Collision.NPCname.equals(Constants.louis)){
             if(dialogue==3){
                 for(int i=0; i<Task.tasks.size(); i++){
                     if(Task.tasks.get(i).id==7 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
@@ -485,11 +485,11 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         PlayScreen.player.gold += Task.tasks.get(i).gold;
                         PlayScreen.player.gold -= 500;
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Ludwik")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.louis)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=false;
                             }
 
-                            if(MapConstants.allNPCs.get(j).name.equals("Pustelnik")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.eremite)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1] = true;
                             }
                         }
@@ -502,7 +502,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
             }
         }
 
-        if(Collision.NPCname.equals("Pustelnik")){
+        if(Collision.NPCname.equals(Constants.eremite)){
             if(dialogue==4){
                 for(int i=0; i<Task.tasks.size(); i++){
                     if(Task.tasks.get(i).id==8 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
@@ -512,11 +512,11 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         PlayScreen.player.experience += Task.tasks.get(i).exp;
                         PlayScreen.player.gold += Task.tasks.get(i).gold;
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Pustelnik")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.eremite)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=false;
                             }
 
-                            if(MapConstants.allNPCs.get(j).name.equals("Mag")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.mage)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=true;
                             }
                         }
@@ -530,7 +530,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
             }
         }
 
-        if(Collision.NPCname.equals("Mag")){
+        if(Collision.NPCname.equals(Constants.mage)){
             if(dialogue==3){
                 for(int i=0; i<Task.tasks.size(); i++){
                     if(Task.tasks.get(i).id==9 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
@@ -540,11 +540,11 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         PlayScreen.player.experience += Task.tasks.get(i).exp;
                         PlayScreen.player.gold += Task.tasks.get(i).gold;
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Mag")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.mage)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=false;
                             }
 
-                            if(MapConstants.allNPCs.get(j).name.equals("Burmistrz")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.mayor)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[3]=true;
                             }
                         }
@@ -558,14 +558,14 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
             }
         }
 
-        if(Collision.NPCname.equals("Ignacy")){
+        if(Collision.NPCname.equals(Constants.ignatius)){
             if(dialogue==3){
                 for(int i=0; i<Task.tasks.size(); i++){
                     if(Task.tasks.get(i).id==11 && !Task.tasks.get(i).active && !Task.tasks.get(i).ended){
                         Task.tasks.get(i).active=true;
                         Gdx.app.debug(TAG, "Quest with ID 11 started.");
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Ignacy")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.ignatius)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[0]=false;
                             }
                         }
@@ -583,7 +583,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
                         PlayScreen.player.experience += Task.tasks.get(i).exp;
                         PlayScreen.player.gold += Task.tasks.get(i).gold;
                         for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                            if(MapConstants.allNPCs.get(j).name.equals("Ignacy")){
+                            if(MapConstants.allNPCs.get(j).name.equals(Constants.ignatius)){
                                 MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=false;
                             }
                         }
@@ -592,7 +592,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
             }
         }
 
-        if(Collision.NPCname.equals("Uzdrowiciel")){
+        if(Collision.NPCname.equals(Constants.healer)){
             if(dialogue==1){
                 PlayScreen.player.currentHealth=PlayScreen.player.maxHealth;
             }
@@ -612,7 +612,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
         for(int i=0; i<Task.tasks.size(); i++){
             if(Task.tasks.get(i).id==1 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
                 for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                    if(MapConstants.allNPCs.get(j).name.equals("Józef")){
+                    if(MapConstants.allNPCs.get(j).name.equals(Constants.joseph)){
                         MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=false;
                         for(int k=0; k<PlayScreen.player.backpack.itemArr.length; k++){
                             if(PlayScreen.player.backpack.itemArr[k]!=null && PlayScreen.player.backpack.itemArr[k].type==Item.Type.armor){
@@ -626,7 +626,7 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
             if(Task.tasks.get(i).id==6 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
                 if(PlayScreen.player.killedMonsters>=15){
                     for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                        if(MapConstants.allNPCs.get(j).name.equals("Burmistrz")){
+                        if(MapConstants.allNPCs.get(j).name.equals(Constants.mayor)){
                             MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=true;
                         }
                     }
@@ -636,13 +636,13 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
             if(Task.tasks.get(i).id==7 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
                 if(PlayScreen.player.gold>=500){
                     for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                        if(MapConstants.allNPCs.get(j).name.equals("Ludwik")){
+                        if(MapConstants.allNPCs.get(j).name.equals(Constants.louis)){
                             MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=true;
                         }
                     }
                 }else{
                     for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                        if(MapConstants.allNPCs.get(j).name.equals("Ludwik")){
+                        if(MapConstants.allNPCs.get(j).name.equals(Constants.louis)){
                             MapConstants.allNPCs.get(j).conversations.get(0).accessibility[1]=false;
                         }
                     }
@@ -652,13 +652,13 @@ public class DialogueScreen extends ApplicationAdapter implements Screen {
             if(Task.tasks.get(i).id==11 && Task.tasks.get(i).active && !Task.tasks.get(i).ended){
                 if(PlayScreen.player.gold>=5){
                     for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                        if(MapConstants.allNPCs.get(j).name.equals("Ignacy")){
+                        if(MapConstants.allNPCs.get(j).name.equals(Constants.ignatius)){
                             MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=true;
                         }
                     }
                 } else{
                     for(int j=0; j<MapConstants.allNPCs.size(); j++){
-                        if(MapConstants.allNPCs.get(j).name.equals("Ignacy")){
+                        if(MapConstants.allNPCs.get(j).name.equals(Constants.ignatius)){
                             MapConstants.allNPCs.get(j).conversations.get(0).accessibility[2]=false;
                         }
                     }

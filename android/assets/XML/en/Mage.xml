@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Mage">
+    <dialogue id="0">
+        <text>What are you looking for here? Get out of here! Now!</text>
+        <response nextDialogue="1">You hid quite well.</response>
+        <response nextDialogue="2" accessibility="false">I know that you are responsible for all the evil on the island!</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>I don't feel like chatting, go away!</text>
+        <response nextDialogue="0">It's already happening...</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>HAHAHA! You're smarter than I thought. Bravo.</text>
+        <response nextDialogue="3">Now I challenge you to a duel! Fight on!</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>I have no intention of doing so. You can't stop the evil that has taken over the island. I'm leaving, goodbye!</text>
+    </dialogue>
+</npc>

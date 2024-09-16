@@ -322,55 +322,55 @@ public class MapConstants implements Serializable{
     public static void fillNPClist(World world){
         allNPCs = new ArrayList<NPC>();
         //testing npc and dialogues
-        NPC npc = new NPC("XML/NPC1.xml", world, new Vector2(8*Constants.UNIT_SCALE, Constants.UNIT_SCALE), TESTMAP, Utility.seller);
+        NPC npc = new NPC("NPC1.xml", world, new Vector2(8*Constants.UNIT_SCALE, Constants.UNIT_SCALE), TESTMAP, Utility.seller);
         npc.setup();
 
-        NPC seller = new Seller("XML/Seller.xml", world, 1, new Vector2(35*Constants.UNIT_SCALE, 45*Constants.UNIT_SCALE), CITY1, Utility.seller);
+        NPC seller = new Seller("Seller.xml", world, 1, new Vector2(35*Constants.UNIT_SCALE, 45*Constants.UNIT_SCALE), CITY1, Utility.seller);
         seller.setup();
         //seller.defineBody();
 
         //npc.defineBody();
-        NPC joseph = new NPC("XML/QuestNPC.xml", world, new Vector2(12*Constants.UNIT_SCALE, 12*Constants.UNIT_SCALE), FOREST2HOUSE1, Utility.joseph);
+        NPC joseph = new NPC("QuestNPC.xml", world, new Vector2(12*Constants.UNIT_SCALE, 12*Constants.UNIT_SCALE), FOREST2HOUSE1, Utility.joseph);
         joseph.setup();
         //npc1.defineBody();
 
-        NPC henrick = new NPC("XML/Henryk.xml", world, new Vector2(6*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE), CITY1HOUSE3, Utility.henrick);
+        NPC henrick = new NPC("Henrick.xml", world, new Vector2(6*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE), CITY1HOUSE3, Utility.henrick);
         henrick.setup();
 
-        NPC mayor = new NPC("XML/Burmistrz.xml", world, new Vector2(9*Constants.UNIT_SCALE, 11*Constants.UNIT_SCALE), CITY1HOUSE5, Utility.mayor);
+        NPC mayor = new NPC("Mayor.xml", world, new Vector2(9*Constants.UNIT_SCALE, 11*Constants.UNIT_SCALE), CITY1HOUSE5, Utility.mayor);
         mayor.setup();
 
-        NPC frederick = new NPC("XML/Fryderyk.xml", world, new Vector2(3*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE), CITY1HOUSE1, Utility.frederick);
+        NPC frederick = new NPC("Frederick.xml", world, new Vector2(3*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE), CITY1HOUSE1, Utility.frederick);
         frederick.setup();
 
-        NPC mage = new NPC("XML/Mag.xml", world, new Vector2(21*Constants.UNIT_SCALE, 18*Constants.UNIT_SCALE), DUNGEON13, Utility.mage);
+        NPC mage = new NPC("Mage.xml", world, new Vector2(21*Constants.UNIT_SCALE, 18*Constants.UNIT_SCALE), DUNGEON13, Utility.mage);
         mage.setup();
 
-        NPC louis = new NPC("XML/Ludwik.xml", world, new Vector2(5*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE), CITY1HOUSE2, Utility.louis);
+        NPC louis = new NPC("Louis.xml", world, new Vector2(5*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE), CITY1HOUSE2, Utility.louis);
         louis.setup();
 
-        NPC eremite = new NPC("XML/Pustelnik.xml", world, new Vector2(36*Constants.UNIT_SCALE, 32*Constants.UNIT_SCALE), BEACH1, Utility.eremite);
+        NPC eremite = new NPC("Eremite.xml", world, new Vector2(36*Constants.UNIT_SCALE, 32*Constants.UNIT_SCALE), BEACH1, Utility.eremite);
         eremite.setup();
 
-        NPC anthony = new NPC("XML/Antoni.xml", world, new Vector2(40*Constants.UNIT_SCALE, 60*Constants.UNIT_SCALE), CITY1, Utility.anthony);
+        NPC anthony = new NPC("Anthony.xml", world, new Vector2(40*Constants.UNIT_SCALE, 60*Constants.UNIT_SCALE), CITY1, Utility.anthony);
         anthony.setup();
 
-        NPC ignatius = new NPC("XML/Ignacy.xml", world, new Vector2(53*Constants.UNIT_SCALE, 45*Constants.UNIT_SCALE), CITY1, Utility.ignatius);
+        NPC ignatius = new NPC("Ignatius.xml", world, new Vector2(53*Constants.UNIT_SCALE, 45*Constants.UNIT_SCALE), CITY1, Utility.ignatius);
         ignatius.setup();
 
-        NPC clement = new NPC("XML/Klemens.xml", world, new Vector2(57*Constants.UNIT_SCALE, 57*Constants.UNIT_SCALE), CITY1, Utility.clement);
+        NPC clement = new NPC("Clement.xml", world, new Vector2(57*Constants.UNIT_SCALE, 57*Constants.UNIT_SCALE), CITY1, Utility.clement);
         clement.setup();
 
-        NPC oldMan = new NPC("XML/Starzec.xml", world, new Vector2(18*Constants.UNIT_SCALE, 23*Constants.UNIT_SCALE), FOREST1, Utility.oldMan);
+        NPC oldMan = new NPC("OldMan.xml", world, new Vector2(18*Constants.UNIT_SCALE, 23*Constants.UNIT_SCALE), FOREST1, Utility.oldMan);
         oldMan.setup();
 
-        NPC healer = new NPC("XML/Uzdrowiciel.xml", world, new Vector2(3*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE), CITY1HOUSE4, Utility.healer);
+        NPC healer = new NPC("Healer.xml", world, new Vector2(3*Constants.UNIT_SCALE, 6*Constants.UNIT_SCALE), CITY1HOUSE4, Utility.healer);
         healer.setup();
 
-        NPC seller2 = new Seller("XML/Seller.xml", world, 2, new Vector2(37*Constants.UNIT_SCALE, 28*Constants.UNIT_SCALE), FOREST3, Utility.seller);
+        NPC seller2 = new Seller("Seller.xml", world, 2, new Vector2(37*Constants.UNIT_SCALE, 28*Constants.UNIT_SCALE), FOREST3, Utility.seller);
         seller2.setup();
 
-        NPC seller3 = new Seller("XML/Seller.xml", world, 3, new Vector2(31*Constants.UNIT_SCALE, 28*Constants.UNIT_SCALE), BEACH1, Utility.seller);
+        NPC seller3 = new Seller("Seller.xml", world, 3, new Vector2(31*Constants.UNIT_SCALE, 28*Constants.UNIT_SCALE), BEACH1, Utility.seller);
         seller3.setup();
 
         allNPCs.add(npc);

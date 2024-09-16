@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="test1">
+    <dialogue id="0">
+        <text>
+            Welcome, welcome.
+        </text>
+        <response nextDialogue="1">
+            Welcome.
+        </response>
+        <response nextDialogue="2">
+            Hello and welcome.
+        </response>
+    </dialogue>
+	<dialogue id="1">
+		<text>
+			Response 1
+		</text>
+	</dialogue>
+    <dialogue id="2">
+        <text>
+            Response 2
+        </text>
+        <response nextDialogue="0">
+            Go back.
+        </response>
+    </dialogue>
+
+</npc>

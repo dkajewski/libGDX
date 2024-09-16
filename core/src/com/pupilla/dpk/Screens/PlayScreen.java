@@ -663,18 +663,18 @@ public class PlayScreen extends ApplicationAdapter implements Screen {
     }
 
     private void createTasks(){
-        Task task1 = new Task(1, "Zdobyć pancerz", "Józef prosił o pancerz.", 10, 15);
-        Task task2 = new Task(2, "Znaleźć Fryderyka", "Znajdź Fryderyka, być może będzie miał zadanie.", 0, 5);
-        Task task3 = new Task(3, "Porozmawiać z Henrykiem", "Fryderyk potrzebuje pomocy Henryka, znaleźć można go w tawernie.", 0, 5);
-        Task task4 = new Task(4, "Zdać relację Fryderykowi", "Powiedz Fryderykowi o decyzji Henryka.", 10, 15);
-        Task task5 = new Task(5, "Rozmowa z burmistrzem", "Fryderyk powiedział, że burmistrz chce porozmawiać.", 0, 20);
-        Task task6 = new Task(6, "Zabić 15 potworów", "Burmistrz poprosił o zabicie 15 potworów.", 30, 50);
-        Task task7 = new Task(7, "Znaleźć Ludwika", "Ludwik powinien pomóc w rozszyfrowaniu listu za 500 sztuk złota.", 0, 40);
-        Task task8 = new Task(8, "Pójść na plażę", "Na plaży przebywa Pustelnik posiadający ważne informacje.", 0, 75);
-        Task task9 = new Task(9, "Znaleźć Maga", "Pustelnik widział jak do jaskini na pustyni wchodzi mag.", 0, 150);
-        Task task10 = new Task(10, "Spotkanie z burmistrzem", "Burmistrzowi należą się informacje o magu.", 80, 200);
+        Task task1 = new Task(1, Constants.task1Title, Constants.task1Description, 10, 15);
+        Task task2 = new Task(2, Constants.task2Title, Constants.task2Description, 0, 5);
+        Task task3 = new Task(3, Constants.task3Title, Constants.task3Description, 0, 5);
+        Task task4 = new Task(4, Constants.task4Title, Constants.task4Description, 10, 15);
+        Task task5 = new Task(5, Constants.task5Title, Constants.task5Description, 0, 20);
+        Task task6 = new Task(6, Constants.task6Title, Constants.task6Description, 30, 50);
+        Task task7 = new Task(7, Constants.task7Title, Constants.task7Description, 0, 40);
+        Task task8 = new Task(8, Constants.task8Title, Constants.task8Description, 0, 75);
+        Task task9 = new Task(9, Constants.task9Title, Constants.task9Description, 0, 150);
+        Task task10 = new Task(10, Constants.task10Title, Constants.task10Description, 80, 200);
 
-        Task task11 = new Task(11, "Złoto dla Ignacego", "Ignacy prosił o 5 sztuk złota.", 0, 20);
+        Task task11 = new Task(11, Constants.task11Title, Constants.task11Description, 0, 20);
     }
 
 }

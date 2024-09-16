@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Seller">
+    <dialogue id="0">
+        <text>
+            I am a seller. You can see what I have for sale.
+        </text>
+    </dialogue>
+</npc>

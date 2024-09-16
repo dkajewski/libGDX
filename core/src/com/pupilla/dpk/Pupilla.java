@@ -9,9 +9,12 @@ import com.pupilla.dpk.Screens.StartScreen;
 
 public class Pupilla extends com.badlogic.gdx.Game {
 
+	public static String locale;
+
 	private StartScreen startScreen;
 	@Override
 	public void create () {
+		this.setLocale("en");
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		startScreen = new StartScreen(this);
 		setScreen(startScreen);
@@ -25,5 +28,10 @@ public class Pupilla extends com.badlogic.gdx.Game {
 	@Override
 	public void dispose () {
 		startScreen.dispose();
+	}
+
+	public void setLocale(String locale)
+	{
+		Pupilla.locale = locale;
 	}
 }

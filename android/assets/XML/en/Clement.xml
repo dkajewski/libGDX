@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Clement">
+    <dialogue id="0">
+        <text>Everything was looking better until these creatures showed up!</text>
+        <response nextDialogue="1">Do you know where they came from?</response>
+        <response nextDialogue="2">Have you tried fighting them?</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>I have no idea. It happened in one night. I'm sick of it.</text>
+        <response nextDialogue="0">Interesting...</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>Yes, but new ones keep appearing. In a little while they will start entering the city!</text>
+        <response nextDialogue="0">This is really scary.</response>
+    </dialogue>
+</npc>

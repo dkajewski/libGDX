@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<npc name="Louis">
+    <dialogue id="0">
+        <text>Hi. What are you doing here?</text>
+        <response nextDialogue="1">Nothing special, just looking around.</response>
+        <response nextDialogue="2" accessibility="false">Apparently you can decipher various messages.</response>
+    </dialogue>
+    <dialogue id="1">
+        <text>Look around as much as you want, just please don't break anything.</text>
+        <response nextDialogue="0">No problem.</response>
+    </dialogue>
+    <dialogue id="2">
+        <text>I'm not a great specialist, but I can try. However, it will cost 500 gold coins.</text>
+        <response nextDialogue="3">Here you go, here is your payment.</response>
+    </dialogue>
+    <dialogue id="3">
+        <text>The letter contains a request to meet on the beach. The Eremite usually walks there.</text>
+        <response nextDialogue="0">Thanks, you really helped me.</response>
+    </dialogue>
+</npc>
